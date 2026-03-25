@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>预约指导 - iPad Demo</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: #eef2f5; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+}
+
+/* ─── iPad 外壳 ─── */
+.ipad-frame {
+  background: #d0d4d8; border-radius: 40px; padding: 15px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.5s ease;
+}
+.ipad-frame.landscape { width: 1024px; height: 768px; }
+.ipad-frame.portrait  { width: 768px;  height: 1024px; }
+.ipad-screen {
+  width: 100%; height: 100%; background: #f7f8fa;
+  border-radius: 25px; overflow: hidden; position: relative;
+}
+.rotate-btn {
+  position: fixed; bottom: 30px; right: 30px;
+  width: 52px; height: 52px; background: #fff;
+  border: 1.5px solid #dde2e8; border-radius: 50%;
+  color: #6b7a8d; font-size: 22px; cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  transition: box-shadow 0.2s;
+}
+.rotate-btn:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+
+/* ─── 色彩变量 ─── */
+:root {
+  --blue:    #5b8def;
+  --blue-lt: #eef3fd;
+  --green:   #6bbf8e;
+  --green-lt:#eef8f2;
+  --teal:    #5ab9b0;
+  --teal-lt: #eef8f7;
+  --amber:   #e8a030;
+  --amber-lt:#fdf6e8;
+  --red:     #e07070;
+  --red-lt:  #fdf0f0;
+  --gray-10: #f7f8fa;
+  --gray-20: #eef0f3;
+  --gray-40: #c8cdd5;
+  --gray-60: #8e96a3;
+  --gray-80: #4a5260;
+  --text:    #2c3340;
+}
+
+/* ─── 页面 ─── */
+.page {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%; display: none; flex-direction: column;
+  background: var(--gray-10);
+}
+.page.active { display: flex; }
+
+/* ─── 通用组件 ─── */
+.btn-primary {
+  padding: 14px 20px; background: var(--blue); color: white;
+  border: none; border-radius: 12px; font-size: 16px; font-weight: 600;
+  cursor: pointer; transition: opacity 0.2s, transform 0.15s; width: 100%;
+}
+.btn-primary:hover { opacity: 0.9; }
+.btn-primary:active { transform: scale(0.97); }
+.btn-primary:disabled { background: var(--gray-40); cursor: default; opacity: 1; }
+
+.btn-secondary {
+  padding: 14px 20px; background: white; color: var(--gray-80);
+  border: 1.5px solid var(--gray-40); border-radius: 12px;
+  font-size: 16px; cursor: pointer; transition: background 0.2s; width: 100%;
+}
+.btn-secondary:hover { background: var(--gray-10); }
+
+.btn-danger {
+  padding: 14px 20px; background: var(--red); color: white;
+  border: none; border-radius: 12px; font-size: 16px; font-weight: 600;
+  cursor: pointer; width: 100%;
+}
+
+.btn-text {
+  background: none; border: none; color: var(--blue);
+  font-size: 15px; cursor: pointer; padding: 6px 10px; border-radius: 8px;
+}
+.btn-text:hover { background: var(--blue-lt); }
+
+/* ─── 通用页头 ─── */
+.page-header {
+  padding: 16px 20px; background: white;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid var(--gray-20); flex-shrink: 0;
+}
+.page-header-back {
+  background: none; border: none; color: var(--blue);
+  font-size: 15px; cursor: pointer; padding: 4px 8px; border-radius: 8px;
+  white-space: nowrap;
+}
+.page-header-back:hover { background: var(--blue-lt); }
+.page-header-title { font-size: 17px; font-weight: 600; color: var(--text); flex: 1; text-align: center; }
+.page-header-right { min-width: 60px; text-align: right; }
+
+/* ─── 步骤进度条 ─── */
+.step-bar { display: flex; gap: 4px; padding: 0 20px 0; height: 4px; flex-shrink: 0; background: white; padding-bottom: 0; }
+.step-bar-wrap { background: white; padding: 0 20px 14px; flex-shrink: 0; }
+.step-seg { flex: 1; height: 4px; border-radius: 2px; background: var(--gray-20); }
+.step-seg.done { background: var(--blue); }
+
+/* ─── 底部 Tab 栏 ─── */
+.bottom-tab {
+  display: flex; background: white;
+  border-top: 1px solid var(--gray-20); flex-shrink: 0;
+}
+.tab-item {
+  flex: 1; padding: 12px 8px; background: none; border: none;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  cursor: pointer; color: var(--gray-60); font-size: 12px;
+  transition: color 0.2s;
+}
+.tab-item.active { color: var(--blue); }
+.tab-icon { font-size: 22px; line-height: 1; }
+
+/* ═══════════════════════════════════
+   1. 入口页
+═══════════════════════════════════ */
+.entry-page { background: white; }
+.entry-body {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; padding: 48px 56px; gap: 32px;
+}
+.landscape .entry-body { flex-direction: row; gap: 64px; justify-content: center; align-items: center; }
+.entry-illus {
+  width: 140px; height: 140px; background: var(--blue-lt); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.landscape .entry-illus { width: 160px; height: 160px; }
+.entry-illus svg { width: 64px; height: 64px; }
+.entry-content { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; max-width: 400px; }
+.landscape .entry-content { align-items: center; }
+.entry-title { font-size: 32px; font-weight: 700; color: var(--text); }
+.landscape .entry-title { font-size: 36px; }
+.entry-subtitle { font-size: 15px; color: var(--gray-60); margin-bottom: 8px; }
+.entry-btn {
+  padding: 16px 36px; background: var(--blue); color: white;
+  border: none; border-radius: 14px; font-size: 18px; font-weight: 600;
+  cursor: pointer; transition: opacity 0.2s, transform 0.15s;
+  display: flex; align-items: center; gap: 8px; white-space: nowrap;
+}
+.entry-btn:hover { opacity: 0.9; }
+.entry-btn:active { transform: scale(0.97); }
+
+/* ═══════════════════════════════════
+   2. 选择科目
+═══════════════════════════════════ */
+.subject-body { flex: 1; overflow-y: auto; padding: 20px; }
+.subject-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+.landscape .subject-grid { grid-template-columns: 1fr 1fr 1fr; }
+.subject-card {
+  background: white; border: 2px solid var(--gray-20); border-radius: 16px;
+  padding: 24px 16px; display: flex; flex-direction: column;
+  align-items: center; gap: 10px; cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.subject-card:hover { border-color: var(--blue); box-shadow: 0 4px 16px rgba(91,141,239,0.1); }
+.subject-card.selected { border-color: var(--blue); background: var(--blue-lt); }
+.subject-icon { font-size: 32px; line-height: 1; }
+.subject-name { font-size: 16px; font-weight: 600; color: var(--text); }
+.subject-footer { padding: 16px 20px; background: white; border-top: 1px solid var(--gray-20); }
+
+/* ═══════════════════════════════════
+   3. 描述问题
+═══════════════════════════════════ */
+.describe-body { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+.landscape .describe-body { flex-direction: row; }
+.describe-left { display: flex; flex-direction: column; gap: 16px; }
+.landscape .describe-left { flex: 2; }
+.landscape .describe-right { flex: 1; }
+.card { background: white; border: 1.5px solid var(--gray-20); border-radius: 16px; padding: 20px; }
+.card-label { font-size: 13px; color: var(--gray-60); margin-bottom: 10px; font-weight: 500; }
+.hint-text { font-size: 14px; color: var(--gray-60); line-height: 1.6; margin-bottom: 4px; }
+.desc-textarea {
+  width: 100%; border: 1.5px solid var(--gray-20); border-radius: 12px;
+  padding: 14px; font-size: 15px; color: var(--text); resize: none;
+  height: 120px; font-family: inherit; line-height: 1.6; outline: none;
+  transition: border-color 0.2s;
+}
+.landscape .desc-textarea { height: 160px; }
+.desc-textarea:focus { border-color: var(--blue); }
+.desc-textarea.error { border-color: var(--red); }
+.char-count { text-align: right; font-size: 12px; color: var(--gray-60); margin-top: 6px; }
+.char-count.over { color: var(--red); }
+.tags-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.quick-tag {
+  padding: 6px 14px; border: 1.5px solid var(--gray-20); border-radius: 20px;
+  font-size: 13px; color: var(--gray-80); cursor: pointer; background: white;
+  transition: all 0.15s; white-space: nowrap;
+}
+.quick-tag:hover { border-color: var(--blue); color: var(--blue); }
+.quick-tag.active { background: var(--blue-lt); border-color: var(--blue); color: var(--blue); }
+.error-msg { font-size: 13px; color: var(--red); margin-top: 6px; display: none; }
+.error-msg.show { display: block; }
+.photo-area { display: flex; flex-direction: column; gap: 12px; }
+.photo-btn {
+  padding: 12px; background: var(--gray-10); border: 1.5px dashed var(--gray-40);
+  border-radius: 12px; font-size: 14px; color: var(--gray-60); cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: border-color 0.2s;
+}
+.photo-btn:hover { border-color: var(--blue); color: var(--blue); }
+.photo-thumbs { display: flex; gap: 10px; flex-wrap: wrap; }
+.photo-thumb {
+  width: 72px; height: 72px; background: var(--gray-20); border-radius: 10px;
+  position: relative; display: flex; align-items: center; justify-content: center;
+  color: var(--gray-60); font-size: 12px;
+}
+.photo-del {
+  position: absolute; top: -6px; right: -6px; width: 20px; height: 20px;
+  background: var(--gray-80); color: white; border: none; border-radius: 50%;
+  font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.describe-footer { padding: 16px 20px; background: white; border-top: 1px solid var(--gray-20); }
+
+/* ═══════════════════════════════════
+   4. 老师列表
+═══════════════════════════════════ */
+.teachers-search {
+  padding: 12px 20px; background: white; border-bottom: 1px solid var(--gray-20);
+  display: flex; gap: 10px; flex-shrink: 0;
+}
+.search-input {
+  flex: 1; padding: 10px 14px; border: 1.5px solid var(--gray-20); border-radius: 10px;
+  font-size: 15px; outline: none; background: var(--gray-10); color: var(--text);
+  transition: border-color 0.2s;
+}
+.search-input:focus { border-color: var(--blue); background: white; }
+.search-btn {
+  padding: 10px 18px; background: var(--blue); color: white; border: none;
+  border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer;
+  white-space: nowrap;
+}
+.teachers-list { flex: 1; overflow-y: auto; padding: 16px; }
+.teachers-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.landscape .teachers-grid { grid-template-columns: 1fr 1fr; }
+.teacher-card {
+  background: white; border: 1.5px solid var(--gray-20); border-radius: 16px;
+  padding: 18px; cursor: pointer; display: flex; gap: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+.teacher-card:hover { border-color: var(--blue); box-shadow: 0 4px 16px rgba(91,141,239,0.12); transform: translateY(-1px); }
+.teacher-card:active { transform: scale(0.98); }
+.teacher-avatar {
+  width: 56px; height: 56px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 700; color: white;
+}
+.teacher-info { flex: 1; min-width: 0; }
+.teacher-name { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.teacher-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+.tag-badge {
+  padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 500;
+}
+.tag-ip { background: var(--blue-lt); color: var(--blue); }
+.tag-subject { background: var(--teal-lt); color: var(--teal); }
+.teacher-meta { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--gray-60); }
+.teacher-rating { color: var(--amber); font-weight: 600; }
+.teacher-status-tag {
+  font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 500;
+}
+.teacher-status-tag.available { background: var(--green-lt); color: var(--green); }
+.teacher-status-tag.full { background: var(--gray-20); color: var(--gray-60); }
+.status-tab {
+  padding: 6px 16px; border-radius: 20px; font-size: 14px; cursor: pointer;
+  border: none; background: transparent; color: var(--gray-60); transition: all 0.2s;
+}
+.status-tab.active { background: var(--blue-lt); color: var(--blue); font-weight: 500; }
+.sort-header-btn {
+  background: white; border: 1.5px solid var(--gray-20); border-radius: 8px;
+  padding: 6px 12px; font-size: 14px; color: var(--gray-80); cursor: pointer;
+  display: flex; align-items: center; gap: 4px; white-space: nowrap;
+}
+.sort-header-btn:hover { border-color: var(--blue); color: var(--blue); }
+
+/* ═══════════════════════════════════
+   5. 老师详情
+═══════════════════════════════════ */
+.detail-body { flex: 1; overflow-y: auto; }
+.landscape .detail-body { display: flex; overflow: hidden; }
+.landscape .detail-left { flex: 1; overflow-y: auto; padding: 20px; border-right: 1px solid var(--gray-20); display: flex; flex-direction: column; gap: 14px; }
+.landscape .detail-right { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.portrait .detail-body { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.detail-teacher-head { display: flex; align-items: flex-start; gap: 16px; }
+.detail-avatar { width: 72px; height: 72px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; color: white; }
+.detail-name { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.bio-text { font-size: 14px; color: var(--gray-60); line-height: 1.7; }
+.bio-toggle { color: var(--blue); cursor: pointer; font-size: 13px; }
+.rating-big { font-size: 40px; font-weight: 800; color: var(--text); }
+.rating-stars-row { display: flex; gap: 4px; margin: 4px 0; }
+.star-filled { color: var(--amber); font-size: 18px; }
+.star-empty  { color: var(--gray-40); font-size: 18px; }
+.rating-count { font-size: 13px; color: var(--gray-60); }
+.review-item { padding: 12px 0; border-bottom: 1px solid var(--gray-20); }
+.review-item:last-child { border-bottom: none; }
+.review-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.review-name { font-size: 14px; font-weight: 600; color: var(--text); }
+.review-stars { color: var(--amber); font-size: 13px; }
+.review-text { font-size: 13px; color: var(--gray-60); line-height: 1.6; }
+/* Calendar in detail */
+.cal-mini-days { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.cal-day-pill {
+  padding: 6px 10px; border-radius: 10px; font-size: 13px; cursor: pointer;
+  background: var(--gray-10); color: var(--gray-60); text-align: center; min-width: 44px;
+}
+.cal-day-pill.avail { background: var(--blue-lt); color: var(--blue); }
+.cal-day-pill.selected { background: var(--blue); color: white; }
+.cal-day-pill.full { background: var(--gray-10); color: var(--gray-40); cursor: default; }
+.time-slots-label { font-size: 12px; color: var(--gray-60); margin: 10px 0 6px; font-weight: 500; }
+.time-slots-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.slot-pill {
+  padding: 8px 14px; border-radius: 10px; font-size: 13px; cursor: pointer;
+  background: var(--blue-lt); color: var(--blue); border: 1.5px solid transparent;
+  transition: all 0.15s;
+}
+.slot-pill:hover { border-color: var(--blue); }
+.slot-pill.selected { background: var(--blue); color: white; }
+.slot-pill.full { background: var(--gray-10); color: var(--gray-40); cursor: default; }
+.detail-footer { padding: 16px 20px; background: white; border-top: 1px solid var(--gray-20); flex-shrink: 0; }
+
+/* ═══════════════════════════════════
+   6. 选择时间
+═══════════════════════════════════ */
+.time-body { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+.landscape .time-body { flex-direction: row; }
+.landscape .time-cal-col { flex: 1; }
+.landscape .time-slots-col { flex: 1; overflow-y: auto; }
+.teacher-mini {
+  display: flex; align-items: center; gap: 12px;
+  background: white; border: 1.5px solid var(--gray-20); border-radius: 14px; padding: 14px 18px;
+}
+.teacher-mini-av { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: white; flex-shrink: 0; }
+.teacher-mini-name { font-size: 16px; font-weight: 600; color: var(--text); }
+.teacher-mini-rating { font-size: 13px; color: var(--amber); }
+/* Calendar grid */
+.cal-grid { background: white; border: 1.5px solid var(--gray-20); border-radius: 16px; padding: 18px; }
+.cal-month-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.cal-month-title { font-size: 16px; font-weight: 600; color: var(--text); }
+.cal-nav-btn { background: none; border: 1.5px solid var(--gray-20); border-radius: 8px; padding: 4px 10px; cursor: pointer; font-size: 16px; color: var(--gray-60); }
+.cal-weekdays { display: grid; grid-template-columns: repeat(7,1fr); text-align: center; margin-bottom: 6px; }
+.cal-weekday { font-size: 12px; color: var(--gray-60); padding: 4px 0; }
+.cal-dates { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; }
+.cal-date {
+  aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; border-radius: 8px; cursor: pointer; color: var(--text);
+  transition: all 0.15s;
+}
+.cal-date:hover:not(.disabled):not(.empty) { background: var(--blue-lt); }
+.cal-date.avail { color: var(--blue); }
+.cal-date.selected { background: var(--blue); color: white; font-weight: 600; }
+.cal-date.disabled { color: var(--gray-40); cursor: default; }
+.cal-date.empty { cursor: default; }
+.cal-date.today { font-weight: 700; }
+.slots-card { background: white; border: 1.5px solid var(--gray-20); border-radius: 16px; padding: 18px; }
+.slots-group-label { font-size: 12px; color: var(--gray-60); font-weight: 600; margin: 12px 0 8px; }
+.slots-group-label:first-child { margin-top: 0; }
+.slot-item {
+  display: inline-flex; align-items: center; margin: 0 8px 8px 0;
+  padding: 9px 16px; border-radius: 10px; font-size: 14px; cursor: pointer;
+  background: var(--blue-lt); color: var(--blue); border: 1.5px solid transparent;
+  transition: all 0.15s;
+}
+.slot-item:hover { border-color: var(--blue); }
+.slot-item.selected { background: var(--blue); color: white; }
+.slot-item.full { background: var(--gray-10); color: var(--gray-40); cursor: default; }
+.points-hint { font-size: 13px; color: var(--gray-60); margin-top: 8px; }
+.time-footer { padding: 16px 20px; background: white; border-top: 1px solid var(--gray-20); flex-shrink: 0; }
+
+/* ═══════════════════════════════════
+   7. 预约成功
+═══════════════════════════════════ */
+.success-page { background: white; justify-content: center; align-items: center; }
+.success-body { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 40px 48px; width: 100%; max-width: 480px; }
+.landscape .success-body { flex-direction: row; max-width: 100%; align-items: center; justify-content: center; gap: 56px; }
+.success-icon-wrap { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.success-icon {
+  width: 80px; height: 80px; background: var(--green-lt); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 36px;
+}
+.success-title { font-size: 28px; font-weight: 700; color: var(--green); }
+.success-card {
+  background: var(--gray-10); border: 1.5px solid var(--gray-20); border-radius: 16px;
+  padding: 20px; width: 100%; display: flex; flex-direction: column; gap: 12px;
+}
+.landscape .success-card { min-width: 300px; }
+.success-row { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--text); }
+.success-row-label { color: var(--gray-60); min-width: 70px; }
+.success-reminder { font-size: 13px; color: var(--gray-60); text-align: center; }
+.success-btn-wrap { width: 100%; max-width: 360px; }
+.landscape .success-btn-wrap { max-width: 260px; }
+
+/* ═══════════════════════════════════
+   8. 我的预约
+═══════════════════════════════════ */
+.my-header { padding: 18px 24px; background: white; border-bottom: 1px solid var(--gray-20); font-size: 20px; font-weight: 700; color: var(--text); flex-shrink: 0; }
+.booking-tabs { display: flex; background: white; border-bottom: 1px solid var(--gray-20); flex-shrink: 0; }
+.booking-tab {
+  flex: 1; padding: 12px; background: none; border: none;
+  font-size: 15px; color: var(--gray-60); cursor: pointer; border-bottom: 2.5px solid transparent;
+  transition: all 0.2s; font-weight: 500;
+}
+.booking-tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+.booking-list { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+.booking-card { background: white; border: 1.5px solid var(--gray-20); border-radius: 16px; padding: 18px; }
+.booking-card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.booking-card-av { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: white; }
+.booking-card-name { font-size: 16px; font-weight: 600; color: var(--text); }
+.booking-card-meta { font-size: 13px; color: var(--gray-60); margin-top: 2px; }
+.status-badge { margin-left: auto; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.status-pending  { background: var(--blue-lt);   color: var(--blue); }
+.status-done     { background: var(--green-lt);   color: var(--green); }
+.status-cancelled{ background: var(--gray-20);    color: var(--gray-60); }
+.booking-desc { font-size: 14px; color: var(--gray-80); line-height: 1.6; margin-bottom: 10px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.booking-cancel-info { font-size: 12px; color: var(--gray-60); margin-bottom: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+.booking-actions { display: flex; gap: 10px; }
+.booking-enter-btn {
+  flex: 1; padding: 11px; border-radius: 10px; font-size: 14px; font-weight: 600;
+  border: none; cursor: pointer; transition: all 0.2s;
+  background: var(--gray-20); color: var(--gray-60);
+}
+.booking-enter-btn.active { background: var(--blue); color: white; }
+.booking-cancel-btn {
+  padding: 11px 18px; border-radius: 10px; font-size: 14px;
+  background: none; border: 1.5px solid var(--red); color: var(--red); cursor: pointer;
+  white-space: nowrap;
+}
+.booking-cancel-btn:hover { background: var(--red-lt); }
+
+/* ═══════════════════════════════════
+   9. 直播间
+═══════════════════════════════════ */
+.live-page { background: #1a1d23; }
+.live-topbar {
+  padding: 16px 20px; display: flex; align-items: center; gap: 12px;
+  background: rgba(0,0,0,0.3); flex-shrink: 0;
+}
+.live-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--red); animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.live-title { font-size: 16px; font-weight: 600; color: white; }
+.live-timer { font-size: 15px; color: rgba(255,255,255,0.7); margin-left: auto; }
+.live-body { flex: 1; display: flex; position: relative; overflow: hidden; }
+.live-main { flex: 1; background: #2a2d35; display: flex; align-items: center; justify-content: center; position: relative; }
+.live-placeholder { text-align: center; color: rgba(255,255,255,0.25); }
+.live-placeholder .big-icon { font-size: 64px; margin-bottom: 12px; }
+.live-placeholder p { font-size: 16px; }
+.live-pip {
+  position: absolute; bottom: 20px; right: 20px; width: 130px; height: 90px;
+  background: #3a3d45; border-radius: 12px; display: flex; align-items: center;
+  justify-content: center; color: rgba(255,255,255,0.3); font-size: 12px;
+  border: 1.5px solid rgba(255,255,255,0.1); cursor: move;
+}
+.live-sidebar {
+  width: 240px; background: rgba(0,0,0,0.5); padding: 16px;
+  border-left: 1px solid rgba(255,255,255,0.1); overflow-y: auto;
+}
+.landscape .live-sidebar { display: flex; flex-direction: column; gap: 10px; }
+.portrait .live-sidebar { display: none; }
+.live-sidebar-title { font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 600; margin-bottom: 8px; }
+.live-sidebar-text { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.6; }
+.live-toolbar {
+  padding: 16px 20px; background: rgba(0,0,0,0.5); display: flex;
+  align-items: center; justify-content: center; gap: 8px; flex-shrink: 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.tool-btn {
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+  color: white; padding: 10px 14px; border-radius: 10px; font-size: 12px;
+  cursor: pointer; display: flex; flex-direction: column; align-items: center;
+  gap: 4px; transition: background 0.2s; min-width: 60px;
+}
+.tool-btn:hover { background: rgba(255,255,255,0.2); }
+.tool-btn .tool-icon { font-size: 20px; }
+.tool-btn.end-btn { background: rgba(224,112,112,0.25); border-color: var(--red); color: var(--red); }
+.tool-btn.end-btn:hover { background: rgba(224,112,112,0.4); }
+
+/* ═══════════════════════════════════
+   10. 课程结束页
+═══════════════════════════════════ */
+.end-page { background: white; }
+.end-body { flex: 1; overflow-y: auto; padding: 32px 40px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+.landscape .end-body { flex-direction: row; align-items: flex-start; justify-content: center; gap: 48px; padding-top: 32px; }
+.end-icon-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.end-icon { width: 72px; height: 72px; background: var(--blue-lt); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; }
+.end-title { font-size: 24px; font-weight: 700; color: var(--blue); }
+.end-info-card { background: var(--gray-10); border: 1.5px solid var(--gray-20); border-radius: 16px; padding: 18px; width: 100%; max-width: 360px; display: flex; flex-direction: column; gap: 10px; }
+.end-row { display: flex; gap: 8px; font-size: 14px; color: var(--text); }
+.end-row-label { color: var(--gray-60); min-width: 56px; }
+.eval-section { width: 100%; max-width: 360px; }
+.eval-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 14px; }
+.stars-row { display: flex; gap: 8px; margin-bottom: 16px; }
+.star-btn { font-size: 32px; cursor: pointer; line-height: 1; transition: transform 0.1s; user-select: none; }
+.star-btn:hover { transform: scale(1.15); }
+.eval-textarea {
+  width: 100%; border: 1.5px solid var(--gray-20); border-radius: 12px;
+  padding: 12px 14px; font-size: 14px; font-family: inherit; resize: none;
+  height: 90px; outline: none; color: var(--text); transition: border-color 0.2s;
+}
+.eval-textarea:focus { border-color: var(--blue); }
+.eval-char { text-align: right; font-size: 12px; color: var(--gray-60); margin-top: 4px; }
+.end-footer { padding: 16px 20px; background: white; border-top: 1px solid var(--gray-20); flex-shrink: 0; }
+
+/* ═══════════════════════════════════
+   弹窗
+═══════════════════════════════════ */
+.overlay {
+  position: absolute; inset: 0; background: rgba(0,0,0,0.45);
+  display: none; align-items: center; justify-content: center; z-index: 100;
+}
+.overlay.show { display: flex; }
+.dialog {
+  background: white; border-radius: 20px; padding: 28px 24px;
+  width: 90%; max-width: 420px; animation: scaleIn 0.22s ease;
+  max-height: 90%; overflow-y: auto;
+}
+@keyframes scaleIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.dialog-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 20px; text-align: center; }
+.dialog-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--gray-20); font-size: 15px; }
+.dialog-row:last-of-type { border-bottom: none; }
+.dialog-row-label { color: var(--gray-60); min-width: 72px; flex-shrink: 0; }
+.dialog-row-val { color: var(--text); font-weight: 500; }
+.dialog-row-val.blue { color: var(--blue); font-weight: 700; font-size: 17px; }
+.dialog-row-val.green { color: var(--green); }
+.dialog-row-val.red { color: var(--red); }
+.dialog-avatar-row { display: flex; align-items: center; gap: 10px; }
+.dialog-av { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: white; flex-shrink: 0; }
+.dialog-info-box { background: var(--gray-10); border-radius: 10px; padding: 12px 14px; margin: 10px 0; font-size: 14px; color: var(--gray-60); line-height: 1.6; }
+.dialog-btns { display: flex; gap: 10px; margin-top: 20px; }
+.dialog-btns .btn-secondary, .dialog-btns .btn-primary, .dialog-btns .btn-danger { flex: 1; }
+
+/* Sort sheet */
+.sheet-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.35); display: none; z-index: 100; }
+.sheet-overlay.show { display: block; }
+.sort-sheet {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: white; border-radius: 20px 20px 0 0; padding: 20px 0 16px;
+  animation: slideUp 0.22s ease;
+}
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.sheet-title { font-size: 14px; color: var(--gray-60); text-align: center; margin-bottom: 12px; font-weight: 500; }
+.sheet-item {
+  padding: 16px 24px; font-size: 16px; color: var(--text); cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background 0.15s;
+}
+.sheet-item:hover { background: var(--gray-10); }
+.sheet-item.active { color: var(--blue); font-weight: 600; }
+
+/* Loading overlay */
+.loading-overlay {
+  position: absolute; inset: 0; background: rgba(255,255,255,0.92);
+  display: none; align-items: center; justify-content: center; flex-direction: column;
+  gap: 20px; z-index: 200;
+}
+.loading-overlay.show { display: flex; }
+.spin-ring { width: 56px; height: 56px; position: relative; }
+.spin-ring::before {
+  content: ''; position: absolute; inset: 0;
+  border: 4px solid var(--gray-20); border-top-color: var(--blue);
+  border-radius: 50%; animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: 17px; color: var(--gray-60); }
+
+/* Toast */
+.toast {
+  position: absolute; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: rgba(44,51,64,0.9); color: white; padding: 12px 22px;
+  border-radius: 24px; font-size: 15px; white-space: nowrap; z-index: 300;
+  opacity: 0; transition: all 0.3s; pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="ipad-frame landscape" id="frame">
+  <div class="ipad-screen" id="screen">
+
+    <!-- ═══ 1. 入口页 ═══ -->
+    <div class="page entry-page active" id="page-entry">
+      <button class="page-header-back" onclick="showPage('page-entry')" style="position:absolute;left:20px;top:16px;z-index:10;background:none;border:none;font-size:15px;color:var(--gray-60);cursor:pointer;">返回</button>
+      <div class="entry-body">
+        <div class="entry-illus">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="12" width="48" height="40" rx="6" fill="#5b8def" opacity=".15"/>
+            <rect x="8" y="12" width="48" height="10" rx="6" fill="#5b8def" opacity=".5"/>
+            <rect x="16" y="30" width="12" height="3" rx="1.5" fill="#5b8def"/>
+            <rect x="16" y="37" width="20" height="3" rx="1.5" fill="#5b8def" opacity=".6"/>
+            <rect x="16" y="44" width="8" height="3" rx="1.5" fill="#5b8def" opacity=".4"/>
+            <circle cx="48" cy="46" r="10" fill="#5b8def"/>
+            <path d="M44 46l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="entry-content">
+          <div class="entry-title">预约指导</div>
+          <div class="entry-subtitle">一对一，按你节奏，彻底搞懂</div>
+          <button class="entry-btn" onclick="startBooking()">开始预约</button>
+        </div>
+      </div>
+      <div class="bottom-tab">
+        <button class="tab-item active" onclick="showPage('page-entry')">
+          <span class="tab-icon">📚</span>预约上课
+        </button>
+        <button class="tab-item" onclick="showPage('page-my-bookings')">
+          <span class="tab-icon">📋</span>我的预约
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══ 2. 选择科目 ═══ -->
+    <!-- ═══ 2. 选择科目 + 知识点 + 描述问题 ═══ -->
+    <div class="page" id="page-subject">
+      <div class="page-header">
+        <button class="page-header-back" onclick="showPage('page-entry')">返回</button>
+        <div class="page-header-title">指导内容</div>
+        <button class="page-header-right" id="subjectNextBtn" onclick="subjectNext()" style="background:none;border:none;color:var(--blue);font-size:15px;cursor:pointer;padding:6px 12px;">下一步</button>
+      </div>
+      <div class="combined-container" id="combinedContainer" style="flex:1;display:flex;overflow:hidden;">
+        <!-- 左侧：科目列表 -->
+        <div class="subject-list-panel" style="width:35%;border-right:1px solid var(--gray-20);overflow-y:auto;background:#fff;">
+          <div style="padding:16px;">
+            <div style="font-size:13px;color:var(--gray-60);margin-bottom:12px;">选择科目</div>
+            <div style="display:flex;flex-direction:column;gap:10px;" id="subjectList">
+              <div class="subject-item active" data-subject="数学" onclick="selectSubject('数学')" style="cursor:pointer;padding:14px;background:white;border:2px solid var(--blue);border-radius:12px;display:flex;align-items:center;gap:10px;">
+                <div style="font-size:24px;">📐</div>
+                <div style="font-size:15px;font-weight:600;">数学</div>
+              </div>
+              <div class="subject-item" data-subject="物理" onclick="selectSubject('物理')" style="cursor:pointer;padding:14px;background:white;border:1.5px solid var(--gray-20);border-radius:12px;display:flex;align-items:center;gap:10px;">
+                <div style="font-size:24px;">⚡</div>
+                <div style="font-size:15px;font-weight:600;">物理</div>
+              </div>
+              <div class="subject-item" data-subject="化学" onclick="selectSubject('化学')" style="cursor:pointer;padding:14px;background:white;border:1.5px solid var(--gray-20);border-radius:12px;display:flex;align-items:center;gap:10px;">
+                <div style="font-size:24px;">🧪</div>
+                <div style="font-size:15px;font-weight:600;">化学</div>
+              </div>
+              <div class="subject-item" data-subject="经济" onclick="selectSubject('经济')" style="cursor:pointer;padding:14px;background:white;border:1.5px solid var(--gray-20);border-radius:12px;display:flex;align-items:center;gap:10px;">
+                <div style="font-size:24px;">📊</div>
+                <div style="font-size:15px;font-weight:600;">经济</div>
+              </div>
+              <div class="subject-item" data-subject="英语" onclick="selectSubject('英语')" style="cursor:pointer;padding:14px;background:white;border:1.5px solid var(--gray-20);border-radius:12px;display:flex;align-items:center;gap:10px;">
+                <div style="font-size:24px;">📖</div>
+                <div style="font-size:15px;font-weight:600;">英语</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 右侧：知识点 + 问题描述 -->
+        <div class="content-panel" style="flex:1;display:flex;flex-direction:column;background:var(--gray-10);overflow-y:auto;">
+          <!-- 知识点区域 -->
+          <div style="padding:16px 20px;background:white;border-bottom:1px solid var(--gray-20);">
+            <div style="font-size:13px;color:var(--gray-60);margin-bottom:12px;">选择知识点（可多选）</div>
+            <div id="knowledgeList" style="display:flex;flex-wrap:wrap;gap:8px;">
+              <!-- Knowledge points will be populated by JS -->
+            </div>
+          </div>
+          <!-- 问题描述区域 -->
+          <div style="flex:1;padding:16px 20px;display:flex;flex-direction:column;">
+            <div style="font-size:13px;color:var(--gray-60);margin-bottom:10px;">问题描述（选填）</div>
+            <div class="card" style="flex:1;display:flex;flex-direction:column;padding:16px;">
+              <div style="position:relative;flex:1;">
+                <textarea class="desc-textarea" id="descTextarea"
+                  style="height:100%;min-height:120px;border:none;padding:0;resize:none;"
+                  maxlength="300"
+                  oninput="onDescInput(this)"
+                  onfocus="hidePlaceholder()"
+                  onblur="showPlaceholder()"></textarea>
+                <div id="descPlaceholder" style="position:absolute;left:0;top:0;color:var(--gray-40);font-size:15px;line-height:1.6;pointer-events:none;">
+                  例如：知识点的理解存在困惑，无法形成清晰的知识框架
+                </div>
+              </div>
+              <div style="text-align:right;font-size:12px;color:var(--gray-60);margin-top:10px;" id="descCount">0 / 300</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ 4. 老师列表 + 可约时间 ═══ -->
+    <div class="page" id="page-teachers">
+      <div class="page-header">
+        <button class="page-header-back" onclick="showPage('page-subject')">返回</button>
+        <div class="page-header-title">预约老师</div>
+        <div class="page-header-right"></div>
+      </div>
+      <div class="filter-bar" style="display:flex;align-items:center;justify-content:center;padding:12px 20px;background:#fff;border-bottom:1px solid var(--gray-20);">
+        <div class="status-filter" style="display:flex;gap:12px;">
+          <button class="status-tab active" id="tab-all" onclick="switchStatusTab('all')">全部</button>
+          <button class="status-tab" id="tab-avail" onclick="switchStatusTab('avail')">可预约</button>
+        </div>
+      </div>
+      <div class="teacher-booking-container" id="teacherBookingContainer" style="flex:1;display:flex;overflow:hidden;">
+        <!-- 左侧：老师列表 -->
+        <div class="teacher-list-panel" id="teacherListPanel" style="width:45%;border-right:1px solid var(--gray-20);overflow-y:auto;background:#fff;">
+          <div class="teachers-list" style="padding:16px;">
+            <div class="teachers-grid" style="display:flex;flex-direction:column;gap:12px;">
+              <div class="teacher-card teacher-card-horizontal active" data-idx="0" onclick="selectTeacherForBooking(0)" style="cursor:pointer;border:2px solid var(--blue);">
+                <div class="teacher-avatar" style="background:#5b8def;width:48px;height:48px;font-size:18px;">王</div>
+                <div class="teacher-info" style="flex:1;min-width:0;">
+                  <div style="display:flex;align-items:center;gap:8px;justify-content:space-between;">
+                    <div class="teacher-name" style="font-size:15px;">王明辉</div>
+                    <span class="teacher-status-tag available" style="font-size:11px;padding:2px 8px;">可预约</span>
+                  </div>
+                  <div class="teacher-tags" style="margin:6px 0;gap:4px;">
+                    <span class="tag-badge tag-ip" style="font-size:11px;padding:2px 8px;">A-level数学专家</span>
+                    <span class="tag-badge tag-ip" style="font-size:11px;padding:2px 8px;">概念讲解王者</span>
+                  </div>
+                  <div class="teacher-meta" style="font-size:13px;">
+                    <span class="teacher-rating">★ 4.92</span>
+                  </div>
+                </div>
+              </div>
+              <div class="teacher-card teacher-card-horizontal" data-idx="1" onclick="selectTeacherForBooking(1)" style="cursor:pointer;">
+                <div class="teacher-avatar" style="background:#6bbf8e;width:48px;height:48px;font-size:18px;">李</div>
+                <div class="teacher-info" style="flex:1;min-width:0;">
+                  <div style="display:flex;align-items:center;gap:8px;justify-content:space-between;">
+                    <div class="teacher-name" style="font-size:15px;">李晓琳</div>
+                    <span class="teacher-status-tag available" style="font-size:11px;padding:2px 8px;">可预约</span>
+                  </div>
+                  <div class="teacher-tags" style="margin:6px 0;gap:4px;">
+                    <span class="tag-badge tag-ip" style="font-size:11px;padding:2px 8px;">高考数学金牌教练</span>
+                    <span class="tag-badge tag-ip" style="font-size:11px;padding:2px 8px;">解题思路大师</span>
+                  </div>
+                  <div class="teacher-meta" style="font-size:13px;">
+                    <span class="teacher-rating">★ 4.78</span>
+                  </div>
+                </div>
+              </div>
+              <div class="teacher-card teacher-card-horizontal full" data-idx="2" onclick="selectTeacherForBooking(2)" style="cursor:pointer;">
+                <div class="teacher-avatar" style="background:#5ab9b0;width:48px;height:48px;font-size:18px;">张</div>
+                <div class="teacher-info" style="flex:1;min-width:0;">
+                  <div style="display:flex;align-items:center;gap:8px;justify-content:space-between;">
+                    <div class="teacher-name" style="font-size:15px;">张宇航</div>
+                    <span class="teacher-status-tag full" style="font-size:11px;padding:2px 8px;">已约满</span>
+                  </div>
+                  <div class="teacher-tags" style="margin:6px 0;gap:4px;">
+                    <span class="tag-badge tag-ip" style="font-size:11px;padding:2px 8px;">海外数学专项</span>
+                  </div>
+                  <div class="teacher-meta" style="font-size:13px;">
+                    <span style="color:var(--gray-60)">暂无评分</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 右侧：可约时间 -->
+        <div class="booking-panel" id="bookingPanel" style="flex:1;display:flex;flex-direction:column;background:var(--gray-10);">
+          <!-- 老师信息头部 -->
+          <div id="selectedTeacherInfo" style="padding:16px 20px;background:white;border-bottom:1px solid var(--gray-20);">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div class="detail-avatar" id="selectedTeacherAv" style="background:#5b8def;width:52px;height:52px;font-size:20px;">王</div>
+              <div style="flex:1;">
+                <div id="selectedTeacherName" style="font-size:17px;font-weight:600;color:var(--text);margin-bottom:4px;">王明辉</div>
+                <div class="teacher-tags" id="selectedTeacherTags" style="gap:4px;">
+                  <span class="tag-badge tag-ip" style="font-size:11px;">A-level数学专家</span>
+                  <span class="tag-badge tag-ip" style="font-size:11px;">概念讲解王者</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 可约时间 -->
+          <div style="flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:14px;">
+            <div class="card" style="flex:1;display:flex;flex-direction:column;">
+              <div class="card-label">可约时间（未来两周）</div>
+              <div class="cal-mini-days" id="listMiniDays"></div>
+              <div id="listMiniSlots" style="flex:1;overflow-y:auto;">
+                <div class="time-slots-label">请选择日期查看时段</div>
+              </div>
+            </div>
+          </div>
+          <!-- 底部预约按钮 -->
+          <div style="padding:16px 20px;background:white;border-top:1px solid var(--gray-20);">
+            <button class="btn-primary" id="listBookBtn" onclick="onListBookClick()">预约此老师</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ 6. 选择时间 ═══ -->
+    <div class="page" id="page-time">
+      <div class="page-header">
+        <button class="page-header-back" onclick="showPage('page-teacher-detail')">返回</button>
+        <div class="page-header-title">选择时间</div>
+        <div class="page-header-right"></div>
+      </div>
+      <div class="time-body">
+        <div class="time-cal-col" style="display:flex;flex-direction:column;gap:14px;">
+          <div class="teacher-mini">
+            <div class="teacher-mini-av" id="timeMiniAv" style="background:#5b8def">王</div>
+            <div>
+              <div class="teacher-mini-name" id="timeMiniName">王明辉老师</div>
+              <div class="teacher-mini-rating">★ 4.92</div>
+            </div>
+          </div>
+          <div class="cal-grid">
+            <div class="cal-month-nav">
+              <button class="cal-nav-btn">‹</button>
+              <div class="cal-month-title">2026年4月</div>
+              <button class="cal-nav-btn">›</button>
+            </div>
+            <div class="cal-weekdays">
+              <div class="cal-weekday">日</div><div class="cal-weekday">一</div>
+              <div class="cal-weekday">二</div><div class="cal-weekday">三</div>
+              <div class="cal-weekday">四</div><div class="cal-weekday">五</div>
+              <div class="cal-weekday">六</div>
+            </div>
+            <div class="cal-dates" id="calDates"></div>
+          </div>
+        </div>
+        <div class="time-slots-col" style="display:flex;flex-direction:column;gap:14px;">
+          <div class="slots-card" id="slotsCard">
+            <div style="color:var(--gray-60);font-size:14px;">请先选择日期</div>
+          </div>
+          <div class="points-hint">💡 本次预约消耗 30 积分</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ 7. 预约失败 ═══ -->
+    <div class="page" id="page-fail">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;">
+        <div style="font-size:56px;margin-bottom:16px;">❌</div>
+        <div style="font-size:20px;font-weight:600;color:var(--text);margin-bottom:12px;">预约失败</div>
+        <div style="font-size:14px;color:var(--gray-60);margin-bottom:40px;max-width:300px;">
+          该时段已被其他学生预约，请选择其他时段
+        </div>
+        <button class="btn-primary" onclick="retryBooking()" style="min-width:180px;">返回选择时段</button>
+      </div>
+    </div>
+
+    <!-- ═══ 8. 我的预约 ═══ -->
+    <div class="page" id="page-my-bookings">
+      <div class="my-header">我的预约</div>
+      <div class="booking-tabs">
+        <button class="booking-tab active" id="tab-pending"  onclick="switchBookingTab('pending')">待上课</button>
+        <button class="booking-tab"        id="tab-done"     onclick="switchBookingTab('done')">已完成</button>
+        <button class="booking-tab"        id="tab-cancelled"onclick="switchBookingTab('cancelled')">已取消</button>
+      </div>
+      <div class="booking-list" id="bookingList"><!-- filled by JS --></div>
+      <div class="bottom-tab">
+        <button class="tab-item" onclick="showPage('page-entry')">
+          <span class="tab-icon">📚</span>预约上课
+        </button>
+        <button class="tab-item active" onclick="showPage('page-my-bookings')">
+          <span class="tab-icon">📋</span>我的预约
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══ 9. 直播间 ═══ -->
+    <div class="page live-page" id="page-live">
+      <div class="live-topbar">
+        <div class="live-dot"></div>
+        <div class="live-title">王明辉老师 · 数学</div>
+        <div class="live-timer" id="liveTimer">00:00:00</div>
+      </div>
+      <div class="live-body">
+        <div class="live-main">
+          <div class="live-placeholder">
+            <div class="big-icon">📹</div>
+            <p>老师视频</p>
+          </div>
+          <div class="live-pip">你的视频</div>
+        </div>
+        <div class="live-sidebar" id="liveSidebar">
+          <div class="live-sidebar-title">本次问题</div>
+          <div class="live-sidebar-text" id="liveSidebarText">导数大题综合题思路不清晰，总是卡在第二步</div>
+        </div>
+      </div>
+      <div class="live-toolbar">
+        <button class="tool-btn" id="micBtn" onclick="toggleTool(this)"><span class="tool-icon">🎙</span>麦克风</button>
+        <button class="tool-btn" id="camBtn" onclick="toggleTool(this)"><span class="tool-icon">📷</span>摄像头</button>
+        <button class="tool-btn" onclick=""><span class="tool-icon">✏️</span>画板</button>
+        <button class="tool-btn" onclick=""><span class="tool-icon">💬</span>聊天</button>
+        <button class="tool-btn end-btn" onclick="showOverlay('overlay-end-confirm')"><span class="tool-icon">🔴</span>结束课程</button>
+      </div>
+    </div>
+
+    <!-- ═══ 10. 课程结束 ═══ -->
+    <div class="page" id="page-end">
+      <div class="end-body">
+        <div class="end-icon-wrap">
+          <div class="end-icon">✔️</div>
+          <div class="end-title">课程结束</div>
+          <div class="end-info-card">
+            <div class="end-row"><span class="end-row-label">老师</span><span>王明辉</span></div>
+            <div class="end-row"><span class="end-row-label">科目</span><span>数学</span></div>
+            <div class="end-row"><span class="end-row-label">时间</span><span>2026-04-05 10:00–11:00</span></div>
+          </div>
+        </div>
+        <div class="eval-section">
+          <div class="eval-title">对这次课满意吗？（选填）</div>
+          <div class="stars-row" id="evalStars">
+            <span class="star-btn" data-idx="1" onclick="rateStar(1)">☆</span>
+            <span class="star-btn" data-idx="2" onclick="rateStar(2)">☆</span>
+            <span class="star-btn" data-idx="3" onclick="rateStar(3)">☆</span>
+            <span class="star-btn" data-idx="4" onclick="rateStar(4)">☆</span>
+            <span class="star-btn" data-idx="5" onclick="rateStar(5)">☆</span>
+          </div>
+          <textarea class="eval-textarea" id="evalText"
+            placeholder="说说老师的亮点或建议（选填，最多200字）"
+            maxlength="200"
+            oninput="onEvalInput(this)"></textarea>
+          <div class="eval-char" id="evalChar">0 / 200</div>
+        </div>
+      </div>
+      <div class="end-footer">
+        <button class="btn-primary" id="endBtn" onclick="showPage('page-entry')">跳过，回到首页</button>
+      </div>
+    </div>
+
+    <!-- ═══ 弹窗：确认积分 ═══ -->
+    <div class="overlay" id="overlay-confirm">
+      <div class="dialog">
+        <div class="dialog-title">确认预约信息</div>
+        <div class="dialog-row"><span class="dialog-row-label">老师</span>
+          <div class="dialog-avatar-row">
+            <div class="dialog-av" style="background:#5b8def">王</div>
+            <span class="dialog-row-val">王明辉</span>
+          </div>
+        </div>
+        <div class="dialog-row"><span class="dialog-row-label">上课时间</span><span class="dialog-row-val" id="confirmTime">2026-04-05（周日）10:00–11:00</span></div>
+        <div class="dialog-row"><span class="dialog-row-label">科目</span><span class="dialog-row-val" id="confirmSubject">数学</span></div>
+        <div class="dialog-row"><span class="dialog-row-label">问题描述</span><span class="dialog-row-val" id="confirmDesc" style="max-height:44px;overflow:hidden;">导数大题综合题思路不清晰</span></div>
+        <div class="dialog-row"><span class="dialog-row-label">本次消耗</span><span class="dialog-row-val blue">30 积分</span></div>
+        <div class="dialog-row"><span class="dialog-row-label">当前积分</span><span class="dialog-row-val green">280 积分</span></div>
+        <div class="dialog-btns">
+          <button class="btn-secondary" onclick="hideOverlay('overlay-confirm')">取消</button>
+          <button class="btn-primary" onclick="doConfirmBooking()">确认预约</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ 弹窗：取消预约 ═══ -->
+    <div class="overlay" id="overlay-cancel">
+      <div class="dialog">
+        <div class="dialog-title">确认取消预约？</div>
+        <div class="dialog-info-box">如果免费取消，本次消耗的 <strong>30 积分</strong>将退回至账户。否则无论是否取消，将扣除30积分</div>
+        <div class="dialog-row"><span class="dialog-row-label">免费取消次数</span><span class="dialog-row-val" id="cancelFreeCount">已免费取消 1 次，本月剩余 2 次（每月限 3 次）</span></div>
+        <div class="dialog-row"><span class="dialog-row-label">取消规则</span><span class="dialog-row-val" id="cancelRule">在 2026-04-04 10:00 前可免费取消</span></div>
+        <div class="dialog-btns">
+          <button class="btn-secondary" onclick="hideOverlay('overlay-cancel')">再想想</button>
+          <button class="btn-danger" onclick="doCancel()">确认取消</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ 弹窗：结束课程确认 ═══ -->
+    <div class="overlay" id="overlay-end-confirm">
+      <div class="dialog" style="max-width:340px;">
+        <div class="dialog-title">确定结束本次课程？</div>
+        <div class="dialog-btns">
+          <button class="btn-secondary" onclick="hideOverlay('overlay-end-confirm')">再上一会</button>
+          <button class="btn-danger" onclick="endLive()">结束课程</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ 排序 Sheet ═══ -->
+    <div class="sheet-overlay" id="sortSheetOverlay" onclick="hideSort()">
+      <div class="sort-sheet" onclick="event.stopPropagation()">
+        <div class="sheet-title">排序方式</div>
+        <div class="sheet-item active" onclick="selectSort(this,'评分最高')">评分最高</div>
+        <div class="sheet-item" onclick="selectSort(this,'辅导次数排序')">辅导次数排序</div>
+      </div>
+    </div>
+
+    <!-- ═══ Loading ═══ -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="spin-ring"></div>
+      <div class="loading-text" id="loadingText">预约中…</div>
+    </div>
+
+    <!-- ═══ Toast ═══ -->
+    <div class="toast" id="toast"></div>
+
+  </div><!-- /ipad-screen -->
+</div><!-- /ipad-frame -->
+
+<button class="rotate-btn" onclick="toggleRotate()" title="横竖屏切换">⟳</button>
+
+<script>
+/* ─── 状态 ─── */
+let selectedSubject = '';
+let selectedKnowledge = [];
+let selectedTeacher = 0;
+let selectedDate    = '';
+let selectedSlot    = '';
+let currentRating   = 0;
+let photoCount      = 0;
+let liveInterval    = null;
+let liveSeconds     = 0;
+let cancelledBooking = false;
+
+const teachers = [
+  { name:'王明辉', av:'王', color:'#5b8def', rating:'4.92',
+    tags:['A-level数学专家','概念讲解王者'], subjects:['数学','物理'] },
+  { name:'李晓琳', av:'李', color:'#6bbf8e', rating:'4.78',
+    tags:['高考数学金牌教练','解题思路大师'], subjects:['数学','化学'] },
+  { name:'张宇航', av:'张', color:'#5ab9b0', rating:null,
+    tags:['海外数学专项'], subjects:['数学','经济'] },
+];
+
+const knowledgeData = {
+  '数学': ['函数与方程', '三角函数', '数列', '导数', '立体几何', '解析几何', '概率统计', '复数'],
+  '物理': ['力学', '运动学', '牛顿定律', '能量守恒', '电磁学', '光学', '热学', '近代物理'],
+  '化学': ['化学计量', '原子结构', '化学键', '化学平衡', '酸碱盐', '电化学', '有机化学', '实验'],
+  '经济': ['微观经济学', '宏观经济学', '市场供需', '弹性理论', '生产理论', '市场结构', '国民经济', '国际贸易'],
+  '英语': ['阅读理解', '完形填空', '语法填空', '书面表达', '听力理解', '词汇语法', '写作技巧', '口语表达']
+};
+
+/* ─── 预约数据 ─── */
+const bookingsData = {
+  pending: [
+    {
+      teacher: { name: '王明辉', avatar: '王', color: '#5b8def' },
+      subject: '数学',
+      knowledgePoints: ['导数', '立体几何', '函数', '解析几何'],
+      date: '2026-04-05',
+      time: '10:00–11:00',
+      freeCancelTime: '2026-04-04 10:00',
+      liveRoomStatus: 'pending'
+    }
+  ],
+  done: [
+    {
+      teacher: { name: '李晓琳', avatar: '李', color: '#6bbf8e' },
+      subject: '英语',
+      knowledgePoints: ['写作技巧', '阅读理解'],
+      date: '2026-03-20',
+      time: '15:00–16:00'
+    },
+    {
+      teacher: { name: '王明辉', avatar: '王', color: '#5b8def' },
+      subject: '数学',
+      knowledgePoints: ['导数', '函数极值'],
+      date: '2026-03-10',
+      time: '10:00–11:00'
+    }
+  ],
+  cancelled: [
+    {
+      teacher: { name: '张宇航', avatar: '张', color: '#5ab9b0' },
+      subject: '经济',
+      knowledgePoints: ['供需曲线', '均衡点'],
+      date: '2026-03-01',
+      time: '14:00–15:00'
+    }
+  ]
+};
+
+// 免费取消次数统计
+let freeCancelStats = {
+  used: 1,        // 本月已使用次数
+  limit: 3,       // 每月限额
+  remaining: 2    // 剩余次数
+};
+
+// 当前选中的待取消预约
+let currentCancelBooking = null;
+
+/* ─── 辅助函数 ─── */
+function formatKnowledgePoints(subject, points) {
+  if (!points || points.length === 0) return subject;
+  const displayPoints = points.slice(0, 3);
+  const suffix = points.length > 3 ? '等' : '';
+  return `${subject} · ${displayPoints.join('、')}${suffix}`;
+}
+
+function calculateFreeCancelTime(date, time) {
+  const startTime = time.split('–')[0];
+  const classStart = new Date(`${date}T${startTime}:00`);
+  const freeCancelTime = new Date(classStart.getTime() - 24 * 60 * 60 * 1000);
+  return freeCancelTime.toLocaleString('zh-CN', {
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit'
+  }).replace(/\//g, '-');
+}
+
+/* ─── 页面切换 ─── */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (id === 'page-my-bookings') renderBookings('pending');
+  if (id === 'page-live') startTimer();
+  else stopTimer();
+  if (id === 'page-subject') {
+    setTimeout(() => initSubjectLayout(), 0);
+  }
+  if (id === 'page-teachers') {
+    setTimeout(() => initTeacherListLayout(), 0);
+  }
+  if (id === 'page-end') { currentRating = 0; renderStars(); document.getElementById('endBtn').textContent = '跳过，回到首页'; }
+}
+
+function startBooking() {
+  showPage('page-subject');
+  setTimeout(() => initSubjectLayout(), 0);
+}
+
+/* ─── 科目 + 知识点选择 ─── */
+function initSubjectLayout() {
+  const container = document.getElementById('combinedContainer');
+  const frame = document.getElementById('frame');
+  const isLandscape = frame.classList.contains('landscape');
+
+  if (container) {
+    if (isLandscape) {
+      container.style.flexDirection = 'row';
+    } else {
+      container.style.flexDirection = 'column';
+    }
+  }
+
+  // Initialize with first subject selected
+  selectSubject('数学');
+}
+
+function selectSubject(subject) {
+  selectedSubject = subject;
+  selectedKnowledge = []; // Reset knowledge points when subject changes
+
+  // Update active state on subject items
+  document.querySelectorAll('.subject-item').forEach(item => {
+    if (item.dataset.subject === subject) {
+      item.classList.add('active');
+      item.style.border = '2px solid var(--blue)';
+    } else {
+      item.classList.remove('active');
+      item.style.border = '1.5px solid var(--gray-20)';
+    }
+  });
+
+  // Populate knowledge points
+  const knowledgeList = document.getElementById('knowledgeList');
+  const points = knowledgeData[subject] || [];
+  knowledgeList.innerHTML = points.map(point =>
+    `<div class="knowledge-tag" data-point="${point}" onclick="toggleKnowledge(this, '${point}')"
+      style="padding:6px 12px;background:var(--gray-10);border:1.5px solid var(--gray-20);border-radius:16px;font-size:13px;color:var(--gray-80);cursor:pointer;transition:all 0.2s;"
+      onmouseover="if(!this.classList.contains('selected')) this.style.borderColor='var(--blue)'"
+      onmouseout="if(!this.classList.contains('selected')) this.style.borderColor='var(--gray-20)'"
+    >${point}</div>`
+  ).join('');
+}
+
+function toggleKnowledge(el, point) {
+  if (selectedKnowledge.includes(point)) {
+    selectedKnowledge = selectedKnowledge.filter(p => p !== point);
+    el.classList.remove('selected');
+    el.style.background = 'var(--gray-10)';
+    el.style.borderColor = 'var(--gray-20)';
+    el.style.color = 'var(--gray-80)';
+  } else {
+    selectedKnowledge.push(point);
+    el.classList.add('selected');
+    el.style.background = 'var(--blue-lt)';
+    el.style.borderColor = 'var(--blue)';
+    el.style.color = 'var(--blue)';
+  }
+}
+
+function subjectNext() {
+  // Set subject for confirmation dialog
+  const confirmSubjectEl = document.getElementById('confirmSubject');
+  if (confirmSubjectEl) {
+    confirmSubjectEl.textContent = selectedSubject;
+  }
+
+  showPage('page-teachers');
+  // Initialize teacher list page layout
+  setTimeout(() => initTeacherListLayout(), 0);
+}
+
+function hidePlaceholder() {
+  const ta = document.getElementById('descTextarea');
+  const placeholder = document.getElementById('descPlaceholder');
+  if (placeholder && ta && ta.value.length > 0) {
+    placeholder.style.display = 'none';
+  }
+}
+
+function showPlaceholder() {
+  const ta = document.getElementById('descTextarea');
+  const placeholder = document.getElementById('descPlaceholder');
+  if (placeholder && ta && ta.value.length === 0) {
+    placeholder.style.display = 'block';
+  }
+}
+
+function onDescInput(el) {
+  const count = document.getElementById('descCount');
+  if (count) {
+    count.textContent = el.value.length + ' / 300';
+  }
+  // Hide or show placeholder based on input
+  const placeholder = document.getElementById('descPlaceholder');
+  if (placeholder) {
+    if (el.value.length > 0) {
+      placeholder.style.display = 'none';
+    } else {
+      placeholder.style.display = 'block';
+    }
+  }
+}
+
+/* ─── 老师列表 + 预约整合 ─── */
+function initTeacherListLayout() {
+  const container = document.getElementById('teacherBookingContainer');
+  const frame = document.getElementById('frame');
+  const isLandscape = frame.classList.contains('landscape');
+
+  if (container) {
+    if (isLandscape) {
+      container.style.flexDirection = 'row';
+    } else {
+      container.style.flexDirection = 'column';
+    }
+  }
+
+  // Initialize first teacher's calendar
+  selectTeacherForBooking(0);
+}
+
+function selectTeacherForBooking(idx) {
+  selectedTeacher = idx;
+  selectedDate = '';
+  selectedSlot = '';
+  const t = teachers[idx];
+
+  // Update active state on cards
+  document.querySelectorAll('.teacher-card-horizontal').forEach((card, i) => {
+    if (i === idx) {
+      card.classList.add('active');
+      card.style.border = '2px solid var(--blue)';
+    } else {
+      card.classList.remove('active');
+      card.style.border = '1.5px solid var(--gray-20)';
+    }
+  });
+
+  // Update right panel teacher info
+  document.getElementById('selectedTeacherAv').textContent = t.av;
+  document.getElementById('selectedTeacherAv').style.background = t.color;
+  document.getElementById('selectedTeacherName').textContent = t.name;
+  document.getElementById('selectedTeacherTags').innerHTML = t.tags.map(x =>
+    `<span class="tag-badge tag-ip" style="font-size:11px;">${x}</span>`
+  ).join('');
+
+  // Reset booking button
+  const btn = document.getElementById('listBookBtn');
+  if (btn) {
+    btn.textContent = '预约此老师';
+  }
+
+  // Build calendar for this teacher
+  buildListMiniDays();
+  document.getElementById('listMiniSlots').innerHTML = '<div class="time-slots-label">请选择日期查看时段</div>';
+}
+
+function buildListMiniDays() {
+  const avail = [2, 5, 6, 8, 10, 12, 14];
+  const full = [3, 7, 11];
+  const el = document.getElementById('listMiniDays');
+  if (!el) return;
+  el.innerHTML = '';
+  for (let d = 1; d <= 14; d++) {
+    const pill = document.createElement('div');
+    pill.className = 'cal-day-pill' + (avail.includes(d) ? ' avail' : full.includes(d) ? ' full' : '');
+    pill.textContent = '4/' + (d + 3);
+    if (avail.includes(d)) {
+      pill.onclick = () => {
+        document.querySelectorAll('.cal-day-pill').forEach(p => p.classList.remove('selected'));
+        pill.classList.add('selected');
+        showListMiniSlots(d);
+      };
+    }
+    el.appendChild(pill);
+  }
+}
+
+function showListMiniSlots(d) {
+  const slots = d % 3 === 0
+    ? ['10:00–11:00', '14:00–15:00', '19:00–20:00']
+    : ['10:00–11:00', '11:00–12:00', '14:00–15:00', '19:00–20:00'];
+  const full = d % 4 === 0 ? ['11:00–12:00'] : [];
+
+  const morningSlots = slots.filter(s => s.startsWith('10') || s.startsWith('11'));
+  const afternoonSlots = slots.filter(s => s.startsWith('14') || s.startsWith('15'));
+  const eveningSlots = slots.filter(s => s.startsWith('19') || s.startsWith('20'));
+
+  function renderSlot(s) {
+    const isFull = full.includes(s);
+    return `<span class="slot-pill${isFull ? ' full' : ''}" ${isFull ? '' : `onclick="selectListMiniSlot(this, '${s}')"`}>${s}</span>`;
+  }
+
+  let html = '';
+  if (morningSlots.length > 0) {
+    html += '<div class="time-slots-label">上午</div>' + morningSlots.map(renderSlot).join(' ');
+  }
+  if (afternoonSlots.length > 0) {
+    html += '<div class="time-slots-label">下午</div>' + afternoonSlots.map(renderSlot).join(' ');
+  }
+  if (eveningSlots.length > 0) {
+    html += '<div class="time-slots-label">晚上</div>' + eveningSlots.map(renderSlot).join(' ');
+  }
+
+  document.getElementById('listMiniSlots').innerHTML = html;
+}
+
+function selectListMiniSlot(el, slot) {
+  document.querySelectorAll('.slot-pill').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedSlot = slot;
+
+  const selectedPill = document.querySelector('.cal-day-pill.selected');
+  if (selectedPill) {
+    const day = selectedPill.textContent;
+    selectedDate = '2026-04-' + day.split('/')[1];
+    document.getElementById('confirmTime').textContent = selectedDate + ' ' + slot;
+    document.getElementById('successTime').textContent = selectedDate + ' ' + slot;
+  }
+
+  const btn = document.getElementById('listBookBtn');
+  if (btn) {
+    btn.textContent = '立即预约';
+  }
+}
+
+function onListBookClick() {
+  if (!selectedSlot) {
+    showToast('请先选择预约时间');
+    return;
+  }
+  showConfirmDialog();
+}
+
+/* ─── 保留原有函数用于兼容 ─── */
+function openTeacher(idx) {
+  // Redirect to new flow
+  showPage('page-teachers');
+  setTimeout(() => selectTeacherForBooking(idx), 0);
+}
+
+function onDetailBookClick() {
+  onListBookClick();
+}
+
+function buildMiniDays() {
+  const avail = [2,5,6,8,10,12,14];
+  const full  = [3,7,11];
+  const el = document.getElementById('miniDays');
+  el.innerHTML = '';
+  for (let d = 1; d <= 14; d++) {
+    const pill = document.createElement('div');
+    pill.className = 'cal-day-pill' + (avail.includes(d) ? ' avail' : full.includes(d) ? ' full' : '');
+    pill.textContent = '4/' + (d + 3);
+    if (avail.includes(d)) {
+      pill.onclick = () => {
+        document.querySelectorAll('.cal-day-pill').forEach(p => p.classList.remove('selected'));
+        pill.classList.add('selected');
+        showMiniSlots(d);
+      };
+    }
+    el.appendChild(pill);
+  }
+}
+
+function showMiniSlots(d) {
+  const slots = d % 3 === 0
+    ? ['10:00–11:00','14:00–15:00','19:00–20:00']
+    : ['10:00–11:00','11:00–12:00','14:00–15:00','19:00–20:00'];
+  const full = d % 4 === 0 ? ['11:00–12:00'] : [];
+
+  const morningSlots = slots.filter(s => s.startsWith('10') || s.startsWith('11'));
+  const afternoonSlots = slots.filter(s => s.startsWith('14') || s.startsWith('15'));
+  const eveningSlots = slots.filter(s => s.startsWith('19') || s.startsWith('20'));
+
+  function renderSlot(s) {
+    const isFull = full.includes(s);
+    return `<span class="slot-pill${isFull?' full':''}" ${isFull?'':'onclick="selectMiniSlot(this,\''+s+'\')"'}>${s}</span>`;
+  }
+
+  let html = '';
+
+  if (morningSlots.length > 0) {
+    html += '<div class="time-slots-label">上午</div>'
+         + morningSlots.map(renderSlot).join(' ');
+  }
+
+  if (afternoonSlots.length > 0) {
+    html += '<div class="time-slots-label">下午</div>'
+         + afternoonSlots.map(renderSlot).join(' ');
+  }
+
+  if (eveningSlots.length > 0) {
+    html += '<div class="time-slots-label">晚上</div>'
+         + eveningSlots.map(renderSlot).join(' ');
+  }
+
+  document.getElementById('miniSlots').innerHTML = html;
+}
+
+function selectMiniSlot(el, slot) {
+  document.querySelectorAll('.slot-pill').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedSlot = slot;
+  // Update confirm dialog time
+  const selectedPill = document.querySelector('.cal-day-pill.selected');
+  if (selectedPill) {
+    const day = selectedPill.textContent;
+    selectedDate = '2026-04-' + day.split('/')[1];
+    document.getElementById('confirmTime').textContent = selectedDate + ' ' + slot;
+    document.getElementById('successTime').textContent = selectedDate + ' ' + slot;
+  }
+  // Update footer button text
+  const footerBtn = document.getElementById('detailBookBtn');
+  if (footerBtn) {
+    footerBtn.textContent = '立即预约';
+  }
+}
+
+/* ─── 日历（选时间页）─── */
+function buildCalendar() {
+  selectedDate = ''; selectedSlot = '';
+  document.getElementById('confirmBookingBtn').disabled = true;
+  document.getElementById('slotsCard').innerHTML = '<div style="color:var(--gray-60);font-size:14px;">请先选择日期</div>';
+
+  const avail  = [5,6,8,10,12,14,16,18];
+  const full   = [3,7,11];
+  const el = document.getElementById('calDates');
+  el.innerHTML = '';
+  // April 2026 starts on Wednesday (index 3 in Sun-start week)
+  const startDay = 3;
+  for (let i = 0; i < startDay; i++) {
+    const empty = document.createElement('div');
+    empty.className = 'cal-date empty';
+    el.appendChild(empty);
+  }
+  for (let d = 1; d <= 30; d++) {
+    const div = document.createElement('div');
+    const isAvail = avail.includes(d);
+    const isFull  = full.includes(d);
+    const isPast  = d < 5;
+    div.className = 'cal-date' + (isPast?'  disabled':isAvail?' avail':isFull?' disabled':'');
+    div.textContent = d;
+    if (isAvail) {
+      div.onclick = () => {
+        document.querySelectorAll('.cal-date').forEach(x => x.classList.remove('selected'));
+        div.classList.add('selected');
+        selectedDate = '2026-04-' + String(d).padStart(2,'0');
+        showSlots(d);
+      };
+    }
+    el.appendChild(div);
+  }
+}
+
+function showSlots(d) {
+  selectedSlot = '';
+  document.getElementById('confirmBookingBtn').disabled = true;
+  const morningSlots = ['10:00–11:00','11:00–12:00'];
+  const afternoonSlots = d % 3 === 0 ? [] : ['14:00–15:00','15:00–16:00'];
+  const eveningSlots = ['19:00–20:00','20:00–21:00'];
+  const fullSlots = d % 4 === 0 ? ['14:00–15:00'] : [];
+
+  function mkSlot(s) {
+    const isFull = fullSlots.includes(s);
+    return `<div class="slot-item${isFull?' full':''}" ${isFull?'':'onclick="pickSlot(this,\''+s+'\')"'}>${s}${isFull?' <small style=\'opacity:.6\'>(已满)</small>':''}</div>`;
+  }
+
+  document.getElementById('slotsCard').innerHTML =
+    `<div class="slots-group-label">上午</div>${morningSlots.map(mkSlot).join('')}`
+    + (afternoonSlots.length ? `<div class="slots-group-label">下午</div>${afternoonSlots.map(mkSlot).join('')}` : '')
+    + `<div class="slots-group-label">晚上</div>${eveningSlots.map(mkSlot).join('')}`;
+}
+
+function pickSlot(el, slot) {
+  document.querySelectorAll('.slot-item').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedSlot = slot;
+  const displaySlot = selectedDate + ' ' + slot;
+  document.getElementById('confirmTime').textContent = selectedDate + '  ' + slot;
+  document.getElementById('successTime').textContent = displaySlot;
+  // Show confirm dialog directly instead of enabling a button
+  setTimeout(() => showConfirmDialog(), 200);
+}
+
+/* ─── 确认预约弹窗 ─── */
+function showConfirmDialog() {
+  const desc = document.getElementById('descTextarea').value.trim();
+  document.getElementById('confirmDesc').textContent = desc || '（未填写）';
+  showOverlay('overlay-confirm');
+}
+
+function doConfirmBooking() {
+  hideOverlay('overlay-confirm');
+  showLoading('预约中…');
+
+  // Check for failure condition: 王明辉 + 4月5日/8日 + 晚上19:00时段
+  const isWangMinghui = selectedTeacher === 0; // 王明辉 is index 0
+  const isApril5 = selectedDate === '2026-04-05' || selectedDate === '2026-04-08';
+  // 检查时段是否以'19'开头（处理'19:00–20:00'或'19:00-20:00'格式）
+  const slotStr = selectedSlot ? String(selectedSlot) : '';
+  const isEveningSlot = slotStr.startsWith('19');
+
+  setTimeout(() => {
+    hideLoading();
+    if (isWangMinghui && isApril5 && isEveningSlot) {
+      // Booking failed - go to fail page
+      showPage('page-fail');
+    } else {
+      // Booking successful - go to my bookings with snackbar
+      showPage('page-my-bookings');
+      showToast('✅ 预约成功！');
+    }
+  }, 1500);
+}
+
+function retryBooking() {
+  showPage('page-teachers');
+  setTimeout(() => initTeacherListLayout(), 0);
+}
+
+/* ─── 我的预约 ─── */
+function switchBookingTab(tab) {
+  ['pending','done','cancelled'].forEach(t => {
+    document.getElementById('tab-' + t).classList.toggle('active', t === tab);
+  });
+  renderBookings(tab);
+}
+
+function renderBookings(tab) {
+  const list = document.getElementById('bookingList');
+  const data = bookingsData[tab] || [];
+
+  // 处理取消预约后的待上课状态
+  if (tab === 'pending' && cancelledBooking) {
+    list.innerHTML = `<div style="text-align:center;color:var(--gray-60);padding:48px 0;font-size:15px;">暂无待上课的预约</div>`;
+    return;
+  }
+
+  // 处理取消预约后的已取消状态 - 添加被取消的预约
+  let displayData = [...data];
+  if (tab === 'cancelled' && cancelledBooking) {
+    displayData.unshift({
+      teacher: { name: '王明辉', avatar: '王', color: '#5b8def' },
+      subject: '数学',
+      knowledgePoints: ['导数', '立体几何', '函数'],
+      date: '2026-04-05',
+      time: '10:00–11:00'
+    });
+  }
+
+  if (displayData.length === 0) {
+    const emptyMessages = {
+      pending: '暂无待上课的预约',
+      done: '暂无已完成的预约',
+      cancelled: '暂无已取消的预约'
+    };
+    list.innerHTML = `<div style="text-align:center;color:var(--gray-60);padding:48px 0;font-size:15px;">${emptyMessages[tab]}</div>`;
+    return;
+  }
+
+  list.innerHTML = displayData.map((booking, index) => {
+    const isPending = tab === 'pending';
+    const knowledgeDisplay = formatKnowledgePoints(booking.subject, booking.knowledgePoints);
+    const dateTimeDisplay = `${booking.date} ${booking.time}`;
+
+    // 待上课特有：免费取消时间和进入教室按钮状态
+    let freeCancelLine = '';
+    let actionButtons = '';
+
+    if (isPending) {
+      const freeCancelTime = booking.freeCancelTime || calculateFreeCancelTime(booking.date, booking.time);
+      freeCancelLine = `<div style="font-size:12px;color:var(--gray-50);margin-top:4px;">免费取消时间：${freeCancelTime}</div>`;
+
+      const isLiveRoomCreated = booking.liveRoomStatus === 'created';
+      const liveBtnStyle = isLiveRoomCreated
+        ? 'background:var(--blue);color:white;'
+        : 'background:var(--gray-20);color:var(--gray-60);';
+
+      actionButtons = `
+        <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
+          <button onclick="goLive()" style="padding:8px 16px;${liveBtnStyle}border:none;border-radius:8px;font-size:13px;cursor:pointer;white-space:nowrap;">进入教室</button>
+          <button onclick="showCancelDialog(${index})" style="padding:8px 16px;background:white;color:var(--gray-60);border:1px solid var(--gray-30);border-radius:8px;font-size:13px;cursor:pointer;white-space:nowrap;">取消预约</button>
+        </div>
+      `;
+    }
+
+    return `
+    <div class="booking-card" style="display:flex;align-items:center;padding:16px;gap:16px;">
+      <div class="booking-card-av" style="background:${booking.teacher.color};width:48px;height:48px;font-size:18px;flex-shrink:0;">${booking.teacher.avatar}</div>
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <div style="font-size:16px;font-weight:600;">${booking.teacher.name}</div>
+        </div>
+        <div style="font-size:13px;color:var(--gray-60);margin-bottom:4px;">${knowledgeDisplay}</div>
+        <div style="font-size:13px;color:var(--gray-60);">${dateTimeDisplay}</div>
+        ${freeCancelLine}
+      </div>
+      ${actionButtons}
+    </div>`;
+  }).join('');
+}
+
+/* ─── 取消预约相关函数 ─── */
+function showCancelDialog(bookingIndex) {
+  // 获取待取消的预约
+  const booking = bookingsData.pending[bookingIndex];
+  if (!booking) return;
+
+  // 保存当前选中的预约
+  currentCancelBooking = { ...booking, index: bookingIndex };
+
+  // 更新弹框内容
+  updateCancelDialogContent(booking);
+
+  // 显示弹框
+  showOverlay('overlay-cancel');
+}
+
+function updateCancelDialogContent(booking) {
+  const now = new Date();
+  const freeCancelTime = new Date(booking.freeCancelTime);
+  const isBeforeFreeCancel = now < freeCancelTime;
+  const hasFreeCancelRemaining = freeCancelStats.remaining > 0;
+
+  // 更新免费取消次数显示
+  const freeCountEl = document.getElementById('cancelFreeCount');
+  if (freeCountEl) {
+    freeCountEl.textContent = `已免费取消 ${freeCancelStats.used} 次，本月剩余 ${freeCancelStats.remaining} 次（每月限 ${freeCancelStats.limit} 次）`;
+  }
+
+  // 更新取消规则显示
+  const ruleEl = document.getElementById('cancelRule');
+  if (ruleEl) {
+    if (hasFreeCancelRemaining) {
+      // 限额未满：显示免费取消截止时间
+      const formattedTime = booking.freeCancelTime.replace(/-/g, '-');
+      ruleEl.textContent = `在 ${formattedTime} 前可免费取消`;
+      ruleEl.className = 'dialog-row-val';
+    } else {
+      // 限额已满
+      ruleEl.textContent = `本月已免费取消${freeCancelStats.limit}次，不可再免费取消`;
+      ruleEl.className = 'dialog-row-val red';
+    }
+  }
+}
+
+function doCancel() {
+  hideOverlay('overlay-cancel');
+
+  if (!currentCancelBooking) return;
+
+  const now = new Date();
+  const freeCancelTime = new Date(currentCancelBooking.freeCancelTime);
+  const isBeforeFreeCancel = now < freeCancelTime;
+  const hasFreeCancelRemaining = freeCancelStats.remaining > 0;
+
+  // 判断是否为免费取消
+  const isFreeCancel = isBeforeFreeCancel && hasFreeCancelRemaining;
+
+  if (isFreeCancel) {
+    // 免费取消：积分退回，更新统计
+    freeCancelStats.used++;
+    freeCancelStats.remaining--;
+    showToast('预约已取消，30积分已退回账户');
+  } else {
+    // 非免费取消：扣除30积分
+    showToast('预约已取消，已扣除30积分');
+  }
+
+  // 将预约从pending移动到cancelled
+  const cancelledBookingData = { ...currentCancelBooking };
+  delete cancelledBookingData.index;
+  bookingsData.cancelled.unshift(cancelledBookingData);
+  bookingsData.pending.splice(currentCancelBooking.index, 1);
+
+  // 重置当前选中
+  currentCancelBooking = null;
+
+  // 刷新列表
+  switchBookingTab('cancelled');
+}
+
+/* ─── 直播间 ─── */
+function goLive() { showPage('page-live'); }
+
+function startTimer() {
+  liveSeconds = 0;
+  stopTimer();
+  liveInterval = setInterval(() => {
+    liveSeconds++;
+    const h = String(Math.floor(liveSeconds/3600)).padStart(2,'0');
+    const m = String(Math.floor((liveSeconds%3600)/60)).padStart(2,'0');
+    const s = String(liveSeconds%60).padStart(2,'0');
+    document.getElementById('liveTimer').textContent = h+':'+m+':'+s;
+  }, 1000);
+}
+function stopTimer() { if (liveInterval) { clearInterval(liveInterval); liveInterval = null; } }
+
+function toggleTool(btn) { btn.style.opacity = btn.style.opacity === '0.45' ? '1' : '0.45'; }
+
+function endLive() { hideOverlay('overlay-end-confirm'); showPage('page-end'); }
+
+/* ─── 课程评价 ─── */
+function rateStar(n) {
+  currentRating = n;
+  renderStars();
+  document.getElementById('endBtn').textContent = '提交评价并回到首页';
+}
+
+function renderStars() {
+  document.querySelectorAll('.star-btn').forEach((el, i) => {
+    el.textContent = i < currentRating ? '★' : '☆';
+    el.style.color  = i < currentRating ? 'var(--amber)' : 'var(--gray-40)';
+  });
+}
+
+function onEvalInput(el) {
+  document.getElementById('evalChar').textContent = el.value.length + ' / 200';
+  if (el.value.length > 0 || currentRating > 0)
+    document.getElementById('endBtn').textContent = '提交评价并回到首页';
+}
+
+/* ─── 布局响应（详情页）─── */
+function buildDetailLayout() {
+  const frame = document.getElementById('frame');
+  const isLandscape = frame.classList.contains('landscape');
+  const body = document.getElementById('detailBody');
+  const left = document.getElementById('detailLeft');
+  const right = document.getElementById('detailRight');
+  if (isLandscape) {
+    body.style.cssText = 'flex:1;display:flex;flex-direction:row;overflow:hidden;';
+    left.style.cssText = 'padding:20px 10px 20px 20px;width:240px;flex-shrink:0;';
+    right.style.cssText = 'padding:20px 20px 20px 10px;flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:14px;';
+  } else {
+    body.style.cssText = 'flex:1;display:flex;flex-direction:column;overflow:hidden;';
+    left.style.cssText = 'padding:20px 20px 0;flex-shrink:0;';
+    right.style.cssText = 'padding:20px;flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:14px;';
+  }
+}
+
+/* ─── 覆盖层 ─── */
+function showOverlay(id) { document.getElementById(id).classList.add('show'); }
+function hideOverlay(id) { document.getElementById(id).classList.remove('show'); }
+
+/* ─── 排序 ─── */
+function showSort() { document.getElementById('sortSheetOverlay').classList.add('show'); }
+function hideSort() { document.getElementById('sortSheetOverlay').classList.remove('show'); }
+function selectSort(el, label) {
+  document.querySelectorAll('.sheet-item').forEach(i => { i.classList.remove('active'); });
+  el.classList.add('active');
+  document.querySelector('.sort-header-btn').textContent = label + ' ▾';
+  hideSort();
+}
+
+/* ─── 状态筛选 ─── */
+function switchStatusTab(status) {
+  document.getElementById('tab-all').classList.toggle('active', status === 'all');
+  document.getElementById('tab-avail').classList.toggle('active', status === 'avail');
+  // Filter teacher cards
+  document.querySelectorAll('.teacher-card-horizontal').forEach((card, idx) => {
+    const t = teachers[idx];
+    if (status === 'all') {
+      card.style.display = 'flex';
+    } else {
+      // Check if teacher has available slots (not full)
+      card.style.display = !card.classList.contains('full') ? 'flex' : 'none';
+    }
+  });
+}
+
+/* ─── Loading ─── */
+function showLoading(msg) {
+  document.getElementById('loadingText').textContent = msg;
+  document.getElementById('loadingOverlay').classList.add('show');
+}
+function hideLoading() { document.getElementById('loadingOverlay').classList.remove('show'); }
+
+/* ─── Toast ─── */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+/* ─── 横竖屏 ─── */
+function toggleRotate() {
+  const frame = document.getElementById('frame');
+  frame.classList.toggle('landscape');
+  frame.classList.toggle('portrait');
+  const page = document.querySelector('.page.active');
+  if (page && page.id === 'page-subject') initSubjectLayout();
+  if (page && page.id === 'page-teachers') initTeacherListLayout();
+}
+
+/* ─── 初始化 ─── */
+// Initialize layout when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  const activePage = document.querySelector('.page.active');
+  if (activePage) {
+    if (activePage.id === 'page-subject') initSubjectLayout();
+    if (activePage.id === 'page-teachers') initTeacherListLayout();
+  }
+});
+</script>
+</body>
+</html>

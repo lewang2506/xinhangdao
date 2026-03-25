@@ -67,3 +67,11 @@ docs/
   PRD-即时解答模式.md
   PRD-预约指导模式.md
 ```
+
+## 开发工作流
+
+**所有任务必须由 main agent 分配给 subagent 完成。**
+
+- Main agent 负责任务分析、文件读取和整体协调
+- 实际的代码编写、修复和重构工作交由 subagent 执行
+- 复杂任务应先拆解后再分配给 subagent，确保指令清晰明确

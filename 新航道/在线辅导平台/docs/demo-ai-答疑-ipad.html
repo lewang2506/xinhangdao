@@ -405,6 +405,7 @@
 
             <!-- ══════════ 首页 ══════════ -->
             <div class="page home-page active" id="homePage">
+                <button class="btn-text" onclick="showPage('homePage')" style="position:absolute;left:24px;top:18px;z-index:10;">返回</button>
                 <div class="home-illus">
                     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="32" cy="32" r="28" fill="#dde8fd"/>
@@ -826,18 +827,17 @@
             setTimeout(() => showPage('resultPage'), 2000);
         }
 
-        /* ─── 老师答疑：二次确认 ─── */
+        /* ─── 老师答疑：直接进入学科选择（去掉二次确认）─── */
         let _subjectFrom = 'homePage'; // 记录学科选择页的返回来源
 
         function showConfirmTeacherModal() {
-            showConfirmTeacherModalFrom('homePage');
+            goToSubjectFrom('homePage');
         }
         function showConfirmTeacherModalFrom(fromPage) {
-            _subjectFrom = fromPage;
-            document.getElementById('confirmTeacherModal').classList.add('active');
+            goToSubjectFrom(fromPage);
         }
-        function confirmGoToSubject() {
-            closeModal('confirmTeacherModal');
+        function goToSubjectFrom(fromPage) {
+            _subjectFrom = fromPage;
             document.getElementById('subjectBackBtn').onclick = () => showPage(_subjectFrom);
             showPage('subjectPage');
         }
