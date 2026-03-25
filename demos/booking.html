@@ -1331,7 +1331,8 @@ function selectListMiniSlot(el, slot) {
   const selectedPill = document.querySelector('.cal-day-pill.selected');
   if (selectedPill) {
     const day = selectedPill.textContent;
-    selectedDate = '2026-04-' + day.split('/')[1];
+    const dayNum = parseInt(day.split('/')[1], 10);
+    selectedDate = '2026-04-' + String(dayNum).padStart(2, '0');
     document.getElementById('confirmTime').textContent = selectedDate + ' ' + slot;
     document.getElementById('successTime').textContent = selectedDate + ' ' + slot;
   }
@@ -1424,7 +1425,8 @@ function selectMiniSlot(el, slot) {
   const selectedPill = document.querySelector('.cal-day-pill.selected');
   if (selectedPill) {
     const day = selectedPill.textContent;
-    selectedDate = '2026-04-' + day.split('/')[1];
+    const dayNum = parseInt(day.split('/')[1], 10);
+    selectedDate = '2026-04-' + String(dayNum).padStart(2, '0');
     document.getElementById('confirmTime').textContent = selectedDate + ' ' + slot;
     document.getElementById('successTime').textContent = selectedDate + ' ' + slot;
   }
