@@ -96,42 +96,84 @@
         .page-header-title { font-size: 18px; font-weight: 600; color: var(--text); }
 
         /* ════════════════════════════════════════
-           首页
+           首页（批改界面样式）
         ════════════════════════════════════════ */
         .home-page {
-            background: white; justify-content: center; align-items: center; padding: 48px 56px;
+            background: #3a3f4a; flex-direction: column;
         }
-        .landscape .home-page { flex-direction: row; gap: 64px; }
-        .home-illus {
-            width: 140px; height: 140px; background: var(--blue-lt); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 28px; flex-shrink: 0;
+        .home-page-header {
+            padding: 14px 24px;
+            background: #2c313c;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #4a5260; flex-shrink: 0;
         }
-        .landscape .home-illus { width: 180px; height: 180px; margin-bottom: 0; }
-        .home-illus svg { width: 68px; height: 68px; }
-        .home-content { width: 100%; max-width: 480px; }
-        .landscape .home-content { text-align: left; }
-        .home-title { font-size: 32px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
-        .landscape .home-title { font-size: 38px; }
-        .home-subtitle { font-size: 15px; color: var(--gray-60); margin-bottom: 32px; }
-        .home-options { display: flex; flex-direction: column; gap: 14px; }
-        .option-card {
-            background: var(--gray-10); border: 1.5px solid var(--gray-20); border-radius: 16px;
-            padding: 20px 22px; cursor: pointer;
-            display: flex; align-items: center; gap: 16px;
-            transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+        .home-page-back {
+            background: none; border: none; color: #8e96a3;
+            font-size: 15px; cursor: pointer; padding: 4px 8px;
+            display: flex; align-items: center; gap: 4px;
         }
-        .option-card:hover { border-color: var(--blue); box-shadow: 0 4px 16px rgba(91,141,239,0.12); transform: translateY(-1px); }
-        .option-card:active { transform: scale(0.98); }
-        .option-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .option-icon.ai      { background: var(--blue-lt); }
-        .option-icon.teacher { background: var(--teal-lt); }
-        .option-icon svg { width: 26px; height: 26px; }
-        .option-info { flex: 1; }
-        .option-title { font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
-        .option-desc  { font-size: 13px; color: var(--gray-60); }
-        .option-badge { font-size: 13px; color: var(--teal); font-weight: 500; background: var(--teal-lt); padding: 4px 10px; border-radius: 20px; }
-        .option-arrow svg { width: 20px; height: 20px; fill: var(--gray-40); }
+        .home-page-title {
+            font-size: 16px; font-weight: 600; color: #f7f8fa;
+        }
+        .home-page-body {
+            flex: 1; display: flex; padding: 16px; gap: 16px; overflow: hidden;
+        }
+        .home-left-panel {
+            flex: 1; display: flex; flex-direction: column; gap: 12px; overflow-y: auto;
+        }
+        .home-right-panel {
+            width: 320px; display: flex; flex-direction: column;
+            background: #2c313c; border-radius: 12px; overflow: hidden;
+        }
+        .question-card, .answer-card {
+            background: #2c313c; border-radius: 12px; padding: 16px;
+            border: 1px solid #4a5260;
+        }
+        .card-label {
+            font-size: 12px; color: #8e96a3; margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        .card-content {
+            font-size: 14px; color: #f7f8fa; line-height: 1.7;
+        }
+        .card-content em {
+            font-style: italic;
+        }
+        .explanation-tabs {
+            display: flex; gap: 0; border-bottom: 1px solid #4a5260;
+        }
+        .explanation-tab {
+            padding: 10px 16px; font-size: 13px; color: #8e96a3;
+            cursor: default; border-bottom: 2px solid transparent;
+        }
+        .explanation-tab.active {
+            color: #5b8def; border-bottom-color: #5b8def;
+        }
+        .explanation-content {
+            flex: 1; padding: 16px; overflow-y: auto;
+        }
+        .explanation-placeholder {
+            font-size: 13px; color: #8e96a3; line-height: 1.6;
+        }
+        .teacher-online-btn {
+            width: 80px; height: 80px; border-radius: 50%;
+            background: linear-gradient(135deg, #5b8def 0%, #4a7de0 100%);
+            border: none; color: white; font-size: 13px; font-weight: 600;
+            cursor: pointer; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 4px;
+            box-shadow: 0 4px 16px rgba(91,141,239,0.4);
+            transition: transform 0.15s, box-shadow 0.2s;
+        }
+        .teacher-online-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(91,141,239,0.5);
+        }
+        .teacher-online-btn:active {
+            transform: scale(0.95);
+        }
+        .teacher-online-btn svg {
+            width: 24px; height: 24px;
+        }
 
         /* ════════════════════════════════════════
            拍照页
@@ -232,9 +274,9 @@
         ════════════════════════════════════════ */
         .teachers-page { background: var(--gray-10); }
 
-        /* 过滤标签 */
+        /* 状态过滤标签 */
         .filter-tabs {
-            display: flex; gap: 8px; padding: 14px 24px 0;
+            display: flex; gap: 8px; padding: 8px 24px 0;
             background: var(--gray-10); flex-shrink: 0;
         }
         .filter-tab {
@@ -403,53 +445,45 @@
     <div class="ipad-frame landscape" id="ipadFrame">
         <div class="ipad-screen" id="ipadScreen">
 
-            <!-- ══════════ 首页 ══════════ -->
+            <!-- ══════════ 首页（批改界面样式）══════════ -->
             <div class="page home-page active" id="homePage">
-                <button class="btn-text" onclick="showPage('homePage')" style="position:absolute;left:24px;top:18px;z-index:10;">返回</button>
-                <div class="home-illus">
-                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="32" cy="32" r="28" fill="#dde8fd"/>
-                        <rect x="18" y="20" width="28" height="20" rx="4" fill="#5b8def" opacity="0.25"/>
-                        <rect x="22" y="24" width="20" height="2.5" rx="1.25" fill="#5b8def"/>
-                        <rect x="22" y="29" width="14" height="2.5" rx="1.25" fill="#5b8def"/>
-                        <rect x="22" y="34" width="16" height="2.5" rx="1.25" fill="#5b8def"/>
-                        <circle cx="44" cy="42" r="8" fill="#5b8def"/>
-                        <path d="M40.5 42L43 44.5L47.5 40" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                <div class="home-page-header">
+                    <button class="home-page-back">← 返回</button>
+                    <span class="home-page-title">题目 1/5</span>
+                    <button class="teacher-online-btn" onclick="showConfirmTeacherModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="8" r="4"/>
+                            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+                        </svg>
+                        名师在线
+                    </button>
                 </div>
-                <div class="home-content">
-                    <h1 class="home-title">即时答疑</h1>
-                    <p class="home-subtitle">快速解决学习难题</p>
-                    <div class="home-options">
-                        <div class="option-card" onclick="openCamera()">
-                            <div class="option-icon ai">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="#5b8def" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="4"/>
-                                    <path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
-                                    <path d="M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-                                </svg>
-                            </div>
-                            <div class="option-info">
-                                <div class="option-title">AI 智能答疑</div>
-                                <div class="option-desc">秒级响应 · 分步讲解</div>
-                            </div>
-                            <div class="option-arrow">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="#c8cdd5" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+                <div class="home-page-body">
+                    <div class="home-left-panel">
+                        <div class="question-card">
+                            <div class="card-label">题目原题</div>
+                            <div class="card-content">
+                                已知函数 <em>f</em>(<em>x</em>) = <em>x</em>² − 2<em>x</em> + 3，求 <em>f</em>(<em>x</em>) 在区间 [0, 3] 上的最大值和最小值。
                             </div>
                         </div>
-                        <!-- 老师答疑：点击先出二次确认弹框 -->
-                        <div class="option-card" onclick="showConfirmTeacherModal()">
-                            <div class="option-icon teacher">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="#5ab9b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="8" r="4"/>
-                                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-                                </svg>
+                        <div class="answer-card">
+                            <div class="card-label">用户答案</div>
+                            <div class="card-content">
+                                最大值是6，最小值是2。
                             </div>
-                            <div class="option-info">
-                                <div class="option-title">老师在线答疑</div>
-                                <div class="option-desc">真人讲解 · 彻底搞懂</div>
+                        </div>
+                    </div>
+                    <div class="home-right-panel">
+                        <div class="explanation-tabs">
+                            <div class="explanation-tab active">答案</div>
+                            <div class="explanation-tab">翻译</div>
+                            <div class="explanation-tab">讲解</div>
+                        </div>
+                        <div class="explanation-content">
+                            <div class="explanation-placeholder">
+                                讲解内容区域<br><br>
+                                点击右上角"名师在线"按钮可呼叫在线老师进行一对一答疑。
                             </div>
-                            <div class="option-badge">30 积分/次</div>
                         </div>
                     </div>
                 </div>
@@ -592,8 +626,8 @@
             <!-- ══════════ 老师列表页 ══════════ -->
             <div class="page teachers-page" id="teachersPage">
                 <div class="page-header">
-                    <button class="btn-text" onclick="showPage('subjectPage')">返回</button>
-                    <span class="page-header-title" id="teachersPageTitle">数学 · 在线老师</span>
+                    <button class="btn-text" onclick="showPage('homePage')">返回</button>
+                    <span class="page-header-title" id="teachersPageTitle">在线老师</span>
                     <span></span>
                 </div>
                 <!-- 状态过滤标签 -->
@@ -603,7 +637,7 @@
                 </div>
                 <div class="teachers-content" id="teachersList">
                     <!-- 空闲老师 -->
-                    <div class="teacher-card" data-status="idle" onclick="showPointsModal('李明老师')">
+                    <div class="teacher-card" data-status="idle" data-subject="数学" onclick="showPointsModal('李明老师')">
                         <div class="teacher-avatar">👨‍🏫</div>
                         <div class="teacher-info">
                             <div class="teacher-name">李明</div>
@@ -615,7 +649,7 @@
                         </div>
                         <div class="teacher-card-arrow">›</div>
                     </div>
-                    <div class="teacher-card" data-status="idle" onclick="showPointsModal('王芳老师', true)">
+                    <div class="teacher-card" data-status="idle" data-subject="数学" onclick="showPointsModal('王芳老师', true)">
                         <div class="teacher-avatar">👩‍🏫</div>
                         <div class="teacher-info">
                             <div class="teacher-name">王芳</div>
@@ -628,7 +662,7 @@
                         <div class="teacher-card-arrow">›</div>
                     </div>
                     <!-- 忙碌老师（不可点击）-->
-                    <div class="teacher-card busy-card" data-status="busy">
+                    <div class="teacher-card busy-card" data-status="busy" data-subject="数学">
                         <div class="teacher-avatar">👨‍🏫</div>
                         <div class="teacher-info">
                             <div class="teacher-name">张伟</div>
@@ -739,7 +773,8 @@
                 </div>
             </div>
 
-            <!-- ══════════ 弹窗：老师答疑二次确认 ══════════ -->
+            <!-- ══════════ 弹窗：老师答疑二次确认（已废弃，保留代码供参考）══════════ -->
+            <!--
             <div class="modal" id="confirmTeacherModal">
                 <div class="modal-box">
                     <div class="modal-icon teal">👩‍🏫</div>
@@ -751,6 +786,7 @@
                     </div>
                 </div>
             </div>
+            -->
 
             <!-- ══════════ 弹窗：积分确认 ══════════ -->
             <div class="modal" id="pointsModal">
@@ -829,12 +865,19 @@
 
         /* ─── 老师答疑：直接进入学科选择（去掉二次确认）─── */
         let _subjectFrom = 'homePage'; // 记录学科选择页的返回来源
+        let currentQuestionSubject = '数学'; // 当前AI答疑题目的学科（根据OCR识别结果自动设置）
 
         function showConfirmTeacherModal() {
-            goToSubjectFrom('homePage');
+            // 直接跳转到老师列表页，不经过学科选择页
+            goToTeachers('all');
         }
         function showConfirmTeacherModalFrom(fromPage) {
-            goToSubjectFrom(fromPage);
+            // 从AI答案页转老师答疑时，直接根据题目学科跳转老师列表页
+            if (fromPage === 'resultPage') {
+                goToTeachers(currentQuestionSubject);
+            } else {
+                goToSubjectFrom(fromPage);
+            }
         }
         function goToSubjectFrom(fromPage) {
             _subjectFrom = fromPage;
@@ -843,7 +886,9 @@
         }
 
         function goToTeachers(subject) {
-            document.getElementById('teachersPageTitle').textContent = subject + ' · 在线老师';
+            // 标题固定为"在线老师"，不显示学科名
+            document.getElementById('teachersPageTitle').textContent = '在线老师';
+            // 重置状态筛选为全部
             filterTeachers('all', document.querySelector('.filter-tab'));
             showPage('teachersPage');
         }
@@ -855,8 +900,8 @@
             tabEl.classList.add('active');
             // 过滤卡片
             document.querySelectorAll('#teachersList .teacher-card').forEach(card => {
-                const show = status === 'all' || card.dataset.status === status;
-                card.style.display = show ? 'flex' : 'none';
+                const statusMatch = status === 'all' || card.dataset.status === status;
+                card.style.display = statusMatch ? 'flex' : 'none';
             });
         }
 
