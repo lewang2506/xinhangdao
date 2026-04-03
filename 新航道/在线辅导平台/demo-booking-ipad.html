@@ -1601,6 +1601,20 @@ function renderBookings(tab) {
           <button onclick="showCancelDialog(${index})" style="padding:8px 16px;background:white;color:var(--gray-60);border:1px solid var(--gray-30);border-radius:8px;font-size:13px;cursor:pointer;white-space:nowrap;">取消预约</button>
         </div>
       `;
+    } else if (tab === 'done') {
+      actionButtons = `
+        <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;align-items:flex-end;">
+          <button onclick="showCourseNotes(${index})" style="padding:8px 16px;background:var(--teal-lt);color:var(--teal);border:none;border-radius:8px;font-size:13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;">
+            <span>📝</span>课程笔记
+          </button>
+          <button onclick="showCourseHomework(${index})" style="padding:8px 16px;background:var(--blue-lt);color:var(--blue);border:none;border-radius:8px;font-size:13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;">
+            <span>📚</span>课程作业
+          </button>
+          <button onclick="showCourseReplay(${index})" style="padding:8px 16px;background:var(--green-lt);color:var(--green);border:none;border-radius:8px;font-size:13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;">
+            <span>▶️</span>课程回看
+          </button>
+        </div>
+      `;
     }
 
     return `
