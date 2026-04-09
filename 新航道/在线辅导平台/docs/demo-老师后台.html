@@ -1644,6 +1644,30 @@
                         </div>
                     </div>
 
+                    <!-- 电话提醒设置 -->
+                    <div style="border-top: 1px solid var(--gray-30); padding-top: 24px; margin-bottom: 32px;">
+                        <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px;">
+                            <div style="display: flex; flex-direction: column; gap: 6px;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">
+                                        <i class="fas fa-phone" style="margin-right: 8px; color: var(--primary);"></i>
+                                        电话提醒
+                                    </div>
+                                    <!-- 状态标签 -->
+                                    <span id="phoneReminderTag" style="padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 500; background: var(--success); color: #fff;">在线</span>
+                                </div>
+                                <span style="font-size: 13px; color: var(--text-tertiary);">学生在线呼叫时，允许系统电话提醒我</span>
+                            </div>
+                            <!-- 下拉选择框 -->
+                            <div style="width: 120px;">
+                                <select id="phoneReminderSelect" onchange="updatePhoneReminderStatus()" style="width: 100%; padding: 10px 14px; border: 1px solid var(--gray-30); border-radius: 8px; font-size: 14px; color: var(--text-primary); background: #fff; cursor: pointer; outline: none; transition: all 0.2s;">
+                                    <option value="online">允许</option>
+                                    <option value="offline">不允许</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- 可授科目设置 -->
                     <div style="border-top: 1px solid var(--gray-30); padding-top: 24px;">
                         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
@@ -4403,6 +4427,23 @@
             }
         }
 
+        // 更新电话提醒状态
+        function updatePhoneReminderStatus() {
+            const select = document.getElementById('phoneReminderSelect');
+            const tag = document.getElementById('phoneReminderTag');
+            const value = select.value;
+
+            if (value === 'online') {
+                tag.textContent = '在线';
+                tag.style.background = 'var(--success)';
+                showToast('您已设置为允许电话提醒');
+            } else {
+                tag.textContent = '离线';
+                tag.style.background = 'var(--error)';
+                showToast('您已设置为不允许电话提醒');
+            }
+        }
+
         // 进入科目编辑模式
         function enterSubjectEditMode() {
             isSubjectEditMode = true;
@@ -5208,6 +5249,12 @@
             // 初始化可授科目标签显示
             if (document.getElementById('bookingSelectedSubjectTags')) {
                 updateBookingSubjectTags();
+            }
+            // 初始化电话提醒状态
+            if (document.getElementById('phoneReminderSelect')) {
+                document.getElementById('phoneReminderSelect').value = 'online';
+                document.getElementById('phoneReminderTag').textContent = '在线';
+                document.getElementById('phoneReminderTag').style.background = 'var(--success)';
             }
         });
 
