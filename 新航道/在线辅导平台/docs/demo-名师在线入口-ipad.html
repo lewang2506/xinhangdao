@@ -50,33 +50,9 @@
             display: flex; align-items: center; justify-content: space-between;
             padding: 20px 40px; color: rgba(255,255,255,0.9);
         }
-        .nav-time { font-size: 15px; font-weight: 500; letter-spacing: 1px; }
+        .nav-back { background: none; border: none; color: #fff; font-size: 16px; cursor: pointer; padding: 4px 8px; }
+        .nav-title { font-size: 18px; font-weight: 600; color: #fff; }
         .nav-icons { display: flex; gap: 6px; font-size: 14px; }
-
-        .tab-bar {
-            display: flex; gap: 32px; padding: 0 40px 20px;
-            color: rgba(255,255,255,0.6); font-size: 16px;
-        }
-        .tab-item { cursor: pointer; padding-bottom: 4px; transition: color 0.2s; }
-        .tab-item:hover { color: rgba(255,255,255,0.9); }
-        .tab-item.active {
-            color: #fff; font-weight: 600;
-            border-bottom: 2.5px solid #fff;
-        }
-
-        /* ─── 页面标题 ─── */
-        .hub-header {
-            padding: 30px 40px 10px;
-            color: #fff;
-        }
-        .hub-title {
-            font-size: 32px; font-weight: 700;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            margin-bottom: 8px;
-        }
-        .hub-subtitle {
-            font-size: 15px; color: rgba(255,255,255,0.75);
-        }
 
         /* ─── 卡片网格 ─── */
         .hub-grid {
@@ -127,14 +103,6 @@
             font-size: 14px; color: rgba(255,255,255,0.75);
             line-height: 1.6;
         }
-        .hub-card-tag {
-            display: inline-block; margin-top: 14px;
-            padding: 5px 14px; border-radius: 20px;
-            font-size: 12px; font-weight: 600;
-            background: rgba(255,255,255,0.2);
-            color: #fff;
-        }
-
         /* 竖屏适配 */
         .ipad-frame.portrait .hub-grid {
             grid-template-columns: 1fr;
@@ -150,27 +118,13 @@
 <div class="ipad-frame landscape" id="ipadFrame">
     <div class="ipad-screen">
 
-        <!-- 顶部状态栏 -->
+        <!-- 顶部导航 -->
         <div class="top-nav">
-            <div style="width:60px;"></div>
-            <div class="nav-time">14:51</div>
+            <button class="nav-back" onclick="history.back()">← 返回</button>
+            <div class="nav-title">名师在线</div>
             <div class="nav-icons">
                 <span>📶</span><span>📡</span><span>🔋</span>
             </div>
-        </div>
-
-        <!-- Tab 导航 -->
-        <div class="tab-bar">
-            <span class="tab-item">AI伴学</span>
-            <span class="tab-item">学科</span>
-            <span class="tab-item active">应用</span>
-            <span class="tab-item">学情</span>
-        </div>
-
-        <!-- 页面标题 -->
-        <div class="hub-header">
-            <div class="hub-title">名师在线</div>
-            <div class="hub-subtitle">专业老师为你答疑解惑，随时随地高效学习</div>
         </div>
 
         <!-- 两个入口卡片 -->
@@ -180,10 +134,9 @@
                 <div class="hub-card-icon">⚡</div>
                 <div class="hub-card-title">即时答疑</div>
                 <div class="hub-card-desc">
-                    30秒快速响应，一对一视频连线老师实时解答。<br>
+                    快速响应，一对一视频连线老师实时解答。<br>
                     适合紧急问题、考前突击、概念理解。
                 </div>
-                <span class="hub-card-tag">30 分钟 / 次</span>
             </div>
 
             <!-- 预约授课 -->
@@ -194,7 +147,6 @@
                     提前规划学习时间，预约心仪老师系统讲解。<br>
                     适合知识体系梳理、专题突破、长期提升。
                 </div>
-                <span class="hub-card-tag">60 分钟 / 次</span>
             </div>
         </div>
 
