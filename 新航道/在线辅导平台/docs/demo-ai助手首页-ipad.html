@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>学习机首页 - AI助手形象Demo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: #eef2f5;
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px;
+        }
+
+        /* ─── iPad 外壳 ─── */
+        .ipad-frame {
+            background: #d0d4d8; border-radius: 40px; padding: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.5s ease;
+        }
+        .ipad-frame.landscape { width: 1024px; height: 768px; }
+        .ipad-frame.portrait  { width: 768px;  height: 1024px; }
+        .ipad-screen {
+            width: 100%; height: 100%; background: #f7f8fa;
+            border-radius: 25px; overflow: hidden; position: relative;
+        }
+        .rotate-btn {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 52px; height: 52px; background: #fff;
+            border: 1.5px solid #dde2e8; border-radius: 50%;
+            color: #6b7a8d; font-size: 22px; cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 1000;
+            display: flex; align-items: center; justify-content: center;
+            transition: box-shadow 0.2s;
+        }
+        .rotate-btn:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+
+        /* ─── 顶部导航栏 ─── */
+        .top-nav {
+            height: 56px;
+            background: #fff;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 24px;
+            border-bottom: 1px solid #f0f0f0;
+            flex-shrink: 0;
+        }
+        .nav-left { display: flex; gap: 8px; }
+        .nav-tab {
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            background: transparent;
+            color: #666;
+        }
+        .nav-tab:hover { background: #f5f5f5; }
+        .nav-tab.active {
+            background: #1a1a2e;
+            color: #fff;
+            font-weight: 500;
+        }
+        .nav-right { display: flex; gap: 16px; align-items: center; }
+        .nav-icon {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+            color: #666;
+            font-size: 18px;
+        }
+        .nav-icon:hover { background: #f5f5f5; }
+
+        /* ─── 页面主布局 ─── */
+        .home-container {
+            display: flex;
+            height: calc(100% - 56px);
+            padding: 20px;
+            gap: 20px;
+        }
+        .ipad-frame.portrait .home-container {
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* ─── 左侧AI助手面板 ─── */
+        .assistant-panel {
+            flex: 0 0 38%;
+            background: #fff;
+            border-radius: 20px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .ipad-frame.portrait .assistant-panel {
+            flex: 0 0 auto;
+            min-height: 380px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #4CAF50;
+            margin-bottom: 16px;
+        }
+        .status-dot {
+            width: 8px; height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .greeting {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 6px;
+        }
+        .greeting-sub {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        /* AI形象展示 */
+        .figure-showcase {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 8px 0 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .figure-showcase:hover { transform: scale(1.02); }
+        .figure-img-wrap {
+            width: 150px; height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(76,175,80,0.15);
+        }
+        .figure-showcase .figure-img {
+            width: 85%;
+            height: 85%;
+            object-fit: contain;
+            transition: transform 0.3s;
+        }
+        .figure-showcase:hover .figure-img { transform: scale(1.05); }
+        .figure-name-tag {
+            margin-top: 10px;
+            padding: 4px 14px;
+            background: #E8F5E9;
+            color: #388E3C;
+            font-size: 13px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        /* 操作按钮 */
+        .action-btns {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 8px;
+        }
+        .action-btn {
+            display: flex; align-items: center; gap: 4px;
+            padding: 8px 16px;
+            border-radius: 18px;
+            border: 1.5px solid #4CAF50;
+            background: #fff;
+            color: #4CAF50;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .action-btn:hover {
+            background: #E8F5E9;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(76,175,80,0.2);
+        }
+        .action-btn:active { transform: translateY(0); }
+
+        /* ─── 右侧面板 ─── */
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* 任务卡片行 */
+        .task-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        .ipad-frame.portrait .task-cards {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .task-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid #f0f0f0;
+            transition: all 0.2s;
+        }
+        .task-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            transform: translateY(-2px);
+        }
+        .task-card-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .task-card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+        .task-card-icon {
+            font-size: 18px;
+        }
+        .task-progress-bar {
+            height: 4px;
+            background: #f0f0f0;
+            border-radius: 2px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+        .task-progress-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+        .task-card-progress {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* 任务详情区 */
+        .task-detail {
+            background: #fff;
+            border-radius: 20px;
+            padding: 24px;
+            flex: 1;
+            position: relative;
+        }
+        .task-detail-header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .task-detail-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .task-detail-sub {
+            font-size: 12px;
+            color: #999;
+        }
+        .progress-circle {
+            width: 56px; height: 56px;
+            position: relative;
+        }
+        .progress-circle svg { transform: rotate(-90deg); }
+        .progress-circle-bg { fill: none; stroke: #f0f0f0; stroke-width: 5; }
+        .progress-circle-fill { fill: none; stroke: #4CAF50; stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset 0.5s; }
+        .progress-text {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 14px; font-weight: 700; color: #333;
+        }
+
+        .task-list { display: flex; flex-direction: column; gap: 10px; }
+        .task-item {
+            display: flex; align-items: center;
+            padding: 14px 16px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            transition: background 0.2s;
+        }
+        .task-item:hover { background: #f0f2f5; }
+        .task-check {
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            margin-right: 12px;
+            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px;
+            color: #fff;
+        }
+        .task-check.done { background: #4CAF50; border-color: #4CAF50; }
+        .task-check.undone { background: transparent; }
+        .task-info { flex: 1; }
+        .task-info-title { font-size: 14px; color: #333; margin-bottom: 2px; }
+        .task-info-tag {
+            display: inline-block;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .task-time {
+            font-size: 13px;
+            color: #999;
+            margin-left: 8px;
+        }
+
+        /* ─── 弹框遮罩 ─── */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.45);
+            display: none; align-items: center; justify-content: center;
+            z-index: 500;
+            opacity: 0;
+            transition: opacity 0.3s;
+            padding: 20px;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal-overlay.fade-in { opacity: 1; }
+
+        /* ─── 我的形象弹框 ─── */
+        .collection-modal {
+            background: #fff;
+            border-radius: 20px;
+            width: 520px;
+            max-width: 90vw;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+        .collection-modal.show {
+            transform: scale(1) translateY(0);
+        }
+        .modal-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px 24px 12px;
+        }
+        .modal-title { font-size: 18px; font-weight: 700; color: #333; }
+        .modal-close {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            border: none; background: #f5f5f5;
+            cursor: pointer; font-size: 16px; color: #666;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+        }
+        .modal-close:hover { background: #e0e0e0; }
+        .modal-body {
+            padding: 12px 24px 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .figure-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        .figure-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            position: relative;
+        }
+        .figure-card:hover { transform: translateY(-2px); }
+        .figure-card.locked { cursor: default; }
+        .figure-card.locked:hover { transform: none; }
+
+        .figure-card-img-wrap {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            background: #f5f5f5;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+            padding: 8px;
+        }
+        .figure-card.active .figure-card-img-wrap {
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76,175,80,0.15);
+        }
+        .figure-card-img {
+            width: 100%; height: 100%;
+            object-fit: contain;
+            transition: filter 0.3s;
+        }
+        .figure-card.locked .figure-card-img {
+            filter: grayscale(100%);
+            opacity: 0.5;
+        }
+        .lock-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.3);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .figure-card.locked .lock-overlay { opacity: 1; }
+        .lock-icon {
+            width: 32px; height: 32px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff;
+            font-size: 14px;
+        }
+        .using-badge {
+            position: absolute;
+            top: 6px; right: 6px;
+            padding: 2px 6px;
+            background: #4CAF50;
+            color: #fff;
+            font-size: 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            z-index: 2;
+        }
+        .figure-card-name {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #333;
+            text-align: center;
+        }
+        .figure-card.locked .figure-card-name { color: #999; }
+
+        /* 空状态提示 */
+        .collection-empty-tip {
+            margin-top: 16px;
+            text-align: center;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        .collection-empty-tip p {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .collection-empty-tip .action-btn {
+            display: inline-flex;
+            margin-top: 4px;
+        }
+
+        /* ─── 盲盒抽取弹框 ─── */
+        .blindbox-modal {
+            background: #fff;
+            border-radius: 20px;
+            width: 460px;
+            max-width: 90vw;
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+        .blindbox-modal.show {
+            transform: scale(1) translateY(0);
+        }
+        .blindbox-body {
+            padding: 20px 24px 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 次数展示 */
+        .draw-count {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .draw-count .count-num {
+            font-size: 24px;
+            font-weight: 700;
+            color: #4CAF50;
+        }
+        .draw-count.empty .count-num { color: #999; }
+        .draw-count-hint {
+            font-size: 12px;
+            color: #999;
+            margin-top: 4px;
+            text-align: center;
+        }
+        .task-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 14px;
+            border-radius: 16px;
+            border: 1.5px solid #FF9800;
+            background: #fff;
+            color: #FF9800;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+        .task-link-btn:hover {
+            background: #FFF3E0;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(255,152,0,0.2);
+        }
+        .task-link-btn:active {
+            transform: translateY(0);
+        }
+
+        /* 盲盒区域 */
+        .blindbox-stage {
+            width: 200px; height: 200px;
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+            margin: 8px 0 20px;
+        }
+        .blindbox-bg-circle {
+            position: absolute;
+            width: 180px; height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+            transition: all 0.3s;
+        }
+        .blindbox-icon {
+            font-size: 100px;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s;
+        }
+        .blindbox-icon.shaking {
+            animation: boxShake 0.8s ease-in-out;
+        }
+        @keyframes boxShake {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            10% { transform: rotate(-8deg) scale(1.05); }
+            20% { transform: rotate(8deg) scale(1.05); }
+            30% { transform: rotate(-6deg) scale(1.08); }
+            40% { transform: rotate(6deg) scale(1.08); }
+            50% { transform: rotate(-4deg) scale(1.1); }
+            60% { transform: rotate(4deg) scale(1.1); }
+            70% { transform: rotate(-2deg) scale(1.12); }
+            80% { transform: rotate(2deg) scale(1.12); }
+            90% { transform: rotate(0deg) scale(1.15); }
+        }
+
+        /* 光芒 */
+        .glow-effect {
+            position: absolute;
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,215,0,0.8), transparent 70%);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .glow-effect.active {
+            animation: glowExpand 0.6s ease-out forwards;
+        }
+        @keyframes glowExpand {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(4); opacity: 0; }
+        }
+
+        /* 粒子 */
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            font-size: 20px;
+            opacity: 0;
+        }
+        .particle.active {
+            animation: particleFly 1s ease-out forwards;
+        }
+        @keyframes particleFly {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0.3); opacity: 0; }
+        }
+
+        /* 抽中结果 */
+        .draw-result {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            animation: resultShow 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .draw-result.show { display: flex; }
+        @keyframes resultShow {
+            0% { transform: translateY(30px) scale(0.6); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        .draw-result-img {
+            width: 160px; height: 160px;
+            object-fit: contain;
+            margin-bottom: 12px;
+        }
+        .draw-result-name {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #FFD700, #FFA000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+        .draw-result-btn {
+            padding: 10px 32px;
+            border-radius: 24px;
+            border: none;
+            background: linear-gradient(135deg, #66BB6A, #43A047);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(76,175,80,0.3);
+            transition: all 0.2s;
+        }
+        .draw-result-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(76,175,80,0.4);
+        }
+        .draw-result-btn:active { transform: translateY(0); }
+
+        /* 抽取按钮 */
+        .draw-btn {
+            width: 200px; height: 48px;
+            border-radius: 24px;
+            border: none;
+            background: linear-gradient(135deg, #66BB6A, #43A047);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(76,175,80,0.3);
+            transition: all 0.2s;
+            margin-bottom: 20px;
+        }
+        .draw-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(76,175,80,0.4);
+        }
+        .draw-btn:active:not(:disabled) { transform: translateY(0); }
+        .draw-btn:disabled {
+            background: #E0E0E0;
+            color: #999;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        /* 进度条 */
+        .collection-progress {
+            width: 100%;
+            margin-top: 4px;
+        }
+        .collection-progress-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+        .collection-progress-bar {
+            height: 8px;
+            background: #E0E0E0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .collection-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #66BB6A, #43A047);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* 全收集状态 */
+        .all-collected {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .all-collected.show { display: flex; }
+        .all-collected-icon { font-size: 60px; margin-bottom: 12px; }
+        .all-collected-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 6px;
+        }
+        .all-collected-sub {
+            font-size: 13px;
+            color: #999;
+        }
+
+        /* Toast 提示 */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(0,0,0,0.75);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.3s;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<!-- 旋转按钮 -->
+<button class="rotate-btn" onclick="toggleOrientation()" title="旋转屏幕">🔄</button>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- iPad 外壳 -->
+<div class="ipad-frame landscape" id="ipadFrame">
+    <div class="ipad-screen">
+
+        <!-- 顶部导航 -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <button class="nav-tab active">AI助教</button>
+                <button class="nav-tab">学科·应用</button>
+                <button class="nav-tab">学情</button>
+            </div>
+            <div class="nav-right">
+                <div class="nav-icon">🔍</div>
+                <div class="nav-icon">🔔</div>
+                <div class="nav-icon">⚙️</div>
+            </div>
+        </nav>
+
+        <!-- 首页主内容 -->
+        <div class="home-container">
+            <!-- 左侧AI助手面板 -->
+            <div class="assistant-panel">
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    <span>小航 在线中</span>
+                </div>
+                <div class="greeting">你好，小明 👋</div>
+                <div class="greeting-sub">小航已经为你规划好了今天的任务</div>
+
+                <!-- AI形象展示 -->
+                <div class="figure-showcase" onclick="openCollection()" title="点击查看我的形象">
+                    <div class="figure-img-wrap">
+                        <img class="figure-img" id="homeFigureImg" src="机机基础形象.png" alt="AI助手形象">
+                    </div>
+                    <div class="figure-name-tag" id="homeFigureName">小航·基础版</div>
+                </div>
+
+                <!-- 操作按钮 -->
+                <div class="action-btns">
+                    <button class="action-btn" onclick="openCollection(event)">
+                        <span>🏠</span> 我的形象
+                    </button>
+                    <button class="action-btn" onclick="openBlindbox(event)">
+                        <span>🎁</span> 抽取盲盒
+                    </button>
+                </div>
+            </div>
+
+            <!-- 右侧任务面板 -->
+            <div class="right-panel">
+                <!-- 任务卡片 -->
+                <div class="task-cards">
+                    <div class="task-card">
+                        <div class="task-card-header">
+                            <span class="task-card-title">今日作业</span>
+                            <span class="task-card-icon">📘</span>
+                        </div>
+                        <div class="task-progress-bar"><div class="task-progress-fill" style="width:25%;background:#2196F3"></div></div>
+                        <div class="task-card-progress">1/4 完成</div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-card-header">
+                            <span class="task-card-title">题库任务</span>
+                            <span class="task-card-icon">📕</span>
+                        </div>
+                        <div class="task-progress-bar"><div class="task-progress-fill" style="width:33%;background:#F44336"></div></div>
+                        <div class="task-card-progress">1/3 完成</div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-card-header">
+                            <span class="task-card-title">英语任务</span>
+                            <span class="task-card-icon">🎧</span>
+                        </div>
+                        <div class="task-progress-bar"><div class="task-progress-fill" style="width:33%;background:#9C27B0"></div></div>
+                        <div class="task-card-progress">1/3 完成</div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-card-header">
+                            <span class="task-card-title">直播精讲</span>
+                            <span class="task-card-icon">📺</span>
+                        </div>
+                        <div class="task-progress-bar"><div class="task-progress-fill" style="width:100%;background:#4CAF50"></div></div>
+                        <div class="task-card-progress">2/2 完成</div>
+                    </div>
+                </div>
+
+                <!-- 任务详情 -->
+                <div class="task-detail">
+                    <div class="task-detail-header">
+                        <div>
+                            <div class="task-detail-title">任务详情</div>
+                            <div class="task-detail-sub">ARIA 为你智能规划 · Physics 模式</div>
+                        </div>
+                        <div class="progress-circle">
+                            <svg width="56" height="56" viewBox="0 0 56 56">
+                                <circle class="progress-circle-bg" cx="28" cy="28" r="24"/>
+                                <circle class="progress-circle-fill" cx="28" cy="28" r="24"
+                                    stroke-dasharray="150.8"
+                                    stroke-dashoffset="113.1"/>
+                            </svg>
+                            <div class="progress-text">25%</div>
+                        </div>
+                    </div>
+                    <div class="task-list">
+                        <div class="task-item">
+                            <div class="task-check done">✓</div>
+                            <div class="task-info">
+                                <div class="task-info-title">电磁感应专项练兵(10题)</div>
+                                <span class="task-info-tag" style="background:#E3F2FD;color:#2196F3">PHYSICS</span>
+                            </div>
+                            <div class="task-time">20 min</div>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-check undone"></div>
+                            <div class="task-info">
+                                <div class="task-info-title">Further Calculus P3(10题)</div>
+                                <span class="task-info-tag" style="background:#F3E5F5;color:#9C27B0">MATH</span>
+                            </div>
+                            <div class="task-time">20 min</div>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-check undone"></div>
+                            <div class="task-info">
+                                <div class="task-info-title">Paper 2 大题写作(10题)</div>
+                                <span class="task-info-tag" style="background:#E8F5E9;color:#4CAF50">ECONOMICS</span>
+                            </div>
+                            <div class="task-time">20 min</div>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-check undone"></div>
+                            <div class="task-info">
+                                <div class="task-info-title">有机反应(10题)</div>
+                                <span class="task-info-tag" style="background:#FFF3E0;color:#FF9800">CHEMISTRY</span>
+                            </div>
+                            <div class="task-time">20 min</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ 我的形象弹框 ═══════ -->
+<div class="modal-overlay" id="collectionOverlay" onclick="closeCollection(event)">
+    <div class="collection-modal" id="collectionModal" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <div class="modal-title">我的形象</div>
+            <button class="modal-close" onclick="closeCollection()">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="figure-grid" id="figureGrid"></div>
+            <div class="collection-empty-tip" id="collectionTip" style="display:none">
+                <p>抽取盲盒可获得更多形象哦~</p>
+                <button class="action-btn" onclick="closeCollection(); openBlindbox();">去抽取</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ 盲盒抽取弹框 ═══════ -->
+<div class="modal-overlay" id="blindboxOverlay" onclick="closeBlindbox(event)">
+    <div class="blindbox-modal" id="blindboxModal" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <div class="modal-title">抽取盲盒</div>
+            <button class="modal-close" onclick="closeBlindbox()">✕</button>
+        </div>
+        <div class="blindbox-body">
+            <!-- 次数 -->
+            <div class="draw-count" id="drawCountEl">
+                剩余抽奖次数：<span class="count-num" id="drawCountNum">3</span> 次
+                <div class="draw-count-hint" id="drawCountHint" style="display:none">暂无抽奖次数，完成任务可获得更多次数哦~</div>
+                <div id="taskLinkWrap" style="display:none; text-align:center;">
+                    <button class="task-link-btn" onclick="goToTasks()">✨ 去做任务赚次数</button>
+                </div>
+            </div>
+
+            <!-- 盲盒舞台 -->
+            <div class="blindbox-stage" id="blindboxStage">
+                <div class="blindbox-bg-circle" id="blindboxBg"></div>
+                <div class="glow-effect" id="glowEffect"></div>
+                <div class="blindbox-icon" id="blindboxIcon">🎁</div>
+                <div id="particles"></div>
+
+                <!-- 抽中结果 -->
+                <div class="draw-result" id="drawResult">
+                    <img class="draw-result-img" id="drawResultImg" src="" alt="">
+                    <div class="draw-result-name" id="drawResultName"></div>
+                    <button class="draw-result-btn" onclick="collectFigure()">收入收藏</button>
+                </div>
+            </div>
+
+            <!-- 抽取按钮 -->
+            <button class="draw-btn" id="drawBtn" onclick="startDraw()">抽取盲盒</button>
+
+            <!-- 全收集状态 -->
+            <div class="all-collected" id="allCollected">
+                <div class="all-collected-icon">🎉</div>
+                <div class="all-collected-title">你已经集齐了所有形象！</div>
+                <div class="all-collected-sub">继续保持学习，未来会有更多形象上线哦~</div>
+            </div>
+
+            <!-- 进度条 -->
+            <div class="collection-progress">
+                <div class="collection-progress-label" id="progressLabel">我的收藏进度：1 / 3</div>
+                <div class="collection-progress-bar">
+                    <div class="collection-progress-fill" id="progressFill" style="width:33%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ═══════ 数据 ═══════
+const FIGURES = [
+    { id: 'base',      name: '小航·基础版', image: '机机基础形象.png', default: true },
+    { id: 'astronaut', name: '小航·宇航员', image: '宇航员.png' },
+    { id: 'athlete',   name: '小航·运动员', image: '运动员.png' }
+];
+
+let userData = {
+    currentFigureId: 'base',
+    ownedFigureIds: ['base'],
+    drawCount: 1
+};
+
+// 当前抽取结果（暂存）
+let currentDrawResult = null;
+let isDrawing = false;
+
+// ═══════ 工具函数 ═══════
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+function getFigure(id) {
+    return FIGURES.find(f => f.id === id);
+}
+
+function getOwnedFigures() {
+    return FIGURES.filter(f => userData.ownedFigureIds.includes(f.id));
+}
+
+function getLockedFigures() {
+    return FIGURES.filter(f => !userData.ownedFigureIds.includes(f.id));
+}
+
+function updateHomeFigure() {
+    const fig = getFigure(userData.currentFigureId) || getFigure('base');
+    document.getElementById('homeFigureImg').src = fig.image;
+    document.getElementById('homeFigureName').textContent = fig.name;
+}
+
+// ═══════ 我的形象弹框 ═══════
+function openCollection(e) {
+    if (e) e.stopPropagation();
+    renderFigureGrid();
+    const overlay = document.getElementById('collectionOverlay');
+    const modal = document.getElementById('collectionModal');
+    overlay.classList.add('show');
+    requestAnimationFrame(() => overlay.classList.add('fade-in'));
+    requestAnimationFrame(() => modal.classList.add('show'));
+}
+
+function closeCollection(e) {
+    if (e && e.target !== e.currentTarget) return;
+    const overlay = document.getElementById('collectionOverlay');
+    const modal = document.getElementById('collectionModal');
+    overlay.classList.remove('fade-in');
+    modal.classList.remove('show');
+    setTimeout(() => overlay.classList.remove('show'), 300);
+}
+
+function renderFigureGrid() {
+    const grid = document.getElementById('figureGrid');
+    grid.innerHTML = '';
+
+    FIGURES.forEach(fig => {
+        const isOwned = userData.ownedFigureIds.includes(fig.id);
+        const isCurrent = userData.currentFigureId === fig.id;
+
+        const card = document.createElement('div');
+        card.className = 'figure-card' + (isOwned ? '' : ' locked') + (isCurrent ? ' active' : '');
+        if (isOwned && !isCurrent) {
+            card.onclick = () => setCurrentFigure(fig.id);
+        }
+
+        card.innerHTML = `
+            <div class="figure-card-img-wrap">
+                <img class="figure-card-img" src="${fig.image}" alt="${fig.name}">
+                ${isCurrent ? '<span class="using-badge">使用中</span>' : ''}
+                <div class="lock-overlay"><div class="lock-icon">🔒</div></div>
+            </div>
+            <div class="figure-card-name">${fig.name}</div>
+        `;
+        grid.appendChild(card);
+    });
+
+    // 显示提示（如果只有默认形象）
+    const tip = document.getElementById('collectionTip');
+    tip.style.display = userData.ownedFigureIds.length <= 1 ? 'block' : 'none';
+}
+
+function setCurrentFigure(id) {
+    userData.currentFigureId = id;
+    updateHomeFigure();
+    showToast(`已将「${getFigure(id).name}」设为当前形象`);
+    closeCollection();
+}
+
+// ═══════ 盲盒抽取 ═══════
+function openBlindbox(e) {
+    if (e) e.stopPropagation();
+    resetBlindbox();
+    const overlay = document.getElementById('blindboxOverlay');
+    const modal = document.getElementById('blindboxModal');
+    overlay.classList.add('show');
+    requestAnimationFrame(() => overlay.classList.add('fade-in'));
+    requestAnimationFrame(() => modal.classList.add('show'));
+}
+
+function closeBlindbox(e) {
+    if (e && e.target !== e.currentTarget) return;
+    if (isDrawing) return; // 动画中禁止关闭
+    const overlay = document.getElementById('blindboxOverlay');
+    const modal = document.getElementById('blindboxModal');
+    overlay.classList.remove('fade-in');
+    modal.classList.remove('show');
+    setTimeout(() => overlay.classList.remove('show'), 300);
+}
+
+function resetBlindbox() {
+    isDrawing = false;
+    currentDrawResult = null;
+
+    // 重置UI
+    document.getElementById('blindboxIcon').style.display = 'block';
+    document.getElementById('blindboxIcon').classList.remove('shaking');
+    document.getElementById('drawResult').classList.remove('show');
+    document.getElementById('allCollected').classList.remove('show');
+    document.getElementById('drawBtn').style.display = 'block';
+    document.getElementById('drawBtn').disabled = false;
+    document.getElementById('drawBtn').textContent = '抽取盲盒';
+    document.getElementById('particles').innerHTML = '';
+
+    updateBlindboxState();
+}
+
+function updateBlindboxState() {
+    const locked = getLockedFigures();
+    const countEl = document.getElementById('drawCountEl');
+    const countNum = document.getElementById('drawCountNum');
+    const countHint = document.getElementById('drawCountHint');
+    const drawBtn = document.getElementById('drawBtn');
+    const allCollected = document.getElementById('allCollected');
+
+    countNum.textContent = userData.drawCount;
+
+    const taskLinkWrap = document.getElementById('taskLinkWrap');
+    if (userData.drawCount <= 0) {
+        countEl.classList.add('empty');
+        countHint.style.display = 'block';
+        taskLinkWrap.style.display = 'block';
+        drawBtn.disabled = true;
+    } else {
+        countEl.classList.remove('empty');
+        countHint.style.display = 'none';
+        taskLinkWrap.style.display = 'none';
+        drawBtn.disabled = false;
+    }
+
+    // 全收集状态
+    if (locked.length === 0) {
+        document.getElementById('blindboxIcon').style.display = 'none';
+        document.getElementById('blindboxBg').style.background = 'linear-gradient(135deg, #E8F5E9, #C8E6C9)';
+        drawBtn.style.display = 'none';
+        allCollected.classList.add('show');
+    } else {
+        allCollected.classList.remove('show');
+    }
+
+    // 更新进度条
+    const total = FIGURES.length;
+    const owned = userData.ownedFigureIds.length;
+    document.getElementById('progressLabel').textContent = `我的收藏进度：${owned} / ${total}`;
+    document.getElementById('progressFill').style.width = (owned / total * 100) + '%';
+}
+
+function startDraw() {
+    if (isDrawing) return;
+    if (userData.drawCount <= 0) {
+        showToast('暂无抽奖次数');
+        return;
+    }
+
+    const locked = getLockedFigures();
+    if (locked.length === 0) {
+        showToast('你已经集齐了所有形象！');
+        return;
+    }
+
+    isDrawing = true;
+    userData.drawCount--;
+    document.getElementById('drawCountNum').textContent = userData.drawCount;
+    document.getElementById('drawBtn').disabled = true;
+    document.getElementById('drawBtn').textContent = '抽取中...';
+
+    // 盲盒抖动
+    const icon = document.getElementById('blindboxIcon');
+    icon.classList.add('shaking');
+
+    // 随机选择结果
+    const result = locked[Math.floor(Math.random() * locked.length)];
+    currentDrawResult = result;
+
+    // 0.8s后开盒
+    setTimeout(() => {
+        icon.classList.remove('shaking');
+        openBoxAnimation(result);
+    }, 800);
+}
+
+function openBoxAnimation(result) {
+    const icon = document.getElementById('blindboxIcon');
+    const bg = document.getElementById('blindboxBg');
+    const glow = document.getElementById('glowEffect');
+
+    // 隐藏盲盒图标，变背景
+    icon.style.transition = 'all 0.3s';
+    icon.style.opacity = '0';
+    icon.style.transform = 'scale(0.5)';
+    bg.style.background = 'radial-gradient(circle, rgba(255,215,0,0.3), #FFF3E0)';
+
+    // 光芒
+    glow.classList.add('active');
+
+    // 粒子
+    spawnParticles();
+
+    // 展示结果
+    setTimeout(() => {
+        icon.style.display = 'none';
+        glow.classList.remove('active');
+
+        const resultEl = document.getElementById('drawResult');
+        document.getElementById('drawResultImg').src = result.image;
+        document.getElementById('drawResultName').textContent = `恭喜获得「${result.name}」！`;
+        resultEl.classList.add('show');
+
+        document.getElementById('drawBtn').style.display = 'none';
+        isDrawing = false;
+    }, 600);
+}
+
+function spawnParticles() {
+    const container = document.getElementById('particles');
+    container.innerHTML = '';
+    const colors = ['#FFD700', '#FF6B9D', '#4FC3F7', '#66BB6A', '#FF9800'];
+    const shapes = ['⭐', '✨', '💫', '🌟'];
+
+    for (let i = 0; i < 12; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+        p.style.color = colors[Math.floor(Math.random() * colors.length)];
+
+        const angle = (Math.PI * 2 * i) / 12;
+        const distance = 80 + Math.random() * 40;
+        p.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+        p.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+
+        container.appendChild(p);
+        requestAnimationFrame(() => p.classList.add('active'));
+    }
+}
+
+function collectFigure() {
+    if (!currentDrawResult) return;
+
+    // 添加到收藏
+    userData.ownedFigureIds.push(currentDrawResult.id);
+    userData.currentFigureId = currentDrawResult.id;
+
+    // 更新首页
+    updateHomeFigure();
+
+    // 提示
+    showToast(`「${currentDrawResult.name}」已加入收藏！`);
+
+    // 关闭弹框
+    closeBlindbox();
+}
+
+// ═══════ 去做任务赚次数 ═══════
+function goToTasks() {
+    // 实际项目中应跳转到任务中心页面
+    // window.location.href = '/tasks';
+    showToast('即将跳转到任务中心...');
+    // 延迟关闭盲盒弹框
+    setTimeout(() => closeBlindbox(), 600);
+}
+
+// ═══════ 横竖屏切换 ═══════
+function toggleOrientation() {
+    const frame = document.getElementById('ipadFrame');
+    frame.classList.toggle('landscape');
+    frame.classList.toggle('portrait');
+}
+
+// ═══════ 初始化 ═══════
+updateHomeFigure();
+</script>
+
+</body>
+</html>
