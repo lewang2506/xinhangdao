@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>名师在线 - iPad Demo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: #eef2f5;
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px;
+        }
+
+        /* ─── iPad 外壳 ─── */
+        .ipad-frame {
+            background: #d0d4d8; border-radius: 40px; padding: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.5s ease;
+        }
+        .ipad-frame.landscape { width: 1024px; height: 768px; }
+        .ipad-frame.portrait  { width: 768px;  height: 1024px; }
+        .ipad-screen {
+            width: 100%; height: 100%; border-radius: 25px;
+            overflow: hidden; position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #2dd4bf 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .rotate-btn {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 52px; height: 52px; background: #fff;
+            border: 1.5px solid #dde2e8; border-radius: 50%;
+            color: #6b7a8d; font-size: 22px; cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 1000;
+            display: flex; align-items: center; justify-content: center;
+            transition: box-shadow 0.2s;
+        }
+        .rotate-btn:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+
+        /* ─── 顶部导航 ─── */
+        .top-nav {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px 40px; color: rgba(255,255,255,0.9);
+        }
+        .nav-back { background: none; border: none; color: #fff; font-size: 16px; cursor: pointer; padding: 4px 8px; }
+        .nav-title { font-size: 18px; font-weight: 600; color: #fff; }
+        .nav-icons { display: flex; gap: 6px; font-size: 14px; }
+
+        /* ─── 卡片网格 ─── */
+        .hub-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 30px 40px 40px;
+        }
+        .hub-card {
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 20px;
+            padding: 32px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .hub-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 60%);
+            opacity: 0; transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .hub-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: rgba(255,255,255,0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .hub-card:hover::before { opacity: 1; }
+        .hub-card:active { transform: translateY(-2px) scale(0.98); }
+
+        .hub-card-icon {
+            width: 64px; height: 64px; border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 32px; margin-bottom: 18px;
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .hub-card-title {
+            font-size: 22px; font-weight: 700; color: #fff;
+            margin-bottom: 10px;
+        }
+        .hub-card-desc {
+            font-size: 14px; color: rgba(255,255,255,0.75);
+            line-height: 1.6;
+        }
+        /* 竖屏适配 */
+        .ipad-frame.portrait .hub-grid {
+            grid-template-columns: 1fr;
+            padding: 20px 30px 30px;
+        }
+        .ipad-frame.portrait .hub-card { padding: 28px; }
+    </style>
+</head>
+<body>
+
+<button class="rotate-btn" onclick="toggleOrientation()" title="旋转屏幕">↻</button>
+
+<div class="ipad-frame landscape" id="ipadFrame">
+    <div class="ipad-screen">
+
+        <!-- 顶部导航 -->
+        <div class="top-nav">
+            <button class="nav-back" onclick="history.back()">← 返回</button>
+            <div class="nav-title">名师在线</div>
+            <div class="nav-icons">
+                <span>📶</span><span>📡</span><span>🔋</span>
+            </div>
+        </div>
+
+        <!-- 两个入口卡片 -->
+        <div class="hub-grid">
+            <!-- 即时答疑 -->
+            <div class="hub-card" onclick="goToInstant()">
+                <div class="hub-card-icon">⚡</div>
+                <div class="hub-card-title">即时答疑</div>
+                <div class="hub-card-desc">
+                    快速响应，一对一视频连线老师实时解答。<br>
+                    适合紧急问题、考前突击、概念理解。
+                </div>
+            </div>
+
+            <!-- 预约授课 -->
+            <div class="hub-card" onclick="goToBooking()">
+                <div class="hub-card-icon">📅</div>
+                <div class="hub-card-title">预约授课</div>
+                <div class="hub-card-desc">
+                    提前规划学习时间，预约心仪老师系统讲解。<br>
+                    适合知识体系梳理、专题突破、长期提升。
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+function toggleOrientation() {
+    const frame = document.getElementById('ipadFrame');
+    frame.classList.toggle('landscape');
+    frame.classList.toggle('portrait');
+}
+function goToInstant() {
+    window.location.href = 'demo-ai-答疑-ipad.html';
+}
+function goToBooking() {
+    window.location.href = 'demo-预约指导-ipad.html';
+}
+</script>
+
+</body>
+</html>
