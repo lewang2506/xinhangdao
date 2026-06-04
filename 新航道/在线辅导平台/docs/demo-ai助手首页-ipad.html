@@ -195,6 +195,62 @@
         }
         .action-btn:active { transform: translateY(0); }
 
+        /* 形象区域右上角操作按钮 */
+        .figure-showcase { position: relative; }
+        .figure-actions {
+            position: absolute;
+            top: 0; right: 0;
+            display: flex;
+            gap: 6px;
+            z-index: 5;
+        }
+        .figure-action-icon {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            border: 1px solid #e0e0e0;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            color: #666;
+        }
+        .figure-action-icon:hover {
+            background: #fff;
+            transform: scale(1.1);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+            border-color: #4CAF50;
+            color: #4CAF50;
+        }
+
+        /* 唤起小航大按钮 */
+        .awaken-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 24px;
+            border: none;
+            background: linear-gradient(135deg, #66BB6A, #43A047);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(76,175,80,0.35);
+            transition: all 0.3s;
+            margin-top: 16px;
+            animation: awakenPulse 2.5s infinite;
+        }
+        .awaken-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(76,175,80,0.45);
+        }
+        .awaken-btn:active { transform: translateY(0) scale(0.98); }
+        @keyframes awakenPulse {
+            0%, 100% { box-shadow: 0 4px 16px rgba(76,175,80,0.35); }
+            50% { box-shadow: 0 4px 24px rgba(76,175,80,0.55), 0 0 0 4px rgba(76,175,80,0.1); }
+        }
+
         /* ─── 右侧面板 ─── */
         .right-panel {
             flex: 1;
@@ -449,6 +505,26 @@
         }
         .figure-card.locked .figure-card-name { color: #999; }
 
+        /* 占位空位 */
+        .figure-slot-empty .figure-card-img-wrap {
+            background: #fafafa;
+            border: 2px dashed #e0e0e0;
+        }
+        .figure-slot-empty .figure-slot-placeholder {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #ccc;
+        }
+        .figure-slot-empty .figure-card-name {
+            color: #bbb;
+        }
+
         /* 空状态提示 */
         .collection-empty-tip {
             margin-top: 16px;
@@ -465,6 +541,15 @@
         .collection-empty-tip .action-btn {
             display: inline-flex;
             margin-top: 4px;
+        }
+
+        /* 我的形象弹框底部 */
+        .collection-modal-footer {
+            padding: 12px 24px 16px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: center;
+            background: #fafafa;
         }
 
         /* ─── 盲盒抽取弹框 ─── */
@@ -735,6 +820,1191 @@
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
+
+        /* ─── Fullscreen Chat ─── */
+        .fullscreen-chat {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #fff;
+            display: none;
+            flex-direction: row;
+            z-index: 100;
+            overflow: hidden;
+        }
+        .fullscreen-chat.active { display: flex; }
+
+        /* Chat Sidebar */
+        .chat-sidebar {
+            width: 260px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #f0f0f0;
+            background: #fff;
+            flex-shrink: 0;
+        }
+        .chat-sidebar-header {
+            padding: 16px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .chat-sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .chat-sidebar-logo-img {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .chat-sidebar-logo-img img { width: 80%; height: 80%; object-fit: contain; }
+        .chat-sidebar-logo-text {
+            font-size: 16px; font-weight: 600; color: #333;
+        }
+        .chat-sidebar-new-btn {
+            width: 100%;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1.5px dashed #4CAF50;
+            background: #fff;
+            color: #4CAF50;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            transition: all 0.2s;
+        }
+        .chat-sidebar-new-btn:hover {
+            background: #E8F5E9;
+            border-style: solid;
+        }
+        .chat-sidebar-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+        .chat-sidebar-empty {
+            text-align: center;
+            padding: 24px 16px;
+            color: #999;
+            font-size: 13px;
+        }
+        .chat-sidebar-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+        .chat-sidebar-item:hover { background: #f5f5f5; }
+        .chat-sidebar-item.active { background: #E8F5E9; }
+        .chat-sidebar-item.pinned { background: #FFF8E1; }
+        .chat-sidebar-item-info { flex: 1; min-width: 0; }
+        .chat-sidebar-item-title {
+            font-size: 13px; color: #333;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            font-weight: 500;
+        }
+        .chat-sidebar-item-time { font-size: 11px; color: #999; margin-top: 2px; }
+        .chat-sidebar-item-actions {
+            display: flex; gap: 2px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .chat-sidebar-item:hover .chat-sidebar-item-actions { opacity: 1; }
+        .chat-sidebar-action {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex; align-items: center; justify-content: center;
+            color: #999;
+            transition: all 0.2s;
+        }
+        .chat-sidebar-action:hover { background: #e0e0e0; color: #333; }
+        .chat-sidebar-badge {
+            font-size: 10px;
+            padding: 1px 5px;
+            border-radius: 4px;
+            background: #FF9800;
+            color: #fff;
+            font-weight: 600;
+            margin-right: 4px;
+        }
+        .chat-sidebar-footer {
+            padding: 12px 16px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .chat-sidebar-user {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px;
+        }
+        .chat-sidebar-user-name {
+            flex: 1;
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+        .chat-sidebar-settings {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex; align-items: center; justify-content: center;
+            color: #666;
+            transition: background 0.2s;
+        }
+        .chat-sidebar-settings:hover { background: #f5f5f5; }
+
+        /* Chat Main */
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-main-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            flex-shrink: 0;
+        }
+        .chat-main-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        .chat-main-tools {
+            display: flex;
+            gap: 8px;
+        }
+        .chat-main-tool-btn {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: #f5f5f5;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex; align-items: center; justify-content: center;
+            color: #666;
+            transition: background 0.2s;
+        }
+        .chat-main-tool-btn:hover { background: #e0e0e0; }
+
+        /* Chat Toolbar */
+        .chat-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            background: #fff;
+            flex-shrink: 0;
+        }
+        .chat-toolbar-left { display: flex; align-items: center; gap: 12px; }
+        .chat-toolbar-center { flex: 1; text-align: center; }
+        .chat-toolbar-right { display: flex; align-items: center; gap: 10px; }
+        .chat-close-btn {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: #f5f5f5;
+            cursor: pointer;
+            font-size: 18px;
+            color: #666;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+        }
+        .chat-close-btn:hover { background: #e0e0e0; }
+        .chat-logo {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .chat-logo img { width: 80%; height: 80%; object-fit: contain; }
+        .chat-toolbar-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: #333;
+        }
+        .chat-toolbar-btn {
+            display: flex; align-items: center; gap: 4px;
+            padding: 6px 14px;
+            border-radius: 16px;
+            border: 1px solid #e0e0e0;
+            background: #fff;
+            color: #666;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .chat-toolbar-btn:hover {
+            border-color: #4CAF50;
+            color: #4CAF50;
+            background: #E8F5E9;
+        }
+
+        /* Chat History Dropdown */
+        .chat-history-dropdown {
+            position: absolute;
+            top: 56px; right: 20px;
+            width: 280px;
+            max-height: 360px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            border: 1px solid #f0f0f0;
+            display: none;
+            flex-direction: column;
+            z-index: 200;
+            overflow: hidden;
+        }
+        .chat-history-dropdown.show { display: flex; }
+        .chat-history-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px; font-weight: 600; color: #333;
+        }
+        .chat-history-list {
+            overflow-y: auto;
+            flex: 1;
+            padding: 4px;
+        }
+        .chat-history-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+            gap: 8px;
+        }
+        .chat-history-item:hover { background: #f5f5f5; }
+        .chat-history-item.active { background: #E8F5E9; }
+        .chat-history-item.pinned { background: #FFF8E1; }
+        .chat-history-info { flex: 1; min-width: 0; }
+        .chat-history-title {
+            font-size: 13px; color: #333;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            font-weight: 500;
+        }
+        .chat-history-time { font-size: 11px; color: #999; margin-top: 2px; }
+        .chat-history-actions {
+            display: flex; gap: 2px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .chat-history-item:hover .chat-history-actions { opacity: 1; }
+        .chat-history-action {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex; align-items: center; justify-content: center;
+            color: #999;
+            transition: all 0.2s;
+        }
+        .chat-history-action:hover { background: #e0e0e0; color: #333; }
+        .chat-history-empty {
+            text-align: center;
+            padding: 24px 16px;
+            color: #999;
+            font-size: 13px;
+        }
+        .chat-history-badge {
+            font-size: 10px;
+            padding: 1px 5px;
+            border-radius: 4px;
+            background: #FF9800;
+            color: #fff;
+            font-weight: 600;
+            margin-left: 4px;
+        }
+
+        /* Chat Messages Area */
+        .chat-messages-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            background: #f7f8fa;
+        }
+
+        /* Message bubbles (updated) */
+        .msg {
+            display: flex;
+            gap: 10px;
+            max-width: 80%;
+            animation: msgAppear 0.3s ease;
+        }
+        @keyframes msgAppear {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .msg.ai-msg { align-self: flex-start; }
+        .msg.user-msg { align-self: flex-end; flex-direction: row-reverse; }
+
+        .msg-avatar {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+            position: relative;
+            border: 2px solid transparent;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .msg-avatar img { width: 80%; height: 80%; object-fit: contain; }
+        .msg-avatar.mood-thinking { border-color: #42A5F5; box-shadow: 0 0 0 3px rgba(66,165,245,0.15); }
+        .msg-avatar.mood-happy   { border-color: #FFA726; box-shadow: 0 0 0 3px rgba(255,167,38,0.15); }
+        .msg-avatar.mood-confused{ border-color: #BDBDBD; box-shadow: 0 0 0 3px rgba(189,189,189,0.15); }
+        .msg-avatar.mood-normal  { border-color: #66BB6A; box-shadow: 0 0 0 3px rgba(102,187,106,0.15); }
+        .msg-mood-emoji {
+            position: absolute;
+            bottom: -2px; right: -2px;
+            font-size: 14px;
+            background: #fff;
+            border-radius: 50%;
+            width: 18px; height: 18px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .msg.user-msg .msg-avatar { display: none; }
+
+        .msg-bubble {
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+        .ai-msg .msg-bubble {
+            background: #fff;
+            color: #333;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .user-msg .msg-bubble {
+            background: #4CAF50;
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+        .msg-time {
+            font-size: 11px;
+            color: #999;
+            margin-top: 4px;
+        }
+        .user-msg .msg-time { text-align: right; color: rgba(255,255,255,0.7); }
+
+        /* Thinking indicator */
+        .thinking-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 16px;
+            background: #fff;
+            border-radius: 16px;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            align-self: flex-start;
+            margin-left: 50px;
+        }
+        .thinking-dots {
+            display: flex;
+            gap: 4px;
+        }
+        .thinking-dots span {
+            width: 8px; height: 8px;
+            background: #ccc;
+            border-radius: 50%;
+            animation: thinkingBounce 1.4s infinite ease-in-out both;
+        }
+        .thinking-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .thinking-dots span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes thinkingBounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        /* Task summary card in chat */
+        .task-summary-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            border: 1px solid #f0f0f0;
+        }
+        .task-summary-card h4 {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .task-summary-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .task-summary-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+            padding: 6px 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .task-summary-item .done { color: #4CAF50; }
+        .task-summary-item .pending { color: #FF9800; }
+
+        /* Quick actions */
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
+            margin-left: 50px;
+        }
+        .quick-btn {
+            padding: 8px 14px;
+            border-radius: 16px;
+            border: 1px solid #e0e0e0;
+            background: #fff;
+            color: #666;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .quick-btn:hover {
+            border-color: #4CAF50;
+            color: #4CAF50;
+            background: #E8F5E9;
+        }
+        /* Multi-function input area */
+        .chat-input-bar {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            padding: 10px 16px 12px;
+            border-top: 1px solid #f0f0f0;
+            background: #fff;
+            flex-shrink: 0;
+        }
+        .chat-input-tools {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+        .chat-input-tool {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: #f5f5f5;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex; align-items: center; justify-content: center;
+            color: #666;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .chat-input-tool:hover { background: #E8F5E9; color: #4CAF50; }
+        .chat-input-tool:active { transform: scale(0.92); }
+        .chat-input-tool.active { background: #4CAF50; color: #fff; }
+        .chat-textarea-wrap {
+            flex: 1;
+            position: relative;
+        }
+        .chat-textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+            resize: none;
+            min-height: 40px;
+            max-height: 120px;
+            font-family: inherit;
+            line-height: 1.4;
+        }
+        .chat-textarea:focus { border-color: #4CAF50; }
+        .chat-send-btn {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #4CAF50;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .chat-send-btn:hover { background: #43A047; }
+        .chat-send-btn:active { transform: scale(0.92); }
+
+        /* Chat input buttons (simplified layout) */
+        .chat-input-btn {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: #f5f5f5;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex; align-items: center; justify-content: center;
+            color: #666;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .chat-input-btn:hover { background: #E8F5E9; color: #4CAF50; }
+        .chat-input-btn:active { transform: scale(0.92); }
+        .chat-input-btn.active { background: #4CAF50; color: #fff; }
+        .chat-input-field {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+            font-family: inherit;
+            line-height: 1.4;
+        }
+        .chat-input-field:focus { border-color: #4CAF50; }
+
+        /* Voice recording state */
+        .voice-recording {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: #fff;
+            border-top: 1px solid #f0f0f0;
+            color: #4CAF50;
+            font-size: 14px;
+        }
+        .voice-recording.active { display: flex; }
+        .voice-wave {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+        .voice-wave span {
+            width: 3px;
+            background: #4CAF50;
+            border-radius: 2px;
+            animation: voiceWave 0.8s infinite ease-in-out;
+        }
+        .voice-wave span:nth-child(1) { height: 8px; animation-delay: 0s; }
+        .voice-wave span:nth-child(2) { height: 16px; animation-delay: 0.1s; }
+        .voice-wave span:nth-child(3) { height: 12px; animation-delay: 0.2s; }
+        .voice-wave span:nth-child(4) { height: 20px; animation-delay: 0.3s; }
+        .voice-wave span:nth-child(5) { height: 10px; animation-delay: 0.15s; }
+        @keyframes voiceWave {
+            0%, 100% { transform: scaleY(0.6); }
+            50% { transform: scaleY(1); }
+        }
+
+        /* Auxiliary chat window */
+        .aux-chat {
+            position: absolute;
+            top: 56px; right: 0; bottom: 0;
+            width: 45%;
+            min-width: 360px;
+            background: #fff;
+            border-radius: 20px 0 0 20px;
+            box-shadow: -4px 0 24px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 60;
+            border: 1px solid #f0f0f0;
+            border-right: none;
+        }
+        .aux-chat.active { display: flex; }
+        .aux-chat-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-bottom: 1px solid #f0f0f0;
+            background: #fff;
+        }
+        .aux-chat-avatar {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .aux-chat-avatar img { width: 80%; height: 80%; object-fit: contain; }
+        .aux-chat-title {
+            flex: 1;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+        .aux-chat-status {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: #999;
+            margin-right: 8px;
+        }
+        .aux-chat-btn {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            border: none;
+            background: #f5f5f5;
+            cursor: pointer;
+            font-size: 13px;
+            color: #666;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+        }
+        .aux-chat-btn:hover { background: #e0e0e0; }
+        .aux-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #f7f8fa;
+        }
+        .aux-chat-input {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border-top: 1px solid #f0f0f0;
+            background: #fff;
+        }
+        .aux-chat-input .chat-textarea {
+            min-height: 32px;
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+        .aux-chat-input .chat-send-btn {
+            width: 32px; height: 32px;
+            font-size: 14px;
+        }
+
+        /* Floating awaken button (for subject page) */
+        .float-awaken {
+            position: fixed;
+            bottom: 24px; right: 24px;
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #66BB6A, #43A047);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 16px rgba(76,175,80,0.4);
+            z-index: 1000;
+            transition: all 0.3s;
+            animation: floatPulse 2.5s infinite;
+        }
+        .float-awaken:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 24px rgba(76,175,80,0.5);
+        }
+        .float-awaken:active { transform: scale(0.95); }
+        @keyframes floatPulse {
+            0%, 100% { box-shadow: 0 4px 16px rgba(76,175,80,0.4); }
+            50% { box-shadow: 0 4px 24px rgba(76,175,80,0.6), 0 0 0 6px rgba(76,175,80,0.1); }
+        }
+        .float-awaken-badge {
+            position: absolute;
+            top: -2px; right: -2px;
+            min-width: 18px; height: 18px;
+            background: #F44336;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Portrait adjustments for fullscreen chat */
+        .ipad-frame.portrait .fullscreen-chat {
+            border-radius: 0;
+        }
+        .ipad-frame.portrait .chat-toolbar {
+            padding: 10px 14px;
+        }
+        .ipad-frame.portrait .chat-history-dropdown {
+            right: 10px;
+            width: 260px;
+        }
+        .ipad-frame.portrait .aux-chat {
+            width: 80%;
+            min-width: auto;
+            border-radius: 16px 0 0 16px;
+        }
+
+        /* ─── 学科·应用页面 ─── */
+        .subject-page {
+            display: none;
+            height: calc(100% - 56px);
+            background: linear-gradient(135deg, #E0F7FA, #E8F5E9);
+            overflow-y: auto;
+            flex-direction: column;
+        }
+        .subject-page.active { display: flex; }
+
+        /* 子标签导航 */
+        .sub-tabs {
+            display: flex;
+            gap: 8px;
+            padding: 16px 20px 8px;
+        }
+        .sub-tab {
+            padding: 6px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            background: transparent;
+            color: #666;
+        }
+        .sub-tab:hover { background: rgba(255,255,255,0.6); }
+        .sub-tab.active {
+            background: #fff;
+            color: #333;
+            font-weight: 500;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        /* 应用卡片网格 */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            padding: 12px 20px 24px;
+        }
+        .ipad-frame.portrait .app-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .app-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px 16px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.2s;
+            cursor: pointer;
+            border: 1.5px solid transparent;
+        }
+        .app-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+            border-color: #4CAF50;
+        }
+        .app-icon {
+            width: 48px; height: 48px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 24px;
+        }
+        .app-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .app-sub {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* 悬浮AI助手按钮 */
+        .float-chat-btn {
+            position: absolute;
+            bottom: 24px; right: 24px;
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #4CAF50;
+            box-shadow: 0 4px 16px rgba(76,175,80,0.3);
+            cursor: pointer;
+            z-index: 50;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s;
+            animation: floatPulse 2.5s infinite;
+        }
+        .float-chat-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 24px rgba(76,175,80,0.45);
+        }
+        .float-chat-btn img {
+            width: 75%; height: 75%;
+            object-fit: contain;
+        }
+
+        /* ─── 定制形象弹框 ─── */
+        .customize-modal {
+            background: #fff;
+            border-radius: 20px;
+            width: 600px;
+            max-width: 90vw;
+            max-height: 82vh;
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+        .customize-modal.show { transform: scale(1) translateY(0); }
+
+        /* 步骤指示器 */
+        .customize-steps {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px 24px 0;
+        }
+        .step-dot {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            color: #999;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s;
+        }
+        .step-dot.active { background: #4CAF50; color: #fff; }
+        .step-dot.done { background: #C8E6C9; color: #388E3C; }
+        .step-line {
+            width: 40px; height: 2px;
+            background: #e0e0e0;
+            transition: background 0.3s;
+        }
+        .step-line.done { background: #C8E6C9; }
+
+        /* 步骤内容区 */
+        .customize-body {
+            padding: 16px 28px 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .customize-step { display: none; }
+        .customize-step.active { display: block; animation: stepFadeIn 0.3s ease; }
+        @keyframes stepFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .customize-step-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+        .customize-step-sub {
+            font-size: 13px;
+            color: #999;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        /* 类型选择（猫/狗） */
+        .pet-type-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .pet-type-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px 16px;
+            border-radius: 16px;
+            border: 2px solid #f0f0f0;
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .pet-type-card:hover {
+            border-color: #81C784;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(76,175,80,0.1);
+        }
+        .pet-type-card.selected {
+            border-color: #4CAF50;
+            background: #E8F5E9;
+            box-shadow: 0 0 0 4px rgba(76,175,80,0.12);
+        }
+        .pet-type-icon {
+            font-size: 56px;
+            margin-bottom: 10px;
+            transition: transform 0.2s;
+        }
+        .pet-type-card:hover .pet-type-icon { transform: scale(1.1); }
+        .pet-type-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+        }
+        .pet-type-desc {
+            font-size: 12px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        /* 名字输入 */
+        .customize-name-wrap {
+            margin-bottom: 12px;
+        }
+        .customize-name-input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+            line-height: 1.5;
+        }
+        .customize-name-input:focus { border-color: #4CAF50; }
+        .customize-name-input::placeholder { color: #bbb; }
+        .customize-name-hint {
+            font-size: 12px;
+            color: #999;
+            margin-top: 6px;
+        }
+
+        /* 积分提示条 */
+        .points-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: #FFF8E1;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #F57C00;
+        }
+        .points-bar.free {
+            background: #E8F5E9;
+            color: #388E3C;
+        }
+        .points-bar strong { font-weight: 700; }
+
+        /* 动态预览区 */
+        .preview-stage {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #f5f5f5, #fafafa);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 12px;
+            border: 2px solid #f0f0f0;
+        }
+        .preview-pet {
+            font-size: 80px;
+            z-index: 2;
+            transition: all 0.3s;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
+        .preview-yarn {
+            font-size: 32px;
+            position: absolute;
+            bottom: 30px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1;
+        }
+        .preview-yarn.show { opacity: 1; }
+
+        /* 动作选择 */
+        .action-tabs {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+        .action-tab {
+            padding: 6px 14px;
+            border-radius: 16px;
+            border: 1.5px solid #e0e0e0;
+            background: #fff;
+            color: #666;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .action-tab:hover { border-color: #81C784; color: #4CAF50; }
+        .action-tab.active {
+            background: #E8F5E9;
+            border-color: #4CAF50;
+            color: #388E3C;
+        }
+
+        /* 预置形象网格 */
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .preset-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px 8px;
+            border-radius: 12px;
+            border: 2px solid #f0f0f0;
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .preset-card:hover {
+            border-color: #81C784;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .preset-card.selected {
+            border-color: #4CAF50;
+            background: #E8F5E9;
+            box-shadow: 0 0 0 3px rgba(76,175,80,0.12);
+        }
+        .preset-card-img {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 36px;
+            margin-bottom: 6px;
+        }
+        .preset-card-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+        }
+        .preset-card-desc {
+            font-size: 11px;
+            color: #999;
+            margin-top: 2px;
+        }
+
+        /* 动画 */
+        @keyframes animSleep {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(12px) scale(1, 0.9); }
+        }
+        @keyframes animStretch {
+            0%, 100% { transform: scaleY(1) scaleX(1); }
+            25% { transform: scaleY(0.9) scaleX(1.1); }
+            50% { transform: scaleY(1.2) scaleX(0.85); }
+            75% { transform: scaleY(0.95) scaleX(1.05); }
+        }
+        @keyframes animChase {
+            0% { transform: translateX(-50px) rotate(-15deg); }
+            25% { transform: translateX(0) rotate(0deg); }
+            50% { transform: translateX(50px) rotate(15deg); }
+            75% { transform: translateX(0) rotate(0deg); }
+            100% { transform: translateX(-50px) rotate(-15deg); }
+        }
+        @keyframes yarnRoll {
+            0% { transform: translateX(-60px) rotate(0deg); }
+            100% { transform: translateX(60px) rotate(720deg); }
+        }
+        .anim-sleep { animation: animSleep 2s ease-in-out infinite; }
+        .anim-stretch { animation: animStretch 1.5s ease-in-out infinite; }
+        .anim-chase { animation: animChase 1.2s ease-in-out infinite; }
+        .yarn-rolling { animation: yarnRoll 1.2s linear infinite; }
+
+        /* 底部按钮 */
+        .customize-footer {
+            padding: 0 28px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+        .customize-btn-primary {
+            padding: 10px 32px;
+            border-radius: 22px;
+            border: none;
+            background: linear-gradient(135deg, #66BB6A, #43A047);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(76,175,80,0.3);
+            transition: all 0.2s;
+        }
+        .customize-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(76,175,80,0.4); }
+        .customize-btn-primary:active { transform: translateY(0); }
+        .customize-btn-primary:disabled {
+            background: #E0E0E0;
+            color: #999;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+        .customize-btn-secondary {
+            padding: 10px 24px;
+            border-radius: 22px;
+            border: 1.5px solid #e0e0e0;
+            background: #fff;
+            color: #666;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .customize-btn-secondary:hover { border-color: #999; color: #333; }
     </style>
 </head>
 <body>
@@ -752,9 +2022,9 @@
         <!-- 顶部导航 -->
         <nav class="top-nav">
             <div class="nav-left">
-                <button class="nav-tab active">AI助教</button>
-                <button class="nav-tab">学科·应用</button>
-                <button class="nav-tab">学情</button>
+                <button class="nav-tab active" onclick="switchPage('home')">AI助教</button>
+                <button class="nav-tab" onclick="switchPage('subject')">学科·应用</button>
+                <button class="nav-tab" onclick="showToast('学情页面开发中')">学情</button>
             </div>
             <div class="nav-right">
                 <div class="nav-icon">🔍</div>
@@ -764,7 +2034,7 @@
         </nav>
 
         <!-- 首页主内容 -->
-        <div class="home-container">
+        <div class="home-container" id="homeContainer">
             <!-- 左侧AI助手面板 -->
             <div class="assistant-panel">
                 <div class="status-badge">
@@ -776,25 +2046,24 @@
 
                 <!-- AI形象展示 -->
                 <div class="figure-showcase" onclick="openCollection()" title="点击查看我的形象">
+                    <div class="figure-actions">
+                        <div class="figure-action-icon" onclick="openCollection(event)" title="我的形象">⚙️</div>
+                        <div class="figure-action-icon" onclick="openBlindbox(event)" title="抽取盲盒">🎁</div>
+                    </div>
                     <div class="figure-img-wrap">
                         <img class="figure-img" id="homeFigureImg" src="机机基础形象.png" alt="AI助手形象">
                     </div>
                     <div class="figure-name-tag" id="homeFigureName">小航·基础版</div>
                 </div>
 
-                <!-- 操作按钮 -->
-                <div class="action-btns">
-                    <button class="action-btn" onclick="openCollection(event)">
-                        <span>🏠</span> 我的形象
-                    </button>
-                    <button class="action-btn" onclick="openBlindbox(event)">
-                        <span>🎁</span> 抽取盲盒
-                    </button>
-                </div>
+                <!-- 唤起小航 -->
+                <button class="awaken-btn" onclick="openMainChat()">
+                    <span>🗨️</span> 唤起小航
+                </button>
             </div>
 
             <!-- 右侧任务面板 -->
-            <div class="right-panel">
+            <div class="right-panel" id="rightPanel">
                 <!-- 任务卡片 -->
                 <div class="task-cards">
                     <div class="task-card">
@@ -885,6 +2154,174 @@
                 </div>
             </div>
         </div>
+
+        <!-- ═══════ 学科·应用页面 ═══════ -->
+        <div class="subject-page" id="subjectPage">
+            <!-- 子标签导航 -->
+            <div class="sub-tabs">
+                <button class="sub-tab" onclick="showToast('AI伴学页面开发中')">AI伴学</button>
+                <button class="sub-tab" onclick="showToast('学科页面开发中')">学科</button>
+                <button class="sub-tab active">应用</button>
+                <button class="sub-tab" onclick="showToast('学情页面开发中')">学情</button>
+            </div>
+
+            <!-- 应用卡片网格 -->
+            <div class="app-grid">
+                <div class="app-card" onclick="showToast('打开题库...')">
+                    <div class="app-icon">📚</div>
+                    <div class="app-title">题库</div>
+                    <div class="app-sub">海量题库任你搜</div>
+                </div>
+                <div class="app-card" onclick="showToast('打开单词...')">
+                    <div class="app-icon">🔤</div>
+                    <div class="app-title">单词</div>
+                    <div class="app-sub">小航教你记单词</div>
+                </div>
+                <div class="app-card" onclick="showToast('打开口语考练...')">
+                    <div class="app-icon">🎤</div>
+                    <div class="app-title">口语考练</div>
+                    <div class="app-sub">口语智能评分</div>
+                </div>
+                <div class="app-card" onclick="showToast('打开资料库...')">
+                    <div class="app-icon">📁</div>
+                    <div class="app-title">资料库</div>
+                    <div class="app-sub">海量学习资料</div>
+                </div>
+                <div class="app-card" onclick="showToast('打开写作批改...')">
+                    <div class="app-icon">✏️</div>
+                    <div class="app-title">写作批改</div>
+                    <div class="app-sub">AI智能批改</div>
+                </div>
+                <div class="app-card" onclick="showToast('打开精品课程...')">
+                    <div class="app-icon">🎓</div>
+                    <div class="app-title">精品课程</div>
+                    <div class="app-sub">名校精品课程</div>
+                </div>
+                <div class="app-card" onclick="showToast('打开AI课堂笔记...')">
+                    <div class="app-icon">📝</div>
+                    <div class="app-title">AI课堂笔记</div>
+                    <div class="app-sub">拍照上传笔记</div>
+                </div>
+                <div class="app-card" onclick="showToast('打开名师在线...')">
+                    <div class="app-icon">👨‍🏫</div>
+                    <div class="app-title">名师在线</div>
+                    <div class="app-sub">真人老师辅导</div>
+                </div>
+                <div class="app-card" onclick="showToast('打开个人中心...')">
+                    <div class="app-icon">👤</div>
+                    <div class="app-title">个人中心</div>
+                    <div class="app-sub">管理个人设置</div>
+                </div>
+                <div class="app-card" onclick="showToast('打开我的课堂...')">
+                    <div class="app-icon">🏫</div>
+                    <div class="app-title">我的课堂</div>
+                    <div class="app-sub">你的学习空间</div>
+                </div>
+                <div class="app-card" onclick="showToast('打开应用商城...')">
+                    <div class="app-icon">🛒</div>
+                    <div class="app-title">应用商城</div>
+                    <div class="app-sub">更多应用下载</div>
+                </div>
+                <div class="app-card" onclick="showToast('打开考试日历...')">
+                    <div class="app-icon">📅</div>
+                    <div class="app-title">考试日历</div>
+                    <div class="app-sub">你的考试时间</div>
+                </div>
+                <div class="app-card" onclick="showToast('打开相机...')">
+                    <div class="app-icon">📷</div>
+                    <div class="app-title">相机</div>
+                    <div class="app-sub"></div>
+                </div>
+                <div class="app-card" onclick="showToast('打开相册...')">
+                    <div class="app-icon">🖼️</div>
+                    <div class="app-title">相册</div>
+                    <div class="app-sub"></div>
+                </div>
+                <div class="app-card" onclick="showToast('打开设置...')">
+                    <div class="app-icon">⚙️</div>
+                    <div class="app-title">设置</div>
+                    <div class="app-sub"></div>
+                </div>
+            </div>
+
+            <!-- 悬浮AI助手按钮 -->
+            <button class="float-chat-btn" id="subjectFloatChatBtn" onclick="openAuxChat()" title="打开小航AI助手">
+                <img id="subjectFloatChatImg" src="images/base.png" alt="小航">
+            </button>
+        </div>
+
+                <!-- 首页辅助聊天窗口 -->
+        <div class="aux-chat" id="homeAuxChat">
+            <div class="aux-chat-header">
+                <div class="aux-chat-avatar">
+                    <img id="homeAuxAvatar" src="" alt="小航">
+                </div>
+                <div class="aux-chat-title">小航AI助手</div>
+                <div class="aux-chat-status"><span class="status-dot"></span>在线</div>
+                <button class="aux-chat-btn" onclick="expandFromAux()" title="展开全屏">⬆</button>
+                <button class="aux-chat-btn" onclick="closeAuxChat()" title="关闭">✕</button>
+            </div>
+            <div class="aux-chat-messages" id="homeAuxMessages"></div>
+            <div class="aux-chat-input">
+                <button onclick="showToast('拍照...')">📷</button>
+                <input type="text" id="homeAuxInput" placeholder="输入消息..." onkeydown="handleHomeAuxKey(event)">
+                <button onclick="showToast('语音...')">🎙</button>
+                <button class="send-btn" onclick="sendHomeAuxMessage()">➤</button>
+            </div>
+        </div>
+
+                <!-- Fullscreen Chat (Left Sidebar + Right Content) -->
+        <div class="fullscreen-chat" id="mainChatPanel">
+            <!-- Left Sidebar -->
+            <div class="chat-sidebar">
+                <div class="chat-sidebar-header">
+                    <div class="chat-sidebar-logo">
+                        <div class="chat-sidebar-logo-img">
+                            <img id="mainChatLogo" src="" alt="小航">
+                        </div>
+                        <div class="chat-sidebar-logo-text">小航AI</div>
+                    </div>
+                    <button class="chat-sidebar-new-btn" onclick="newConversation()">
+                        <span>+</span> 新建对话
+                    </button>
+                </div>
+                <div class="chat-sidebar-list" id="chatHistoryList">
+                    <div class="chat-sidebar-empty">暂无聊天记录，开始新的对话吧~</div>
+                </div>
+            </div>
+
+            <!-- Right Main Area -->
+            <div class="chat-main">
+                <!-- Main Header -->
+                <div class="chat-main-header">
+                    <div class="chat-main-title" id="chatMainTitle">新对话 1</div>
+                    <div class="chat-main-tools">
+                        <button class="chat-main-tool-btn" onclick="switchToAux()" title="切换为辅助窗口">⬇</button>
+                        <button class="chat-main-tool-btn" onclick="closeMainChat()" title="关闭">✕</button>
+                    </div>
+                </div>
+                
+                <!-- Chat Messages -->
+                <div class="chat-messages-area" id="mainChatMessages"></div>
+                
+                <!-- Voice Recording State -->
+                <div class="voice-recording" id="voiceRecording">
+                    <div class="voice-wave">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <span>正在录音... 点击结束</span>
+                </div>
+                
+                <!-- Simplified Chat Input -->
+                <div class="chat-input-bar" id="chatInputBar">
+                    <button class="chat-input-btn" onclick="showToast('打开相机...')" title="拍照">📷</button>
+                    <input type="text" class="chat-input-field" id="mainChatInput" placeholder="输入消息..." onkeydown="handleChatKeydown(event)">
+                    <button class="chat-input-btn" id="voiceBtn" onclick="toggleVoiceInput()" title="语音输入">🎙</button>
+                    <button class="chat-send-btn" onclick="sendMainMessage()" title="发送">➤</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -898,9 +2335,73 @@
         <div class="modal-body">
             <div class="figure-grid" id="figureGrid"></div>
             <div class="collection-empty-tip" id="collectionTip" style="display:none">
-                <p>抽取盲盒可获得更多形象哦~</p>
-                <button class="action-btn" onclick="closeCollection(); openBlindbox();">去抽取</button>
+                <p>抽取盲盒或定制专属宠物可获得更多形象哦~</p>
             </div>
+        </div>
+        <!-- 弹框底部固定入口 -->
+        <div class="collection-modal-footer">
+            <button class="action-btn" onclick="closeCollection(); openBlindbox();">
+                <span>🎁</span> 抽取盲盒
+            </button>
+            <button class="action-btn" onclick="closeCollection(); openCustomizeModal();">
+                <span>🎨</span> 定制专属宠物
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ 定制形象弹框 ═══════ -->
+<div class="modal-overlay" id="customizeOverlay" onclick="closeCustomizeModal(event)">
+    <div class="customize-modal" id="customizeModal" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <div class="modal-title">🎨 定制我的AI形象</div>
+            <button class="modal-close" onclick="closeCustomizeModal()">✕</button>
+        </div>
+
+        <div class="customize-body">
+            <div class="customize-step active" id="customizeStep1">
+                <div class="customize-step-title">选择你的AI伙伴</div>
+                <div class="customize-step-sub">选择猫咪或狗狗，并为它取一个名字</div>
+
+                <div class="pet-type-grid">
+                    <div class="pet-type-card" id="petCat" onclick="selectPetType('cat')">
+                        <div class="pet-type-icon">🐱</div>
+                        <div class="pet-type-name">猫咪</div>
+                        <div class="pet-type-desc">温柔灵动的猫咪伙伴</div>
+                    </div>
+                    <div class="pet-type-card" id="petDog" onclick="selectPetType('dog')">
+                        <div class="pet-type-icon">🐶</div>
+                        <div class="pet-type-name">狗狗</div>
+                        <div class="pet-type-desc">忠诚活泼的狗狗伙伴</div>
+                    </div>
+                </div>
+
+                <div class="customize-name-wrap">
+                    <input class="customize-name-input" id="petNameInput" placeholder="给你的伙伴取个名字（必填）" maxlength="10">
+                    <div class="customize-name-hint">💡 名字最多10个字</div>
+                </div>
+
+                <!-- 动态预览区 -->
+                <div class="preview-stage" id="previewStage">
+                    <div class="preview-pet" id="previewPet">🐱</div>
+                    <div class="preview-yarn" id="previewYarn">🧶</div>
+                </div>
+
+                <!-- 预置形象选择 -->
+                <div class="preset-grid" id="presetGrid"></div>
+
+                <!-- 积分提示 -->
+                <div class="points-bar" id="pointsBar">
+                    <span>🪙</span>
+                    <span id="pointsBarText">首次定制免费，后续每次消耗 <strong>100 积分</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部按钮 -->
+        <div class="customize-footer" id="customizeFooter">
+            <button class="customize-btn-secondary" onclick="closeCustomizeModal()">取消</button>
+            <button class="customize-btn-primary" id="customizeNextBtn" onclick="handleCustomizeNext()" disabled>确认使用</button>
         </div>
     </div>
 </div>
@@ -915,10 +2416,11 @@
         <div class="blindbox-body">
             <!-- 次数 -->
             <div class="draw-count" id="drawCountEl">
-                剩余抽奖次数：<span class="count-num" id="drawCountNum">3</span> 次
-                <div class="draw-count-hint" id="drawCountHint" style="display:none">暂无抽奖次数，完成任务可获得更多次数哦~</div>
+                剩余积分：<span class="count-num" id="drawCountNum">100</span>
+                <span style="color:#999; font-size:13px; margin-left:6px">(100积分/次)</span>
+                <div class="draw-count-hint" id="drawCountHint" style="display:none">积分不足（100积分/次），完成任务可获得更多积分哦~</div>
                 <div id="taskLinkWrap" style="display:none; text-align:center;">
-                    <button class="task-link-btn" onclick="goToTasks()">✨ 去做任务赚次数</button>
+                    <button class="task-link-btn" onclick="goToTasks()">✨ 去做任务赚积分</button>
                 </div>
             </div>
 
@@ -961,20 +2463,51 @@
 <script>
 // ═══════ 数据 ═══════
 const FIGURES = [
-    { id: 'base',      name: '小航·基础版', image: '机机基础形象.png', default: true },
-    { id: 'astronaut', name: '小航·宇航员', image: '宇航员.png' },
-    { id: 'athlete',   name: '小航·运动员', image: '运动员.png' }
+    { id: 'base',      name: '小航·基础版', image: 'images/base.png', default: true },
+    { id: 'astronaut', name: '小航·宇航员', image: 'images/astronaut.png' },
+    { id: 'athlete',   name: '小航·运动员', image: 'images/athlete.png' }
 ];
 
 let userData = {
     currentFigureId: 'base',
     ownedFigureIds: ['base'],
-    drawCount: 1
+    points: 100,
+    hasCustomizedFree: false,   // 是否已使用首次免费定制
+    generatedFigures: []        // AI生成的形象 {id, name, image, type, desc}
 };
 
 // 当前抽取结果（暂存）
 let currentDrawResult = null;
 let isDrawing = false;
+
+// ═══════ 定制形象状态 ═══════
+let customizeState = {
+    selectedType: null,      // 'cat' | 'dog'
+    petName: '',
+    selectedPresetId: null,
+    currentAnimation: 'sleep'
+};
+let animationTimer = null;
+
+// 预置宠物形象
+const PRESET_PETS = {
+    cat: [
+        { id: 'preset_cat_orange', emoji: '🐱', name: '橘猫', bg: 'linear-gradient(135deg,#FFE0B2,#FFCC80)', desc: '温暖活泼' },
+        { id: 'preset_cat_ragdoll', emoji: '🐈', name: '布偶猫', bg: 'linear-gradient(135deg,#E3F2FD,#BBDEFB)', desc: '优雅温柔' },
+        { id: 'preset_cat_british', emoji: '😺', name: '英短', bg: 'linear-gradient(135deg,#ECEFF1,#CFD8DC)', desc: '圆润可爱' },
+        { id: 'preset_cat_siamese', emoji: '😸', name: '暹罗猫', bg: 'linear-gradient(135deg,#FFF3E0,#FFE0B2)', desc: '聪明机灵' },
+        { id: 'preset_cat_persian', emoji: '😻', name: '波斯猫', bg: 'linear-gradient(135deg,#F3E5F5,#E1BEE7)', desc: '高贵优雅' },
+        { id: 'preset_cat_maine', emoji: '😼', name: '缅因猫', bg: 'linear-gradient(135deg,#E8F5E9,#C8E6C9)', desc: '温柔巨人' }
+    ],
+    dog: [
+        { id: 'preset_dog_shiba', emoji: '🐶', name: '柴犬', bg: 'linear-gradient(135deg,#FFE0B2,#FFCC80)', desc: '笑容治愈' },
+        { id: 'preset_dog_corgi', emoji: '🐕', name: '柯基', bg: 'linear-gradient(135deg,#FFECB3,#FFE082)', desc: '腿短心暖' },
+        { id: 'preset_dog_golden', emoji: '🦮', name: '金毛', bg: 'linear-gradient(135deg,#FFF8E1,#FFECB3)', desc: '温柔懂事' },
+        { id: 'preset_dog_poodle', emoji: '🐩', name: '贵宾犬', bg: 'linear-gradient(135deg,#F3E5F5,#E1BEE7)', desc: '聪明活泼' },
+        { id: 'preset_dog_husky', emoji: '🐕‍🦺', name: '哈士奇', bg: 'linear-gradient(135deg,#E3F2FD,#BBDEFB)', desc: '精力旺盛' },
+        { id: 'preset_dog_samoyed', emoji: '🦴', name: '萨摩耶', bg: 'linear-gradient(135deg,#ECEFF1,#CFD8DC)', desc: '微笑天使' }
+    ]
+};
 
 // ═══════ 工具函数 ═══════
 function showToast(msg) {
@@ -985,21 +2518,93 @@ function showToast(msg) {
 }
 
 function getFigure(id) {
-    return FIGURES.find(f => f.id === id);
+    return FIGURES.find(f => f.id === id) || userData.generatedFigures.find(f => f.id === id);
 }
 
 function getOwnedFigures() {
-    return FIGURES.filter(f => userData.ownedFigureIds.includes(f.id));
+    const sys = FIGURES.filter(f => userData.ownedFigureIds.includes(f.id));
+    return [...sys, ...userData.generatedFigures];
 }
 
 function getLockedFigures() {
     return FIGURES.filter(f => !userData.ownedFigureIds.includes(f.id));
 }
 
+// 渲染AI头像HTML（支持系统形象图片和生成形象emoji）
+function renderAvatarHtml(fig, moodClass, moodEmoji) {
+    if (fig.generated) {
+        return `
+            <div class="msg-avatar mood-${moodClass}" style="background:${fig.bg || '#f5f5f5'};display:flex;align-items:center;justify-content:center;font-size:24px;">
+                ${fig.emoji || '🐾'}
+                ${moodEmoji ? `<div class="msg-mood-emoji">${moodEmoji}</div>` : ''}
+            </div>
+        `;
+    }
+    return `
+        <div class="msg-avatar mood-${moodClass}">
+            <img src="${fig.image}" alt="小航">
+            ${moodEmoji ? `<div class="msg-mood-emoji">${moodEmoji}</div>` : ''}
+        </div>
+    `;
+}
+
 function updateHomeFigure() {
     const fig = getFigure(userData.currentFigureId) || getFigure('base');
-    document.getElementById('homeFigureImg').src = fig.image;
+    const wrap = document.querySelector('.figure-img-wrap');
+    if (fig.generated) {
+        // AI生成的形象：用emoji+背景色展示
+        wrap.innerHTML = `<div class="figure-img" style="width:85%;height:85%;display:flex;align-items:center;justify-content:center;font-size:70px;background:${fig.bg || '#f5f5f5'};border-radius:50%;">${fig.emoji || '🐾'}</div>`;
+    } else {
+        wrap.innerHTML = `<img class="figure-img" id="homeFigureImg" src="${fig.image}" alt="AI助手形象">`;
+    }
     document.getElementById('homeFigureName').textContent = fig.name;
+    // 同步更新学科页面悬浮按钮头像
+    const floatBtn = document.getElementById('subjectFloatChatBtn');
+    if (floatBtn) {
+        if (fig.generated) {
+            floatBtn.innerHTML = `<div style="width:75%;height:75%;display:flex;align-items:center;justify-content:center;font-size:32px;background:${fig.bg || '#f5f5f5'};border-radius:50%;">${fig.emoji || '🐾'}</div>`;
+        } else {
+            floatBtn.innerHTML = `<img id="subjectFloatChatImg" src="${fig.image}" alt="小航" style="width:75%;height:75%;object-fit:contain;">`;
+        }
+    }
+    // 同步更新聊天头像
+    const mainChatLogo = document.getElementById('mainChatLogo');
+    if (mainChatLogo) {
+        const logoWrap = mainChatLogo.parentElement;
+        if (fig.generated) {
+            logoWrap.innerHTML = `<div id="mainChatLogo" style="width:80%;height:80%;display:flex;align-items:center;justify-content:center;font-size:24px;background:${fig.bg || '#f5f5f5'};border-radius:50%;">${fig.emoji || '🐾'}</div>`;
+        } else {
+            logoWrap.innerHTML = `<img id="mainChatLogo" src="${fig.image}" alt="小航" style="width:80%;height:80%;object-fit:contain;">`;
+        }
+    }
+    const homeAuxAvatar = document.getElementById('homeAuxAvatar');
+    if (homeAuxAvatar) {
+        const auxWrap = homeAuxAvatar.parentElement;
+        if (fig.generated) {
+            auxWrap.innerHTML = `<div id="homeAuxAvatar" style="width:80%;height:80%;display:flex;align-items:center;justify-content:center;font-size:22px;background:${fig.bg || '#f5f5f5'};border-radius:50%;">${fig.emoji || '🐾'}</div>`;
+        } else {
+            auxWrap.innerHTML = `<img id="homeAuxAvatar" src="${fig.image}" alt="小航" style="width:80%;height:80%;object-fit:contain;">`;
+        }
+    }
+}
+
+// ═══════ 页面切换 ═══════
+function switchPage(page) {
+    const home = document.getElementById('homeContainer');
+    const subject = document.getElementById('subjectPage');
+    const tabs = document.querySelectorAll('.nav-tab');
+
+    if (page === 'home') {
+        home.style.display = 'flex';
+        subject.classList.remove('active');
+        tabs[0].classList.add('active');
+        tabs[1].classList.remove('active');
+    } else if (page === 'subject') {
+        home.style.display = 'none';
+        subject.classList.add('active');
+        tabs[0].classList.remove('active');
+        tabs[1].classList.add('active');
+    }
 }
 
 // ═══════ 我的形象弹框 ═══════
@@ -1026,34 +2631,71 @@ function renderFigureGrid() {
     const grid = document.getElementById('figureGrid');
     grid.innerHTML = '';
 
-    FIGURES.forEach(fig => {
-        const isOwned = userData.ownedFigureIds.includes(fig.id);
-        const isCurrent = userData.currentFigureId === fig.id;
+    const MAX_SLOTS = 4;
+    const allOwned = [];
 
+    // 收集所有已拥有的形象
+    FIGURES.forEach(fig => {
+        if (userData.ownedFigureIds.includes(fig.id)) {
+            allOwned.push({ type: 'system', data: fig });
+        }
+    });
+    userData.generatedFigures.forEach(fig => {
+        allOwned.push({ type: 'generated', data: fig });
+    });
+
+    // 渲染已拥有的形象
+    allOwned.forEach(item => {
+        const fig = item.data;
+        const isCurrent = userData.currentFigureId === fig.id;
         const card = document.createElement('div');
-        card.className = 'figure-card' + (isOwned ? '' : ' locked') + (isCurrent ? ' active' : '');
-        if (isOwned && !isCurrent) {
+        card.className = 'figure-card' + (isCurrent ? ' active' : '');
+        if (!isCurrent) {
             card.onclick = () => setCurrentFigure(fig.id);
         }
 
-        card.innerHTML = `
-            <div class="figure-card-img-wrap">
-                <img class="figure-card-img" src="${fig.image}" alt="${fig.name}">
-                ${isCurrent ? '<span class="using-badge">使用中</span>' : ''}
-                <div class="lock-overlay"><div class="lock-icon">🔒</div></div>
-            </div>
-            <div class="figure-card-name">${fig.name}</div>
-        `;
+        if (item.type === 'system') {
+            card.innerHTML = `
+                <div class="figure-card-img-wrap">
+                    <img class="figure-card-img" src="${fig.image}" alt="${fig.name}">
+                    ${isCurrent ? '<span class="using-badge">使用中</span>' : ''}
+                </div>
+                <div class="figure-card-name">${fig.name}</div>
+            `;
+        } else {
+            card.innerHTML = `
+                <div class="figure-card-img-wrap" style="padding:6px;">
+                    <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:36px;background:${fig.bg || '#f5f5f5'};border-radius:10px;">${fig.emoji || '🐾'}</div>
+                    ${isCurrent ? '<span class="using-badge">使用中</span>' : ''}
+                </div>
+                <div class="figure-card-name">${fig.name}</div>
+            `;
+        }
         grid.appendChild(card);
     });
 
-    // 显示提示（如果只有默认形象）
+    // 填充空白占位
+    const emptyCount = MAX_SLOTS - allOwned.length;
+    for (let i = 0; i < emptyCount; i++) {
+        const card = document.createElement('div');
+        card.className = 'figure-card figure-slot-empty';
+        card.innerHTML = `
+            <div class="figure-card-img-wrap">
+                <div class="figure-slot-placeholder">?</div>
+            </div>
+            <div class="figure-card-name">未解锁</div>
+        `;
+        grid.appendChild(card);
+    }
+
+    // 显示提示（如果格子未满）
     const tip = document.getElementById('collectionTip');
-    tip.style.display = userData.ownedFigureIds.length <= 1 ? 'block' : 'none';
+    tip.style.display = allOwned.length < MAX_SLOTS ? 'block' : 'none';
 }
 
 function setCurrentFigure(id) {
     userData.currentFigureId = id;
+    saveUserData();
     updateHomeFigure();
     showToast(`已将「${getFigure(id).name}」设为当前形象`);
     closeCollection();
@@ -1105,10 +2747,10 @@ function updateBlindboxState() {
     const drawBtn = document.getElementById('drawBtn');
     const allCollected = document.getElementById('allCollected');
 
-    countNum.textContent = userData.drawCount;
+    countNum.textContent = userData.points;
 
     const taskLinkWrap = document.getElementById('taskLinkWrap');
-    if (userData.drawCount <= 0) {
+    if (userData.points < 100) {
         countEl.classList.add('empty');
         countHint.style.display = 'block';
         taskLinkWrap.style.display = 'block';
@@ -1139,8 +2781,8 @@ function updateBlindboxState() {
 
 function startDraw() {
     if (isDrawing) return;
-    if (userData.drawCount <= 0) {
-        showToast('暂无抽奖次数');
+    if (userData.points < 100) {
+        showToast('积分不足（需100积分/次）');
         return;
     }
 
@@ -1151,8 +2793,9 @@ function startDraw() {
     }
 
     isDrawing = true;
-    userData.drawCount--;
-    document.getElementById('drawCountNum').textContent = userData.drawCount;
+    userData.points -= 100;
+    saveUserData();
+    document.getElementById('drawCountNum').textContent = userData.points;
     document.getElementById('drawBtn').disabled = true;
     document.getElementById('drawBtn').textContent = '抽取中...';
 
@@ -1231,6 +2874,7 @@ function collectFigure() {
     // 添加到收藏
     userData.ownedFigureIds.push(currentDrawResult.id);
     userData.currentFigureId = currentDrawResult.id;
+    saveUserData();
 
     // 更新首页
     updateHomeFigure();
@@ -1258,8 +2902,624 @@ function toggleOrientation() {
     frame.classList.toggle('portrait');
 }
 
+// ═══════ AI 主聊天窗口 (Left Sidebar + Right Content) ═══════
+let chatConversations = JSON.parse(localStorage.getItem('xh_chat_history') || '[]');
+let currentConversationId = null;
+let isRecording = false;
+let isAuxChatOpen = false;
+
+function openMainChat() {
+    const panel = document.getElementById('mainChatPanel');
+    panel.classList.add('active');
+
+    // 同步更新所有头像（支持系统形象和AI生成形象）
+    updateHomeFigure();
+
+    // Load or create conversation
+    if (!currentConversationId || !chatConversations.find(c => c.id === currentConversationId)) {
+        createNewConversation(false);
+    } else {
+        renderCurrentConversation();
+    }
+    
+    // Focus input
+    setTimeout(() => {
+        const inp = document.getElementById('mainChatInput');
+        if (inp) inp.focus();
+    }, 300);
+    
+    renderChatHistory();
+}
+
+function closeMainChat() {
+    document.getElementById('mainChatPanel').classList.remove('active');
+    isAuxChatOpen = false;
+}
+
+function switchToAux() {
+    closeMainChat();
+    openAuxChat();
+    showToast('已切换为辅助聊天窗口');
+}
+
+function openAuxChat() {
+    isAuxChatOpen = true;
+    const aux = document.getElementById('homeAuxChat');
+    if (aux) {
+        aux.classList.add('active');
+        // Copy current conversation to aux
+        renderAuxMessages();
+        setTimeout(() => {
+            const inp = document.getElementById('homeAuxInput');
+            if (inp) inp.focus();
+        }, 200);
+    }
+}
+
+function closeAuxChat() {
+    isAuxChatOpen = false;
+    const aux = document.getElementById('homeAuxChat');
+    if (aux) aux.classList.remove('active');
+}
+
+function expandFromAux() {
+    closeAuxChat();
+    openMainChat();
+}
+
+function createNewConversation(showToastMsg=true) {
+    const id = 'conv_' + Date.now();
+    const now = new Date();
+    const title = '新对话 ' + (chatConversations.length + 1);
+    const conv = {
+        id, title,
+        time: now.toISOString(),
+        pinned: false,
+        messages: [{
+            role: 'ai',
+            content: '你好呀！我是小航，你的AI学习助手~ 今天有什么可以帮你的吗？',
+            time: formatTime(),
+            mood: 'normal',
+            quickActions: [{label:'📷 拍照答疑',action:'photo'},{label:'👨‍🏫 名师在线',action:'teacher'},{label:'📋 查看任务',action:'task'}]
+        }]
+    };
+    chatConversations.unshift(conv);
+    currentConversationId = id;
+    saveConversations();
+    renderCurrentConversation();
+    renderChatHistory();
+    if (isAuxChatOpen) renderAuxMessages();
+    if (showToastMsg) showToast('已新建对话');
+    return id;
+}
+
+function newConversation() {
+    createNewConversation(true);
+}
+
+function saveConversations() {
+    try { localStorage.setItem('xh_chat_history', JSON.stringify(chatConversations)); } catch(e) {}
+}
+
+function renderChatHistory() {
+    const list = document.getElementById('chatHistoryList');
+    if (!list) return;
+    if (chatConversations.length === 0) {
+        list.innerHTML = '<div class="chat-sidebar-empty">暂无聊天记录，开始新的对话吧~</div>';
+        return;
+    }
+    const sorted = [...chatConversations].sort((a,b) => {
+        if (a.pinned && !b.pinned) return -1;
+        if (!a.pinned && b.pinned) return 1;
+        return new Date(b.time) - new Date(a.time);
+    });
+    list.innerHTML = sorted.map(c => {
+        const isActive = c.id === currentConversationId;
+        const d = new Date(c.time);
+        const timeStr = d.getMonth()+1 + '/' + d.getDate();
+        return `
+            <div class="chat-sidebar-item ${isActive?'active':''} ${c.pinned?'pinned':''}" onclick="switchConversation('${c.id}')">
+                <div class="chat-sidebar-item-info">
+                    <div class="chat-sidebar-item-title">${c.pinned ? '<span class="chat-sidebar-badge">置顶</span> ' : ''}${escapeHtml(c.title)}</div>
+                    <div class="chat-sidebar-item-time">${timeStr}</div>
+                </div>
+                <div class="chat-sidebar-item-actions" onclick="event.stopPropagation()">
+                    <button class="chat-sidebar-action" title="置顶" onclick="pinConversation('${c.id}')">⬆</button>
+                    <button class="chat-sidebar-action" title="重命名" onclick="renameConversation('${c.id}')">✏</button>
+                    <button class="chat-sidebar-action" title="删除" onclick="deleteConversation('${c.id}')">🗑</button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function switchConversation(id) {
+    currentConversationId = id;
+    renderCurrentConversation();
+    renderChatHistory();
+    if (isAuxChatOpen) renderAuxMessages();
+}
+
+function pinConversation(id) {
+    const conv = chatConversations.find(c => c.id === id);
+    if (conv) {
+        conv.pinned = !conv.pinned;
+        saveConversations();
+        renderChatHistory();
+        showToast(conv.pinned ? '已置顶' : '已取消置顶');
+    }
+}
+
+function renameConversation(id) {
+    const conv = chatConversations.find(c => c.id === id);
+    if (!conv) return;
+    const newName = prompt('重命名对话：', conv.title);
+    if (newName && newName.trim()) {
+        conv.title = newName.trim();
+        saveConversations();
+        renderChatHistory();
+        if (currentConversationId === id) renderCurrentConversation();
+    }
+}
+
+function deleteConversation(id) {
+    if (!confirm('确定要删除这个对话吗？')) return;
+    chatConversations = chatConversations.filter(c => c.id !== id);
+    if (currentConversationId === id) {
+        currentConversationId = chatConversations.length > 0 ? chatConversations[0].id : null;
+    }
+    saveConversations();
+    renderChatHistory();
+    if (currentConversationId) renderCurrentConversation();
+    else createNewConversation(false);
+}
+
+function renderCurrentConversation() {
+    const container = document.getElementById('mainChatMessages');
+    if (!container || !currentConversationId) return;
+    const conv = chatConversations.find(c => c.id === currentConversationId);
+    if (!conv) { createNewConversation(false); return; }
+    
+    document.getElementById('chatMainTitle').textContent = conv.title;
+    
+    const fig = getFigure(userData.currentFigureId) || getFigure('base');
+    container.innerHTML = conv.messages.map(m => {
+        if (m.role === 'user') {
+            return `
+                <div class="msg user-msg">
+                    <div class="msg-bubble">
+                        <div class="msg-text">${m.content}</div>
+                        <div class="msg-time">${m.time}</div>
+                    </div>
+                </div>
+            `;
+        } else {
+            const moodClass = m.mood || 'normal';
+            const moodEmoji = {normal:'', thinking:'💭', happy:'😊', confused:'🤔'}[moodClass] || '';
+            const quickHtml = m.quickActions ? `
+                <div class="quick-actions" style="margin-left:0;">
+                    ${m.quickActions.map(q => `<button class="quick-btn" onclick="handleQuickAction('${q.action}')">${q.label}</button>
+                    `).join('')}
+                </div>
+            ` : '';
+            return `
+                <div class="msg ai-msg">
+                    ${renderAvatarHtml(fig, moodClass, moodEmoji)}
+                    <div class="msg-bubble">
+                        <div class="msg-text">${m.content}</div>
+                        <div class="msg-time">${m.time}</div>
+                    </div>
+                </div>
+                ${quickHtml}
+            `;
+        }
+    }).join('');
+    scrollToBottomMain();
+}
+
+function sendMainMessage() {
+    const inp = document.getElementById('mainChatInput');
+    const text = inp.value.trim();
+    if (!text) return;
+    
+    const conv = chatConversations.find(c => c.id === currentConversationId);
+    if (!conv) return;
+    
+    const time = formatTime();
+    conv.messages.push({role:'user', content: escapeHtml(text), time});
+    conv.time = new Date().toISOString();
+    saveConversations();
+    renderCurrentConversation();
+    inp.value = '';
+    
+    // Show thinking
+    showThinking();
+    
+    // AI response
+    setTimeout(() => {
+        hideThinking();
+        handleAIResponseMain(text);
+    }, 800);
+}
+
+function showThinking() {
+    const container = document.getElementById('mainChatMessages');
+    const fig = getFigure(userData.currentFigureId) || getFigure('base');
+    const html = `
+        <div class="msg ai-msg" id="thinkingMsg">
+            ${renderAvatarHtml(fig, 'thinking', '💭')}
+            <div class="thinking-indicator">
+                <div class="thinking-dots"><span></span><span></span><span></span></div>
+                <span>思考中...</span>
+            </div>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', html);
+    scrollToBottomMain();
+}
+
+function hideThinking() {
+    const el = document.getElementById('thinkingMsg');
+    if (el) el.remove();
+}
+
+function handleAIResponseMain(userText) {
+    const text = userText.toLowerCase();
+    const conv = chatConversations.find(c => c.id === currentConversationId);
+    if (!conv) return;
+    
+    const time = formatTime();
+    let content, mood, quickActions;
+    
+    if (text.includes('任务') || text.includes('作业')) {
+        mood = 'normal';
+        content = `
+            今天你有 <b>4</b> 项学习任务，已完成 <b>1</b> 项：<br><br>
+            <div class="task-summary-card">
+                <h4>📋 今日任务摘要</h4>
+                <div class="task-summary-list">
+                    <div class="task-summary-item"><span>电磁感应专项练兵</span><span class="done">✓ 已完成</span></div>
+                    <div class="task-summary-item"><span>Further Calculus P3</span><span class="pending">⏳ 待完成</span></div>
+                    <div class="task-summary-item"><span>Paper 2 大题写作</span><span class="pending">⏳ 待完成</span></div>
+                    <div class="task-summary-item"><span>有机反应</span><span class="pending">⏳ 待完成</span></div>
+                </div>
+            </div>
+        `;
+        quickActions = [{label:'📋 查看全部任务', action:'task'}];
+    } else if (text.includes('题目') || text.includes('答疑') || text.includes('拍照')) {
+        mood = 'thinking';
+        content = `遇到难题了吗？我可以帮你拍照答疑！<br><br>打开相机，对准题目拍照，我会立即为你分析解答思路~`;
+        quickActions = [{label:'📷 去拍照答疑', action:'photo'}];
+    } else if (text.includes('老师') || text.includes('呼叫')) {
+        mood = 'happy';
+        content = `需要真人老师帮忙吗？我们的名师在线为你提供一对一辅导！`;
+        quickActions = [{label:'👨‍🏫 去名师在线', action:'teacher'}];
+    } else if (text.includes('你好') || text.includes('嗨') || text.includes('hi')) {
+        mood = 'happy';
+        content = `你好呀！很高兴见到你 😊 有什么我可以帮你的吗？`;
+        quickActions = [{label:'📷 拍照答疑', action:'photo'},{label:'👨‍🏫 名师在线', action:'teacher'},{label:'📋 查看任务', action:'task'}];
+    } else {
+        mood = 'confused';
+        content = `收到！小航正在学习中，暂时还不能完全理解这个问题 😊<br><br>你可以试试以下功能：`;
+        quickActions = [{label:'📷 拍照答疑', action:'photo'},{label:'👨‍🏫 名师在线', action:'teacher'},{label:'📋 查看任务', action:'task'}];
+    }
+    
+    conv.messages.push({role:'ai', content, time, mood, quickActions});
+    conv.time = new Date().toISOString();
+    saveConversations();
+    renderCurrentConversation();
+    if (isAuxChatOpen) renderAuxMessages();
+}
+
+function handleQuickAction(action) {
+    if (action === 'photo') {
+        showToast('即将打开拍照答疑...');
+    } else if (action === 'teacher') {
+        showToast('即将打开名师在线...');
+    } else if (action === 'task') {
+        showToast('已切换到任务面板');
+        closeMainChat();
+        closeAuxChat();
+    }
+}
+
+function toggleVoiceInput() {
+    isRecording = !isRecording;
+    const btn = document.getElementById('voiceBtn');
+    const bar = document.getElementById('chatInputBar');
+    const rec = document.getElementById('voiceRecording');
+    if (isRecording) {
+        btn.classList.add('active');
+        bar.style.display = 'none';
+        rec.classList.add('active');
+        showToast('开始录音，点击结束');
+    } else {
+        btn.classList.remove('active');
+        bar.style.display = '';
+        rec.classList.remove('active');
+        showToast('录音结束，正在识别...');
+        setTimeout(() => {
+            const inp = document.getElementById('mainChatInput');
+            inp.value = '帮我看看这道数学题怎么做';
+            sendMainMessage();
+        }, 800);
+    }
+}
+
+function handleChatKeydown(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        sendMainMessage();
+    }
+}
+
+function formatTime() {
+    const now = new Date();
+    return now.getHours().toString().padStart(2,'0') + ':' + 
+           now.getMinutes().toString().padStart(2,'0');
+}
+
+function scrollToBottomMain() {
+    const container = document.getElementById('mainChatMessages');
+    if (container) container.scrollTop = container.scrollHeight;
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// ═══════ 辅助聊天窗口 (首页) ═══════
+function renderAuxMessages() {
+    const container = document.getElementById('homeAuxMessages');
+    if (!container || !currentConversationId) return;
+    const conv = chatConversations.find(c => c.id === currentConversationId);
+    if (!conv) return;
+    const fig = getFigure(userData.currentFigureId) || getFigure('base');
+    container.innerHTML = conv.messages.slice(-10).map(m => {
+        if (m.role === 'user') {
+            return `
+                <div class="msg user-msg">
+                    <div class="msg-bubble"><div class="msg-text">${m.content}</div><div class="msg-time">${m.time}</div></div>
+                </div>
+            `;
+        } else {
+            const moodClass = m.mood || 'normal';
+            const moodEmoji = {normal:'', thinking:'💭', happy:'😊', confused:'🤔'}[moodClass] || '';
+            return `
+                <div class="msg ai-msg">
+                    ${renderAvatarHtml(fig, moodClass, moodEmoji)}
+                    <div class="msg-bubble"><div class="msg-text">${m.content}</div><div class="msg-time">${m.time}</div></div>
+                </div>
+            `;
+        }
+    }).join('');
+    container.scrollTop = container.scrollHeight;
+}
+
+function sendHomeAuxMessage() {
+    const inp = document.getElementById('homeAuxInput');
+    const text = inp.value.trim();
+    if (!text) return;
+    const conv = chatConversations.find(c => c.id === currentConversationId);
+    if (!conv) return;
+    const time = formatTime();
+    conv.messages.push({role:'user', content: escapeHtml(text), time});
+    conv.time = new Date().toISOString();
+    saveConversations();
+    renderAuxMessages();
+    inp.value = '';
+    setTimeout(() => {
+        handleAIResponseMain(text);
+    }, 600);
+}
+
+function handleHomeAuxKey(e) {
+    if (e.key === 'Enter') { e.preventDefault(); sendHomeAuxMessage(); }
+}
+
+function handleHomeAuxQuick(action) {
+    if (action === 'photo') showToast('即将打开拍照答疑...');
+    else if (action === 'teacher') showToast('即将打开名师在线...');
+    else if (action === 'task') { showToast('查看任务'); closeAuxChat(); }
+}
+
+// ═══════ 定制形象 ═══════
+function openCustomizeModal() {
+    resetCustomizeState();
+    const overlay = document.getElementById('customizeOverlay');
+    const modal = document.getElementById('customizeModal');
+    overlay.classList.add('show');
+    requestAnimationFrame(() => overlay.classList.add('fade-in'));
+    requestAnimationFrame(() => modal.classList.add('show'));
+    updatePointsBar();
+}
+
+function closeCustomizeModal(e) {
+    if (e && e.target !== e.currentTarget) return;
+    stopRandomAnimation();
+    const overlay = document.getElementById('customizeOverlay');
+    const modal = document.getElementById('customizeModal');
+    overlay.classList.remove('fade-in');
+    modal.classList.remove('show');
+    setTimeout(() => overlay.classList.remove('show'), 300);
+}
+
+function resetCustomizeState() {
+    stopRandomAnimation();
+    customizeState = { selectedType: null, petName: '', selectedPresetId: null, currentAnimation: 'sleep' };
+    document.getElementById('petCat').classList.remove('selected');
+    document.getElementById('petDog').classList.remove('selected');
+    document.getElementById('petNameInput').value = '';
+    document.getElementById('presetGrid').innerHTML = '';
+    const pet = document.getElementById('previewPet');
+    pet.className = 'preview-pet';
+    pet.textContent = '🐱';
+    document.getElementById('previewYarn').classList.remove('show', 'yarn-rolling');
+    updateCustomizeNextBtn();
+}
+
+function updatePointsBar() {
+    const bar = document.getElementById('pointsBar');
+    const text = document.getElementById('pointsBarText');
+    if (!userData.hasCustomizedFree) {
+        bar.className = 'points-bar free';
+        text.innerHTML = '🎉 首次定制 <strong>免费</strong>';
+    } else {
+        bar.className = 'points-bar';
+        text.innerHTML = `每次消耗 <strong>100 积分</strong>（当前剩余 ${userData.points} 积分）`;
+    }
+}
+
+function selectPetType(type) {
+    customizeState.selectedType = type;
+    document.getElementById('petCat').classList.toggle('selected', type === 'cat');
+    document.getElementById('petDog').classList.toggle('selected', type === 'dog');
+    // 渲染预置形象网格
+    renderPresetGrid();
+    // 自动选中第一个
+    const presets = PRESET_PETS[type];
+    if (presets && presets.length > 0) {
+        selectPresetPet(presets[0].id);
+    }
+    updateCustomizeNextBtn();
+}
+
+function updateCustomizeNextBtn() {
+    const btn = document.getElementById('customizeNextBtn');
+    const hasType = customizeState.selectedType !== null;
+    const name = document.getElementById('petNameInput').value.trim();
+    btn.disabled = !(hasType && name.length > 0 && customizeState.selectedPresetId !== null);
+}
+
+function handleCustomizeNext() {
+    // 检查积分（首次免费不检查）
+    const cost = userData.hasCustomizedFree ? 100 : 0;
+    if (cost > 0 && userData.points < cost) {
+        showToast('积分不足，去做任务赚积分吧~');
+        return;
+    }
+    customizeState.petName = document.getElementById('petNameInput').value.trim();
+    confirmCustomize(cost);
+}
+
+function playAnimation(anim) {
+    customizeState.currentAnimation = anim;
+    const pet = document.getElementById('previewPet');
+    const yarn = document.getElementById('previewYarn');
+    pet.classList.remove('anim-sleep', 'anim-stretch', 'anim-chase');
+    yarn.classList.remove('show', 'yarn-rolling');
+    requestAnimationFrame(() => {
+        pet.classList.add('anim-' + anim);
+        if (anim === 'chase') {
+            yarn.classList.add('show', 'yarn-rolling');
+        }
+    });
+}
+
+function startRandomAnimation() {
+    stopRandomAnimation();
+    const anims = ['sleep', 'stretch', 'chase'];
+    animationTimer = setInterval(() => {
+        const randomAnim = anims[Math.floor(Math.random() * anims.length)];
+        playAnimation(randomAnim);
+    }, 2500);
+}
+
+function stopRandomAnimation() {
+    if (animationTimer) {
+        clearInterval(animationTimer);
+        animationTimer = null;
+    }
+}
+
+function renderPresetGrid() {
+    const grid = document.getElementById('presetGrid');
+    const presets = PRESET_PETS[customizeState.selectedType] || [];
+    grid.innerHTML = presets.map(p => `
+        <div class="preset-card ${customizeState.selectedPresetId === p.id ? 'selected' : ''}" onclick="selectPresetPet('${p.id}')">
+            <div class="preset-card-img" style="background:${p.bg};">${p.emoji}</div>
+            <div class="preset-card-name">${p.name}</div>
+            <div class="preset-card-desc">${p.desc}</div>
+        </div>
+    `).join('');
+}
+
+function selectPresetPet(id) {
+    customizeState.selectedPresetId = id;
+    const preset = (PRESET_PETS[customizeState.selectedType] || []).find(p => p.id === id);
+    if (preset) {
+        const pet = document.getElementById('previewPet');
+        pet.textContent = preset.emoji;
+        pet.classList.remove('anim-sleep', 'anim-stretch', 'anim-chase');
+        requestAnimationFrame(() => {
+            pet.classList.add('anim-' + customizeState.currentAnimation);
+        });
+    }
+    renderPresetGrid();
+    updateCustomizeNextBtn();
+    // 启动随机动画
+    startRandomAnimation();
+}
+
+function confirmCustomize(cost) {
+    const preset = (PRESET_PETS[customizeState.selectedType] || []).find(p => p.id === customizeState.selectedPresetId);
+    if (!preset) return;
+    const petName = customizeState.petName || preset.name;
+    const newFigure = {
+        id: preset.id + '_' + Date.now(),
+        name: petName,
+        image: '',
+        emoji: preset.emoji,
+        bg: preset.bg,
+        type: customizeState.selectedType,
+        generated: true
+    };
+    userData.generatedFigures.push(newFigure);
+    userData.currentFigureId = newFigure.id;
+    // 成功创建后才扣积分、标记首次免费已使用
+    if (cost > 0) {
+        userData.points -= cost;
+    }
+    userData.hasCustomizedFree = true;
+    saveUserData();
+    updateHomeFigure();
+    showToast(`「${newFigure.name}」已成为你的AI助手形象！`);
+    closeCustomizeModal();
+}
+
+// 名字输入监听
+document.getElementById('petNameInput').addEventListener('input', function() {
+    updateCustomizeNextBtn();
+});
+
+// ═══════ 用户数据持久化 ═══════
+function loadUserData() {
+    try {
+        const raw = localStorage.getItem('xh_user_data');
+        if (raw) {
+            const saved = JSON.parse(raw);
+            Object.assign(userData, saved);
+        }
+    } catch (e) {}
+}
+
+function saveUserData() {
+    try {
+        localStorage.setItem('xh_user_data', JSON.stringify(userData));
+    } catch (e) {}
+}
+
 // ═══════ 初始化 ═══════
+// URL参数 ?reset 可清空本地数据（开发测试用）
+if (location.search.includes('reset')) {
+    localStorage.removeItem('xh_user_data');
+    location.href = location.pathname;
+}
+loadUserData();
 updateHomeFigure();
+console.log('🎨 定制宠物: URL加 ?reset 可重置本地数据');
 </script>
 
 </body>
