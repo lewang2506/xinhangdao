@@ -2847,38 +2847,25 @@
         }
         .schedule-empty-icon { font-size: 36px; margin-bottom: 8px; }
         /* ─── 留学规划应用 ─── */
-        .study-plan-app-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 1001; opacity: 0; transition: opacity 0.3s; padding: 20px; }
+        .study-plan-app-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: none; align-items: stretch; justify-content: stretch; z-index: 2000; opacity: 0; transition: opacity 0.3s; }
         .study-plan-app-overlay.show { display: flex; }
         .study-plan-app-overlay.fade-in { opacity: 1; }
-        .study-plan-app { background: #f7f8fa; border-radius: 20px; width: 900px; max-width: 95vw; height: 700px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; transform: scale(0.95) translateY(20px); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .study-plan-app.show { transform: scale(1) translateY(0); }
-        .study-plan-app-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; background: #fff; border-bottom: 1px solid #f0f0f0; }
+        .study-plan-app { background: #f7f8fa; border-radius: 0; width: 100%; height: 100%; max-width: 100%; max-height: 100%; display: flex; flex-direction: column; overflow: hidden; transform: scale(0.98); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .study-plan-app.show { transform: scale(1); }
+        .study-plan-app-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; background: #fff; border-bottom: 1px solid #f0f0f0; flex-shrink: 0; }
         .study-plan-app-title { font-size: 18px; font-weight: 700; color: #333; display: flex; align-items: center; gap: 10px; }
         .study-plan-app-close { width: 32px; height: 32px; border-radius: 50%; border: none; background: #f5f5f5; cursor: pointer; font-size: 16px; color: #666; display: flex; align-items: center; justify-content: center; }
         .study-plan-app-close:hover { background: #e0e0e0; }
+        .sp-popover-close { width: 32px; height: 32px; border-radius: 50%; border: none; background: #f5f5f5; cursor: pointer; font-size: 16px; color: #666; display: flex; align-items: center; justify-content: center; }
+        .sp-popover-close:hover { background: #e0e0e0; }
         .sp-view-toggle { padding: 6px 14px; border-radius: 16px; border: 1.5px solid #ddd; background: #fff; color: #666; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
         .sp-view-toggle:hover { border-color: #4CAF50; color: #388E3C; background: #E8F5E9; }
-        .sp-presentation-view { display: none; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 8px 0; }
+        .sp-header-actions { display: flex; align-items: center; gap: 10px; }
+        .sp-presentation-view { display: none; gap: 16px; padding: 8px 0; }
         .sp-presentation-view.active { display: grid; }
-        .sp-presentation-thumb { background: #fff; border-radius: 16px; padding: 20px; border: 1px solid #f0f0f0; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 10px; min-height: 160px; }
-        .sp-presentation-thumb:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); border-color: #C8E6C9; }
-        .sp-thumb-num { width: 28px; height: 28px; border-radius: 50%; background: #E8F5E9; color: #388E3C; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-        .sp-thumb-title { font-size: 15px; font-weight: 700; color: #333; }
-        .sp-thumb-summary { font-size: 13px; color: #666; line-height: 1.5; flex: 1; }
-        .sp-slide-view { display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #f7f8fa; z-index: 10; flex-direction: column; }
-        .sp-slide-view.active { display: flex; }
-        .sp-slide-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; background: #fff; border-bottom: 1px solid #f0f0f0; }
-        .sp-slide-back { padding: 6px 14px; border-radius: 16px; border: 1.5px solid #ddd; background: #fff; color: #666; font-size: 13px; font-weight: 600; cursor: pointer; }
-        .sp-slide-back:hover { border-color: #4CAF50; color: #388E3C; background: #E8F5E9; }
-        .sp-slide-content { flex: 1; overflow-y: auto; padding: 24px; }
-        .sp-slide-nav { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 12px 24px; background: #fff; border-top: 1px solid #f0f0f0; }
-        .sp-slide-nav-btn { padding: 8px 16px; border-radius: 14px; border: 1.5px solid #ddd; background: #fff; color: #666; font-size: 13px; font-weight: 600; cursor: pointer; }
-        .sp-slide-nav-btn:hover { border-color: #4CAF50; color: #388E3C; background: #E8F5E9; }
-        .sp-slide-nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-        .sp-slide-counter { font-size: 13px; color: #999; font-weight: 600; }
-        .study-plan-app-body { flex: 1; overflow-y: auto; padding: 24px; }
+        .study-plan-app-body { flex: 1; overflow-y: auto; padding: 24px; position: relative; }
         .study-plan-steps { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
-        .sp-step { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #999; padding: 6px 12px; border-radius: 16px; background: #fff; border: 1px solid #eee; cursor: pointer; transition: all 0.2s; }
+        .sp-step { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #999; padding: 6px 12px; border-radius: 16px; background: #fff; border: 1px solid #eee; cursor: pointer; transition: all 0.2s; position: relative; z-index: 1; }
         .sp-step:hover { border-color: #C8E6C9; }
         .sp-step.active { background: #E8F5E9; color: #388E3C; border-color: #4CAF50; font-weight: 600; }
         .sp-step.done { background: #f5f5f5; color: #666; }
@@ -2890,6 +2877,7 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .sp-card { background: #fff; border-radius: 16px; padding: 24px; margin-bottom: 16px; border: 1px solid #f0f0f0; }
         .sp-card-title { font-size: 16px; font-weight: 700; color: #333; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .sp-card-title-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
         .sp-form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
         .sp-form-field { display: flex; flex-direction: column; gap: 6px; }
         .sp-form-field.full-width { grid-column: span 2; }
@@ -2922,6 +2910,97 @@
             color: #388E3C;
         }
         .sp-selected-uni-remove:hover { color: #F44336; }
+        .sp-picker-card { padding: 10px 12px; border: 1.5px solid #e0e0e0; border-radius: 10px; font-size: 14px; color: #333; background: #fff; cursor: pointer; transition: border-color 0.2s; display: flex; align-items: center; justify-content: space-between; min-height: 40px; }
+        .sp-picker-card:hover { border-color: #4CAF50; }
+        .sp-picker-card .placeholder { color: #999; }
+        .sp-picker-card .value { font-weight: 500; color: #333; }
+        .sp-picker-card .arrow { color: #999; font-size: 12px; }
+        .sp-picker-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .sp-picker-option { padding: 12px 14px; border-radius: 12px; border: 1.5px solid #e0e0e0; background: #fff; color: #555; font-size: 14px; cursor: pointer; transition: all 0.2s; text-align: center; }
+        .sp-picker-option:hover { border-color: #4CAF50; color: #388E3C; background: #f8fff8; }
+        .sp-picker-option.selected { background: #E8F5E9; border-color: #4CAF50; color: #388E3C; font-weight: 600; }
+        .sp-picker-option.disabled { opacity: 0.45; cursor: not-allowed; background: #f5f5f5; }
+        .sp-picker-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 20px; border-top: 1px solid #f0f0f0; background: #fff; }
+        .sp-picker-footer-actions { display: flex; gap: 10px; }
+        .sp-picker-ai-btn { padding: 8px 14px; border-radius: 18px; border: 1.5px solid #4CAF50; background: #E8F5E9; color: #388E3C; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .sp-picker-ai-btn:hover { background: #4CAF50; color: #fff; }
+        .sp-ai-chat-btn { padding: 12px 20px; border-radius: 24px; border: 1.5px solid #4CAF50; background: #E8F5E9; color: #388E3C; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+        .sp-ai-chat-btn:hover { background: #4CAF50; color: #fff; }
+        .sp-report-list { display: flex; flex-direction: column; gap: 10px; }
+        .sp-report-card { background: #fff; border-radius: 12px; padding: 14px 16px; border: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .sp-report-card-title { font-size: 14px; font-weight: 600; color: #333; }
+        .sp-report-card-date { font-size: 12px; color: #999; }
+        .sp-report-empty { text-align: center; padding: 30px 20px; color: #bbb; font-size: 13px; }
+        .sp-report-popover { position: absolute; top: 64px; right: 24px; width: 320px; max-width: calc(100% - 48px); max-height: 60vh; background: #fff; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); border: 1px solid #f0f0f0; z-index: 100; display: none; flex-direction: column; overflow: hidden; }
+        .sp-report-popover.show { display: flex; }
+        .sp-report-popover-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #f0f0f0; font-size: 14px; font-weight: 700; color: #333; }
+        .sp-report-popover-body { padding: 12px; overflow-y: auto; flex: 1; }
+        .sp-report-popover-item { padding: 12px; border-radius: 10px; background: #f8f9fa; margin-bottom: 8px; cursor: pointer; transition: background 0.2s; }
+        .sp-report-popover-item:hover { background: #E8F5E9; }
+        .sp-report-popover-item-title { font-size: 13px; font-weight: 600; color: #333; margin-bottom: 4px; }
+        .sp-report-popover-item-date { font-size: 11px; color: #999; }
+        .sp-report-summary { background: #fff; border-radius: 12px; padding: 14px; border: 1px solid #f0f0f0; font-size: 13px; color: #333; line-height: 1.6; }
+        .sp-report-section { margin-bottom: 12px; }
+        .sp-report-section:last-child { margin-bottom: 0; }
+        .sp-report-section-title { font-weight: 700; color: #4CAF50; margin-bottom: 6px; font-size: 13px; }
+        .sp-report-section-body { color: #555; line-height: 1.6; }
+        .sp-report-summary-toggle { margin-top: 10px; }
+
+        .sp-report-link { display: inline-block; color: #4CAF50; font-weight: 600; text-decoration: underline; cursor: pointer; margin-top: 8px; }
+        .sp-report-link:hover { color: #388E3C; }
+        .sp-benchmark-block { margin-top: 12px; }
+        .sp-benchmark-title { font-size: 13px; color: #555; margin-bottom: 10px; font-weight: 600; }
+        .sp-benchmark-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 12px; }
+        .sp-benchmark-label { width: 90px; color: #333; flex-shrink: 0; }
+        .sp-benchmark-bar-wrap { flex: 1; height: 14px; background: #f0f0f0; border-radius: 7px; overflow: hidden; margin: 0 10px; }
+        .sp-benchmark-bar { height: 100%; border-radius: 7px; transition: width 0.4s ease; }
+        .sp-benchmark-pct { width: 36px; text-align: right; color: #666; flex-shrink: 0; }
+        .sp-report-printable { background: #fff; }
+        .sp-report-print-header { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+        .sp-report-date { color: #888; font-size: 13px; margin-bottom: 14px; }
+        .sp-ai-chat-panel {
+            position: absolute; top: 0; right: 0; bottom: 0; width: 33.333%; min-width: 300px; max-width: 460px;
+            background: #fff; border-left: 1px solid #f0f0f0; box-shadow: -4px 0 24px rgba(0,0,0,0.08);
+            display: none; flex-direction: column; overflow: hidden; z-index: 50;
+        }
+        .sp-ai-chat-panel.active { display: flex; }
+        .sp-ai-chat-header { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid #f0f0f0; background: #fff; flex-shrink: 0; }
+        .sp-ai-chat-avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, #E8F5E9, #C8E6C9); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .sp-ai-chat-avatar img { width: 80%; height: 80%; object-fit: contain; }
+        .sp-ai-chat-title { flex: 1; font-size: 14px; font-weight: 600; color: #333; }
+        .sp-ai-chat-status { display: flex; align-items: center; gap: 4px; font-size: 12px; color: #999; margin-right: 8px; }
+        .sp-ai-chat-close { width: 28px; height: 28px; border-radius: 50%; border: none; background: #f5f5f5; cursor: pointer; font-size: 13px; color: #666; display: flex; align-items: center; justify-content: center; }
+        .sp-ai-chat-close:hover { background: #e0e0e0; }
+        .sp-ai-chat-messages { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 12px; background: #f7f8fa; }
+        .sp-ai-chat-input { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-top: 1px solid #f0f0f0; background: #fff; flex-shrink: 0; }
+        .sp-ai-chat-input input { flex: 1; padding: 8px 12px; border: 1px solid #e0e0e0; border-radius: 18px; font-size: 13px; outline: none; }
+        .sp-ai-chat-input input:focus { border-color: #4CAF50; }
+        .sp-ai-chat-send { width: 32px; height: 32px; border-radius: 50%; border: none; background: #4CAF50; color: #fff; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .sp-ai-chat-send:hover { background: #43A047; }
+        .sp-ai-chat-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+        .sp-ai-chat-actions button { padding: 6px 12px; border-radius: 14px; border: 1px solid #4CAF50; background: #fff; color: #4CAF50; font-size: 12px; font-weight: 600; cursor: pointer; }
+        .sp-ai-chat-actions button.primary { background: #4CAF50; color: #fff; }
+        .sp-ai-chat-actions button:hover { background: #E8F5E9; }
+        .sp-ai-chat-actions button.primary:hover { background: #43A047; }
+        .sp-ai-option-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px; }
+        .sp-ai-option-card { padding: 10px 12px; border-radius: 12px; border: 1.5px solid #e0e0e0; background: #fff; color: #555; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; user-select: none; text-align: center; line-height: 1.4; }
+        .sp-ai-option-card:hover { border-color: #4CAF50; color: #388E3C; background: #f8fff8; }
+        .sp-ai-option-card.primary { background: #4CAF50; border-color: #4CAF50; color: #fff; }
+        .sp-ai-option-card.primary:hover { background: #43A047; border-color: #43A047; color: #fff; }
+        .sp-ai-option-card.selected { background: #E8F5E9; border-color: #4CAF50; color: #388E3C; }
+        @media (max-width: 768px) { .sp-ai-option-cards { grid-template-columns: 1fr; } }
+        .sp-ai-composite { display: flex; flex-direction: column; gap: 16px; }
+        .sp-ai-composite-intro { font-size: 14px; color: #333; line-height: 1.5; }
+        .sp-ai-composite-question { display: flex; flex-direction: column; gap: 8px; }
+        .sp-ai-composite-title { font-size: 13px; font-weight: 600; color: #333; display: flex; align-items: center; gap: 8px; }
+        .sp-ai-composite-index { width: 22px; height: 22px; border-radius: 50%; background: #E8F5E9; color: #388E3C; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .sp-ai-composite-options { display: flex; flex-wrap: wrap; gap: 8px; }
+        .sp-ai-composite-options .sp-ai-option-card { flex: 1 1 calc(50% - 8px); min-width: 90px; }
+        .sp-ai-composite-confirm { align-self: flex-end; margin-top: 4px; padding: 8px 18px; border-radius: 16px; border: none; background: #E0E0E0; color: #999; font-size: 13px; font-weight: 600; cursor: not-allowed; transition: all 0.2s; }
+        .sp-ai-composite-confirm.enabled { background: #4CAF50; color: #fff; cursor: pointer; }
+        .sp-ai-composite-confirm.enabled:hover { background: #43A047; }
+        .sp-main-with-chat { padding-right: calc(33.333% + 24px); }
+        @media (max-width: 768px) { .sp-ai-chat-panel { width: 100%; min-width: auto; max-width: none; border-left: none; } .sp-main-with-chat { padding-right: 24px; } }
         .sp-timeline-overview {
             background: #f8f9fa;
             border-radius: 12px;
@@ -2961,11 +3040,45 @@
             font-weight: 600;
             color: #333;
         }
-        .sp-timeline-item { cursor: pointer; transition: all 0.2s; }
+        .sp-timeline-image { width: 100%; max-height: 220px; object-fit: contain; background: #f8f9fa; border-radius: 12px; border: 1px dashed #ddd; padding: 12px; margin-bottom: 16px; display: block; min-height: 120px; }
+        .sp-timeline-image.hide { display: none; }
+        .sp-timeline-placeholder { display: none; width: 100%; min-height: 120px; background: #f8f9fa; border-radius: 12px; border: 1px dashed #ddd; padding: 24px; margin-bottom: 16px; text-align: center; color: #999; font-size: 13px; align-items: center; justify-content: center; flex-direction: column; gap: 8px; }
+        .sp-timeline-placeholder.show { display: flex; }
+        .sp-timeline-categories { display: flex; flex-direction: column; gap: 16px; }
+        .sp-timeline-category { background: #fff; border-radius: 14px; padding: 16px; border: 1px solid #f0f0f0; }
+        .sp-timeline-category-title { font-size: 15px; font-weight: 700; color: #333; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .sp-timeline-category-title.alevel { color: #1976D2; }
+        .sp-timeline-category-title.ielts { color: #7B1FA2; }
+        .sp-timeline-category-title.interview { color: #F57C00; }
+        .sp-timeline-category-items { display: flex; flex-direction: column; gap: 10px; }
+        .sp-timeline-editable-row { display: grid; grid-template-columns: 130px 1fr 28px; gap: 8px; align-items: start; padding: 10px; background: #f8f9fa; border-radius: 10px; border-left: 3px solid #e0e0e0; }
+        .sp-timeline-editable-row.alevel { border-left-color: #2196F3; }
+        .sp-timeline-editable-row.ielts { border-left-color: #9C27B0; }
+        .sp-timeline-editable-row.interview { border-left-color: #FF9800; }
+        .sp-timeline-editable-row input, .sp-timeline-editable-row textarea { border: 1px solid #e0e0e0; border-radius: 8px; padding: 6px 8px; font-size: 13px; color: #333; background: #fff; width: 100%; }
+        .sp-timeline-editable-row input:focus, .sp-timeline-editable-row textarea:focus { outline: none; border-color: #4CAF50; }
+        .sp-timeline-editable-row input[type="date"] { font-size: 12px; color: #4CAF50; font-weight: 600; }
+        .sp-timeline-editable-main { display: flex; flex-direction: column; gap: 6px; }
+        .sp-timeline-editable-title { font-weight: 600; }
+        .sp-timeline-editable-desc { resize: vertical; min-height: 44px; }
+        .sp-timeline-editable-meta { display: flex; align-items: center; gap: 10px; font-size: 12px; color: #666; }
+        .sp-timeline-editable-meta label { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+        .sp-timeline-editable-delete { color: #ccc; cursor: pointer; text-align: center; padding-top: 4px; }
+        .sp-timeline-editable-delete:hover { color: #F44336; }
+        .sp-add-timeline-item { padding: 10px; border: 1.5px dashed #ddd; border-radius: 10px; background: #fff; color: #999; font-size: 13px; cursor: pointer; text-align: center; transition: all 0.2s; margin-top: 10px; }
+        .sp-add-timeline-item:hover { border-color: #4CAF50; color: #4CAF50; }
+        .sp-timeline { position: relative; padding-left: 24px; }
+        .sp-timeline::before { content: ''; position: absolute; left: 6px; top: 4px; bottom: 4px; width: 2px; background: #e0e0e0; }
+        .sp-timeline-item { position: relative; margin-bottom: 16px; padding: 14px 16px; background: #fff; border-radius: 12px; border: 1px solid #f0f0f0; cursor: pointer; transition: all 0.2s; }
         .sp-timeline-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .sp-timeline-item::before { content: ''; position: absolute; left: -22px; top: 18px; width: 10px; height: 10px; border-radius: 50%; background: #4CAF50; border: 2px solid #fff; box-shadow: 0 0 0 1px #4CAF50; }
+        .sp-timeline-item.milestone::before { background: #FF9800; box-shadow: 0 0 0 1px #FF9800; }
         .sp-timeline-item.exam-alevel { border-left: 3px solid #2196F3; }
         .sp-timeline-item.exam-ielts { border-left: 3px solid #9C27B0; }
         .sp-timeline-item.exam-interview { border-left: 3px solid #FF9800; }
+        .sp-timeline-date { font-size: 12px; color: #4CAF50; font-weight: 600; margin-bottom: 4px; }
+        .sp-timeline-title { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 4px; }
+        .sp-timeline-desc { font-size: 12px; color: #888; line-height: 1.5; }
         .sp-timeline-exam-tag {
             display: inline-block;
             padding: 2px 8px;
@@ -2977,6 +3090,11 @@
         .sp-timeline-exam-tag.alevel { background: #E3F2FD; color: #1976D2; }
         .sp-timeline-exam-tag.ielts { background: #F3E5F5; color: #7B1FA2; }
         .sp-timeline-exam-tag.interview { background: #FFF3E0; color: #F57C00; }
+        .sp-timeline-tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+        .sp-timeline-tag { padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+        .sp-timeline-tag.hard { background: #E3F2FD; color: #1976D2; }
+        .sp-timeline-tag.soft { background: #FFF3E0; color: #F57C00; }
+        .sp-timeline-tag.exam { background: #F3E5F5; color: #7B1FA2; }
         .sp-slider-wrap { padding: 8px 4px; }
         .sp-slider { width: 100%; height: 6px; border-radius: 3px; background: #e0e0e0; outline: none; -webkit-appearance: none; }
         .sp-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #4CAF50; cursor: pointer; box-shadow: 0 2px 6px rgba(76,175,80,0.3); }
@@ -3000,6 +3118,40 @@
         .sp-req-item-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
         .sp-req-item-icon.hard { background: #E3F2FD; color: #1976D2; }
         .sp-req-item-icon.soft { background: #FFF3E0; color: #F57C00; }
+        .sp-req-edit { display: grid; grid-template-columns: 40px 1fr 1fr 28px; gap: 8px; align-items: center; padding: 10px; background: #f8f9fa; border-radius: 10px; }
+        .sp-req-edit input { border: 1px solid #e0e0e0; border-radius: 8px; padding: 6px 8px; font-size: 13px; }
+        .sp-req-edit input:focus { outline: none; border-color: #4CAF50; }
+        .sp-req-edit-delete { color: #ccc; cursor: pointer; text-align: center; }
+        .sp-req-edit-delete:hover { color: #F44336; }
+        .sp-add-req { padding: 10px; border: 1.5px dashed #ddd; border-radius: 10px; background: #fff; color: #999; font-size: 13px; cursor: pointer; text-align: center; transition: all 0.2s; margin-top: 8px; }
+        .sp-add-req:hover { border-color: #4CAF50; color: #4CAF50; }
+        .sp-requirements-wrap { display: flex; flex-direction: column; gap: 16px; }
+        .sp-req-section { background: #fff; border-radius: 14px; padding: 18px; border: 1px solid #f0f0f0; }
+        .sp-req-category-title { font-size: 16px; font-weight: 700; color: #333; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .sp-req-category-title.hard { color: #1976D2; }
+        .sp-req-category-title.soft { color: #F57C00; }
+        .sp-req-table { display: flex; flex-direction: column; gap: 10px; }
+        .sp-req-row { display: grid; grid-template-columns: 80px 1fr; gap: 12px; padding: 12px; background: #f8f9fa; border-radius: 10px; align-items: flex-start; }
+        .sp-req-item-label { font-size: 13px; font-weight: 700; color: #444; line-height: 1.5; }
+        .sp-req-item-content { font-size: 13px; color: #555; line-height: 1.6; outline: none; border: 1px dashed transparent; background: transparent; border-radius: 6px; padding: 4px 6px; min-height: 1.4em; }
+        .sp-req-item-content:hover { background: #fff; border-color: #e0e0e0; }
+        .sp-req-item-content:focus { background: #fff; border-color: #4CAF50; box-shadow: 0 0 0 3px rgba(76,175,80,0.12); }
+        .sp-req-teacher-btn { margin-top: 12px; display: flex; justify-content: flex-start; }
+        .sp-req-prompt { text-align: center; padding: 40px 20px; background: #fff; border-radius: 14px; border: 1.5px dashed #ddd; color: #999; }
+        .sp-req-prompt-icon { font-size: 40px; margin-bottom: 10px; }
+        .sp-req-prompt-title { font-size: 15px; font-weight: 600; color: #666; margin-bottom: 6px; }
+        .sp-req-prompt-desc { font-size: 13px; line-height: 1.5; max-width: 420px; margin: 0 auto; }
+        .sp-factor-analysis { grid-column: 1 / -1; background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); border-radius: 14px; padding: 18px; border: 1px solid #f0f0f0; }
+        .sp-factor-analysis-title { font-size: 16px; font-weight: 700; color: #333; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .sp-factor-analysis-intro { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 14px; }
+        .sp-factor-analysis-body { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .sp-factor-item { display: flex; gap: 10px; align-items: flex-start; padding: 12px; background: #fff; border-radius: 10px; border: 1px solid #f0f0f0; }
+        .sp-factor-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+        .sp-factor-dot.hard { background: #1976D2; }
+        .sp-factor-dot.soft { background: #F57C00; }
+        .sp-factor-text { font-size: 13px; color: #555; line-height: 1.6; }
+        .sp-factor-text b { color: #333; font-weight: 700; }
+        @media (max-width: 768px) { .sp-req-row { grid-template-columns: 1fr; } .sp-factor-analysis-body { grid-template-columns: 1fr; } }
         .sp-empty-state { text-align: center; padding: 40px 20px; color: #999; }
         .sp-empty-icon { font-size: 48px; margin-bottom: 12px; }
         .sp-empty-title { font-size: 15px; font-weight: 600; color: #666; margin-bottom: 6px; }
@@ -3007,7 +3159,7 @@
         .sp-analysis-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 16px; border: 1.5px solid #2196F3; background: #fff; color: #2196F3; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-top: 12px; }
         .sp-analysis-btn:hover { background: #E3F2FD; }
         .sp-analysis-btn:disabled { border-color: #ddd; color: #999; cursor: not-allowed; background: #f5f5f5; }
-        .sp-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.45); display: none; align-items: center; justify-content: center; z-index: 1100; opacity: 0; transition: opacity 0.3s; padding: 20px; }
+        .sp-modal-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.45); display: none; align-items: center; justify-content: center; z-index: 3000; opacity: 0; transition: opacity 0.3s; padding: 20px; }
         .sp-modal-overlay.show { display: flex; }
         .sp-modal-overlay.fade-in { opacity: 1; }
         .sp-modal { background: #fff; border-radius: 16px; width: 560px; max-width: 90vw; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; transform: scale(0.95); transition: transform 0.3s; }
@@ -3020,19 +3172,6 @@
         .sp-modal-body ul { padding-left: 18px; margin: 8px 0; }
         .sp-modal-body li { margin-bottom: 6px; }
         .sp-modal-body .highlight { background: #E8F5E9; color: #388E3C; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
-        .sp-timeline { position: relative; padding-left: 24px; }
-        .sp-timeline::before { content: ''; position: absolute; left: 6px; top: 4px; bottom: 4px; width: 2px; background: #e0e0e0; }
-        .sp-timeline-item { position: relative; margin-bottom: 16px; padding: 14px 16px; background: #fff; border-radius: 12px; border: 1px solid #f0f0f0; }
-        .sp-timeline-item::before { content: ''; position: absolute; left: -22px; top: 18px; width: 10px; height: 10px; border-radius: 50%; background: #4CAF50; border: 2px solid #fff; box-shadow: 0 0 0 1px #4CAF50; }
-        .sp-timeline-item.milestone::before { background: #FF9800; box-shadow: 0 0 0 1px #FF9800; }
-        .sp-timeline-date { font-size: 12px; color: #4CAF50; font-weight: 600; margin-bottom: 4px; }
-        .sp-timeline-title { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 4px; }
-        .sp-timeline-desc { font-size: 12px; color: #888; line-height: 1.5; }
-        .sp-timeline-tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
-        .sp-timeline-tag { padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
-        .sp-timeline-tag.hard { background: #E3F2FD; color: #1976D2; }
-        .sp-timeline-tag.soft { background: #FFF3E0; color: #F57C00; }
-        .sp-timeline-tag.exam { background: #F3E5F5; color: #7B1FA2; }
         .sp-detail-list { display: flex; flex-direction: column; gap: 10px; }
         .sp-detail-item { display: flex; gap: 10px; align-items: flex-start; padding: 12px; background: #fff; border-radius: 10px; border: 1px solid #f0f0f0; }
         .sp-detail-drag { color: #ccc; font-size: 14px; cursor: grab; padding-top: 2px; }
@@ -3052,7 +3191,22 @@
         .sp-plan-preview-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #f8f9fa; border-radius: 10px; font-size: 13px; color: #555; }
         .sp-plan-preview-time { width: 48px; font-size: 12px; color: #999; flex-shrink: 0; }
         .sp-plan-preview-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-        .sp-teacher-toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background: #fff; border-radius: 16px; padding: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 1200; text-align: center; display: none; opacity: 0; transition: all 0.3s; min-width: 280px; }
+        .sp-toggle { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; }
+        .sp-toggle input { display: none; }
+        .sp-toggle-track { width: 44px; height: 24px; border-radius: 12px; background: #ccc; position: relative; transition: background 0.2s; }
+        .sp-toggle input:checked + .sp-toggle-track { background: #4CAF50; }
+        .sp-toggle-thumb { width: 20px; height: 20px; border-radius: 50%; background: #fff; position: absolute; top: 2px; left: 2px; transition: transform 0.2s; }
+        .sp-toggle input:checked + .sp-toggle-track .sp-toggle-thumb { transform: translateX(20px); }
+        .sp-toggle-label { font-size: 14px; color: #555; font-weight: 600; }
+        .sp-schedule-snapshot { background: #fff; border-radius: 14px; padding: 16px; border: 1px solid #f0f0f0; margin-top: 16px; }
+        .sp-schedule-snapshot-title { font-size: 14px; font-weight: 700; color: #333; margin-bottom: 12px; }
+        .sp-overall-report { background: #fff; border-radius: 16px; padding: 24px; border: 1px solid #f0f0f0; }
+        .sp-overall-report h3 { font-size: 16px; color: #333; margin: 16px 0 10px; }
+        .sp-overall-report h3:first-child { margin-top: 0; }
+        .sp-overall-report p, .sp-overall-report li { font-size: 13px; color: #555; line-height: 1.6; }
+        .sp-overall-report ul { padding-left: 18px; margin: 8px 0; }
+        .sp-print-area { display: none; }
+        .sp-teacher-toast { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background: #fff; border-radius: 16px; padding: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 1200; text-align: center; display: none; opacity: 0; transition: all 0.3s; min-width: 280px; }
         .sp-teacher-toast.show { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
         .sp-teacher-toast-icon { font-size: 48px; margin-bottom: 12px; }
         .sp-teacher-toast-title { font-size: 16px; font-weight: 700; color: #333; margin-bottom: 8px; }
@@ -3063,6 +3217,24 @@
         .sp-mini-card-title { font-size: 14px; font-weight: 700; color: #2E7D32; }
         .sp-mini-card-status { padding: 2px 8px; border-radius: 10px; background: #fff; color: #4CAF50; font-size: 11px; font-weight: 600; }
         .sp-mini-card-info { font-size: 12px; color: #558B2F; line-height: 1.5; }
+        .sp-masonry { column-count: 2; column-gap: 16px; }
+        .sp-masonry .sp-card { break-inside: avoid; margin-bottom: 16px; }
+        @supports (grid-template-rows: masonry) {
+            .sp-masonry { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: masonry; gap: 16px; column-count: unset; }
+            .sp-masonry .sp-card { margin-bottom: 0; }
+        }
+        @media (max-width: 768px) { .sp-masonry { column-count: 1; } @supports (grid-template-rows: masonry) { .sp-masonry { grid-template-columns: 1fr; } } }
+
+        @media print {
+            body > * { display: none !important; }
+            .sp-print-area { display: block !important; position: static; width: 100%; }
+            .sp-modal-overlay.show { display: block !important; position: static !important; opacity: 1 !important; background: #fff !important; }
+            .sp-modal.show { transform: none !important; max-width: 100% !important; width: 100% !important; max-height: none !important; position: static !important; }
+            .sp-modal-header { display: none !important; }
+            .sp-modal-body { overflow: visible !important; color: #000 !important; }
+            .sp-report-print-header { display: none !important; }
+            .sp-benchmark-bar { background: #4CAF50 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
         @media (max-width: 768px) { .study-plan-app { width: 100%; height: 100%; max-width: 100%; max-height: 100%; border-radius: 0; } .sp-form-grid { grid-template-columns: 1fr; } .sp-form-field.full-width { grid-column: span 1; } .sp-requirements-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
@@ -3400,6 +3572,203 @@
             </div>
         </div>
 
+
+<!-- 留学规划应用 -->
+<div class="study-plan-app-overlay" id="studyPlanAppOverlay" onclick="closeStudyPlanApp(event)">
+    <div class="study-plan-app" id="studyPlanApp">
+        <div class="study-plan-app-header">
+            <div class="study-plan-app-title">
+                <span>🎓</span>
+                <span>留学规划助手</span>
+            </div>
+            <div class="sp-header-actions">
+                <button class="sp-view-toggle" id="spViewToggle" onclick="toggleSpPresentationView()">🖼️ 完整视图</button>
+                <button class="study-plan-app-close" onclick="closeStudyPlanApp()">✕</button>
+            </div>
+        </div>
+        <div class="study-plan-app-body" id="studyPlanAppBody">
+            <div class="study-plan-steps" id="studyPlanSteps">
+                <div class="sp-step active" data-step="1" onclick="goToSpStep(1)"><span class="sp-step-num">1</span>我的留学目标</div>
+                <div class="sp-step" data-step="3" onclick="goToSpStep(3)"><span class="sp-step-num">2</span>申请要求</div>
+                <div class="sp-step" data-step="4" onclick="goToSpStep(4)"><span class="sp-step-num">3</span>时间规划</div>
+                <div class="sp-step" data-step="5" onclick="goToSpStep(5)"><span class="sp-step-num">4</span>学习任务</div>
+            </div>
+            <div class="sp-presentation-view" id="spPresentationView"></div>
+            <div class="sp-step-panel active" id="spStep1">
+                <div class="sp-card">
+                    <div class="sp-card-title-row">
+                        <div class="sp-card-title">📝 我的留学目标</div>
+                        <button class="sp-btn secondary" onclick="contactTeacherForPlan()">🎧 预约顾问一对一咨询</button>
+                    </div>
+                    <div class="sp-form-grid">
+                        <div class="sp-form-field">
+                            <label class="sp-form-label">学生姓名</label>
+                            <select class="sp-select" id="spStudentName" disabled><option value="">小明</option></select>
+                        </div>
+                        <div class="sp-form-field">
+                            <label class="sp-form-label">年级 <span class="required">*</span></label>
+                            <select class="sp-select placeholder" id="spGrade" onchange="updateSpSelectStyle(this)">
+                                <option value="">请选择年级</option>
+                                <option value="高一">高一</option>
+                                <option value="高二">高二</option>
+                                <option value="高三">高三</option>
+                                <option value="大一">大一</option>
+                                <option value="大二">大二</option>
+                                <option value="大三">大三</option>
+                                <option value="大四">大四</option>
+                                <option value="已毕业">已毕业</option>
+                            </select>
+                        </div>
+                        <div class="sp-form-field">
+                            <label class="sp-form-label">目标申请年份</label>
+                            <select class="sp-select placeholder" id="spIntake" onchange="updateSpSelectStyle(this)">
+                                <option value="">请选择申请年份</option>
+                                <option value="2026">2026 Fall</option>
+                                <option value="2027">2027 Fall</option>
+                                <option value="2028">2028 Fall</option>
+                                <option value="2029">2029 Fall</option>
+                            </select>
+                        </div>
+                        <div class="sp-form-field">
+                            <label class="sp-form-label">目标专业 <span class="required">*</span></label>
+                            <div class="sp-picker-card" id="spMajorCard" onclick="openSpPicker('major')">
+                                <span class="placeholder">请选择目标专业</span>
+                                <span class="arrow">▾</span>
+                            </div>
+                        </div>
+                        <div class="sp-form-field full-width">
+                            <label class="sp-form-label">目标申请国家/地区 <span class="required">*</span></label>
+                            <div class="sp-picker-card" id="spRegionCard" onclick="openSpPicker('region')">
+                                <span class="placeholder">请选择目标申请国家/地区</span>
+                                <span class="arrow">▾</span>
+                            </div>
+                        </div>
+                        <div class="sp-form-field full-width">
+                            <label class="sp-form-label">目标大学 <span class="required">*</span>（最多选3所，地区联动）</label>
+                            <div class="sp-picker-card" id="spUniversityCard" onclick="openSpPicker('university')">
+                                <span class="placeholder">请先选择目标申请国家/地区</span>
+                                <span class="arrow">▾</span>
+                            </div>
+                            <div class="sp-selected-unis" id="spSelectedUnis"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sp-tip">
+                    <span class="sp-tip-icon">💡</span>
+                    <span>如果你还没有明确的目标大学或专业，可以点击右上角“预约顾问一对一咨询”，资深顾问会在 3 个工作日内电话联系你，帮你做一对一规划。</span>
+                </div>
+                <div class="sp-actions">
+                    <button class="sp-btn primary" onclick="startSpGoal()">根据目标生成留学要求</button>
+                </div>
+            </div>
+            <div class="sp-step-panel" id="spStep3">
+                <div class="sp-actions" style="justify-content:flex-start;margin-bottom:16px;">
+                    <button class="sp-btn" onclick="generateDefaultRequirements()">根据目标生成默认要求</button>
+                </div>
+                <div class="sp-requirements-grid" id="spRequirementsGrid"></div>
+                <div class="sp-actions" style="margin-top:16px;">
+                    <button class="sp-btn primary" onclick="generateTimelineFromRequirements()">根据申请要求生成时间规划</button>
+                </div>
+            </div>
+            <div class="sp-step-panel" id="spStep4">
+                <div class="sp-card">
+                    <div class="sp-card-title">🗓️ 时间线图片</div>
+                    <img class="sp-timeline-image" id="spTimelineImage" src="docs/images/study-plan-timeline.png" alt="留学规划时间线" onerror="this.classList.add('hide'); document.getElementById('spTimelinePlaceholder').classList.add('show');">
+                    <div class="sp-timeline-placeholder" id="spTimelinePlaceholder">
+                        <div style="font-size:24px;margin-bottom:4px;">🖼️</div>
+                        <div>默认时间线图片未找到</div>
+                        <div style="font-size:12px;color:#bbb;">默认图片路径：docs/images/study-plan-timeline.png</div>
+                    </div>
+                    <div class="sp-actions" style="justify-content:flex-start;">
+                        <button class="sp-btn" onclick="generateTimeline()">根据目标生成默认时间线</button>
+                    </div>
+                </div>
+                <div class="sp-card">
+                    <div class="sp-card-title">📝 时间线事项</div>
+                    <div class="sp-timeline-categories" id="spTimelineList"></div>
+                </div>
+                <div class="sp-card">
+                    <div class="sp-card-title">📅 日程快照</div>
+                    <div class="sp-schedule-snapshot" id="spScheduleSnapshot">
+                        <div class="sp-empty-state" style="padding:20px;">
+                            <div class="sp-empty-icon">📅</div>
+                            <div class="sp-empty-title">尚未生成日程快照</div>
+                        </div>
+                    </div>
+                    <div class="sp-actions" style="justify-content:flex-start;margin-top:12px;">
+                        <button class="sp-btn primary" onclick="generateScheduleSnapshot()">生成日程快照</button>
+                    </div>
+                </div>
+                <div class="sp-actions" style="justify-content:flex-end;margin-top:8px;">
+                    <button class="sp-btn primary" onclick="goToSpStep(5)">下一步：学习任务 ➜</button>
+                </div>
+            </div>
+            <div class="sp-step-panel" id="spStep5">
+                <div class="sp-card">
+                    <div class="sp-card-title">📚 学习任务结合</div>
+                    <label class="sp-toggle">
+                        <input type="checkbox" id="spTaskIntegrateToggle" onchange="toggleSpTaskIntegration()">
+                        <span class="sp-toggle-track"><span class="sp-toggle-thumb"></span></span>
+                        <span class="sp-toggle-label">将学习任务与留学规划结合</span>
+                    </label>
+                    <p id="spTaskIntegrationStatus" style="margin-top:12px;font-size:13px;color:#888;">关闭后不会自动同步任务到学习日历。</p>
+                </div>
+            </div>
+            <div class="sp-ai-chat-panel" id="spAiChatPanel">
+                <div class="sp-ai-chat-header">
+                    <div class="sp-ai-chat-avatar"><img id="spAiChatAvatarImg" src="images/base.png" alt="小航"></div>
+                    <div class="sp-ai-chat-title">小航 · AI 留学咨询</div>
+                    <div class="sp-ai-chat-status"><span class="status-dot"></span>在线</div>
+                    <button class="sp-ai-chat-close" onclick="closeSpAiChat()">✕</button>
+                </div>
+                <div class="sp-ai-chat-messages" id="spAiChatMessages"></div>
+                <div class="sp-ai-chat-input">
+                    <input type="text" id="spAiChatInput" placeholder="输入你的问题…" onkeydown="handleSpAiChatKey(event)">
+                    <button class="sp-ai-chat-send" onclick="sendSpAiChatMessage()">➤</button>
+                </div>
+            </div>
+            <div class="sp-report-popover" id="spReportPopover">
+                <div class="sp-report-popover-header">
+                    <span>我的咨询报告</span>
+                    <button class="sp-popover-close" onclick="toggleSpReportPopover()">✕</button>
+                </div>
+                <div class="sp-report-popover-body" id="spReportPopoverBody"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sp-print-area" id="spPrintArea"></div>
+<div class="sp-modal-overlay" id="spModalOverlay" onclick="closeSpModal(event)">
+    <div class="sp-modal" id="spModal">
+        <div class="sp-modal-header">
+            <div class="sp-modal-title" id="spModalTitle">解析</div>
+            <button class="sp-popover-close" onclick="closeSpModal()">✕</button>
+        </div>
+        <div class="sp-modal-body" id="spModalBody"></div>
+    </div>
+</div>
+<div class="sp-modal-overlay" id="spPickerOverlay" onclick="closeSpPicker(event)">
+    <div class="sp-modal" id="spPickerModal" onclick="event.stopPropagation()">
+        <div class="sp-modal-header">
+            <div class="sp-modal-title" id="spPickerTitle">选择</div>
+            <button class="sp-popover-close" onclick="closeSpPicker()">✕</button>
+        </div>
+        <div class="sp-modal-body" id="spPickerBody"></div>
+        <div class="sp-picker-footer">
+            <button class="sp-picker-ai-btn" id="spPickerAiBtn" onclick="openSpPickerAiConsult()">💬 咨询 AI 小航建议</button>
+            <div class="sp-picker-footer-actions">
+                <button class="sp-btn secondary" onclick="closeSpPicker()">取消</button>
+                <button class="sp-btn primary" onclick="confirmSpPicker()">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sp-teacher-toast" id="spTeacherToast">
+    <div class="sp-teacher-toast-icon">📞</div>
+    <div class="sp-teacher-toast-title">已为你安排顾问老师</div>
+    <div class="sp-teacher-toast-desc">新航道资深留学顾问将在 3 个工作日内通过电话联系你，请保持手机畅通。</div>
+    <button class="sp-btn primary" onclick="hideTeacherToast()">我知道了</button>
+</div>
     </div>
 </div>
 
@@ -4273,6 +4642,10 @@ function hideThinking() {
 }
 
 function handleAIResponseMain(userText) {
+    if (spAiConsultMode) {
+        handleSpAiConsultResponse(userText);
+        return;
+    }
     const text = userText.toLowerCase();
     const conv = chatConversations.find(c => c.id === currentConversationId);
     if (!conv) return;
@@ -4443,7 +4816,11 @@ function sendHomeAuxMessage() {
     renderAuxMessages();
     inp.value = '';
     setTimeout(() => {
-        handleAIResponseMain(text);
+        if (spAiConsultMode) {
+            handleSpAiConsultResponse(text);
+        } else {
+            handleAIResponseMain(text);
+        }
     }, 600);
 }
 
@@ -6201,220 +6578,172 @@ loadCalendarData();
 initDefaultCalendar();
 
 // ═══════ 留学规划应用 ═══════
-let studyPlanState = { step: 1, data: { name: '小明', grade: '', region: '', universities: [], major: '', intake: '' }, requirements: null, timeline: [], details: [] };
+let studyPlanState = {
+  step: 1,
+  data: { name: '小明', grade: '', region: '', universities: [], major: '', intake: '' },
+  consultation: {
+    teacherContacted: false,
+    activeSegment: '',
+    segments: {
+      major: { report: '', summary: '', done: false },
+      region: { report: '', summary: '', done: false },
+      school: { report: '', summary: '', done: false }
+    }
+  },
+  reports: [],
+  requirements: { hardware: [], software: [] },
+  timeline: {
+    imageData: '',
+    imageFile: 'docs/images/study-plan-timeline.png',
+    items: []
+  },
+  integrateTasks: false,
+  overallReportHtml: ''
+};
 const SP_UNIVERSITIES = { uk: ['牛津大学','剑桥大学','帝国理工学院','伦敦大学学院UCL','爱丁堡大学','曼彻斯特大学','伦敦国王学院KCL','华威大学','布里斯托大学','格拉斯哥大学'], us: ['哈佛大学','麻省理工学院','斯坦福大学','普林斯顿大学','耶鲁大学','哥伦比亚大学','宾夕法尼亚大学','加州理工学院','杜克大学','芝加哥大学'], hk: ['香港大学HKU','香港中文大学CUHK','香港科技大学HKUST','香港理工大学PolyU','香港城市大学CityU'], sg: ['新加坡国立大学NUS','南洋理工大学NTU','新加坡管理大学SMU'], au: ['墨尔本大学','悉尼大学','澳大利亚国立大学','新南威尔士大学UNSW','昆士兰大学','莫纳什大学'], ca: ['多伦多大学','不列颠哥伦比亚大学UBC','麦吉尔大学','滑铁卢大学','麦克马斯特大学'] };
 const SP_MAJOR_REQS = { finance: { hard: [{label:'GPA/均分',value:'Top 10% 或 3.7+/4.0',icon:'📊'},{label:'标化考试',value:'A-Level: A*AA 以上；IB: 38+；AP: 4-5门5分',icon:'📝'},{label:'语言成绩',value:'雅思 7.0+ 或 托福 100+',icon:'🗣️'},{label:'先修课程',value:'数学、经济/高数为核心，建议选修统计',icon:'📚'}], soft: [{label:'实习经历',value:'银行、券商、咨询公司相关实习 1-2段',icon:'💼'},{label:'竞赛奖项',value:'NEC、IEO、沃顿商赛、数学竞赛',icon:'🏆'},{label:'课外活动',value:'商社、投资俱乐部、公益创业',icon:'🎯'},{label:'文书亮点',value:'突出量化能力、商业洞察与领导力',icon:'✍️'}] }, cs: { hard: [{label:'GPA/均分',value:'Top 15% 或 3.6+/4.0',icon:'📊'},{label:'标化考试',value:'A-Level: A*A*A（数学+高数优先）；IB: 38+',icon:'📝'},{label:'语言成绩',value:'雅思 6.5-7.0 或 托福 90-100',icon:'🗣️'},{label:'先修课程',value:'数学、计算机、物理，建议有编程项目',icon:'💻'}], soft: [{label:'项目经历',value:'GitHub项目、开源贡献、个人作品集',icon:'🚀'},{label:'竞赛奖项',value:'USACO、NOIP、CCC、Kaggle',icon:'🏆'},{label:'科研经历',value:'AI/算法相关科研或夏校',icon:'🔬'},{label:'文书亮点',value:'展示编程热情与解决实际问题的能力',icon:'✍️'}] }, engineering: { hard: [{label:'GPA/均分',value:'Top 15% 或 3.6+/4.0',icon:'📊'},{label:'标化考试',value:'A-Level: A*AA（数学+物理）；IB: 37+',icon:'📝'},{label:'语言成绩',value:'雅思 6.5+ 或 托福 90+',icon:'🗣️'},{label:'先修课程',value:'数学、物理为核心，化学/高数加分',icon:'⚙️'}], soft: [{label:'实践项目',value:'机器人、工程设计、创客项目',icon:'🔧'},{label:'竞赛奖项',value:'物理奥赛、数学竞赛、FRC、IEO',icon:'🏆'},{label:'科研经历',value:'工程实验室、暑期科研项目',icon:'🔬'},{label:'文书亮点',value:'强调动手能力、创新思维与团队协作',icon:'✍️'}] }, math: { hard: [{label:'GPA/均分',value:'Top 10% 或 3.7+/4.0',icon:'📊'},{label:'标化考试',value:'A-Level: A*A*A（数学+高数）；IB: 38+',icon:'📝'},{label:'语言成绩',value:'雅思 6.5+ 或 托福 90+',icon:'🗣️'},{label:'先修课程',value:'数学、进阶数学、物理/统计',icon:'📐'}], soft: [{label:'竞赛奖项',value:'AMC/AIME、欧几里得、数学建模竞赛',icon:'🏆'},{label:'科研经历',value:'数学课题研究、夏校、论文发表',icon:'🔬'},{label:'课外活动',value:'数学社团、竞赛教练、助教',icon:'🎯'},{label:'文书亮点',value:'展示数学思维深度与研究兴趣',icon:'✍️'}] }, science: { hard: [{label:'GPA/均分',value:'Top 15% 或 3.6+/4.0',icon:'📊'},{label:'标化考试',value:'A-Level: A*AA（相关专业科目）；IB: 37+',icon:'📝'},{label:'语言成绩',value:'雅思 6.5+ 或 托福 90+',icon:'🗣️'},{label:'先修课程',value:'生物/化学/物理根据方向选择',icon:'🧪'}], soft: [{label:'科研经历',value:'实验室研究、科学竞赛、论文发表',icon:'🔬'},{label:'竞赛奖项',value:'BBO、UKChO、Physics Bowl、ISEF',icon:'🏆'},{label:'课外活动',value:'科学社团、环保项目、科普活动',icon:'🎯'},{label:'文书亮点',value:'体现好奇心、实验精神与长期投入',icon:'✍️'}] }, social: { hard: [{label:'GPA/均分',value:'Top 20% 或 3.5+/4.0',icon:'📊'},{label:'标化考试',value:'A-Level: AAA；IB: 36+；AP: 3-4门4分以上',icon:'📝'},{label:'语言成绩',value:'雅思 7.0+ 或 托福 100+（写作要求高）',icon:'🗣️'},{label:'先修课程',value:'历史、地理、心理、经济等人文科目',icon:'📖'}], soft: [{label:'写作样本',value:'优秀Essay、研究论文、社论文章',icon:'✍️'},{label:'社会实践',value:'公益组织、调研项目、模拟联合国',icon:'🌍'},{label:'竞赛奖项',value:'John Locke、NYT写作、历史竞赛',icon:'🏆'},{label:'文书亮点',value:'展现批判性思维、社会关怀与独立观点',icon:'💡'}] }, art: { hard: [{label:'GPA/均分',value:'Top 30% 或 3.2+/4.0',icon:'📊'},{label:'标化考试',value:'A-Level: ABB-BBB；IB: 32+；作品集更重要',icon:'📝'},{label:'语言成绩',value:'雅思 6.0-6.5 或 托福 80-90',icon:'🗣️'},{label:'作品集',value:'10-20件代表作，体现创意与技法',icon:'🎨'}], soft: [{label:'作品集',value:'主题统一、过程完整、媒介多样',icon:'🎨'},{label:'展览经历',value:'个人展览、艺术节、线上作品集',icon:'🖼️'},{label:'实习经历',value:'设计公司、画廊、品牌实习',icon:'💼'},{label:'文书亮点',value:'讲述创作理念、艺术经历与未来愿景',icon:'✍️'}] }, business: { hard: [{label:'GPA/均分',value:'Top 15% 或 3.6+/4.0',icon:'📊'},{label:'标化考试',value:'A-Level: A*AA；IB: 37+；AP: 4-5门4分以上',icon:'📝'},{label:'语言成绩',value:'雅思 6.5-7.0 或 托福 90-100',icon:'🗣️'},{label:'先修课程',value:'数学、经济、商业研究相关',icon:'📚'}], soft: [{label:'领导力',value:'学生会、社团主席、创业经历',icon:'👥'},{label:'实习经历',value:'企业实习、市场/运营相关项目',icon:'💼'},{label:'竞赛奖项',value:'DECA、FBLA、沃顿商赛、模拟联合国',icon:'🏆'},{label:'文书亮点',value:'突出领导潜质、商业意识与社会影响',icon:'✍️'}] } };
-function openStudyPlanApp() { const overlay = document.getElementById('studyPlanAppOverlay'); const app = document.getElementById('studyPlanApp'); overlay.classList.add('show'); requestAnimationFrame(() => overlay.classList.add('fade-in')); requestAnimationFrame(() => app.classList.add('show')); initStudyPlanApp(); }
-function closeStudyPlanApp(e) { if (e && e.target !== e.currentTarget && e.target.className !== 'study-plan-app-close') return; const overlay = document.getElementById('studyPlanAppOverlay'); const app = document.getElementById('studyPlanApp'); overlay.classList.remove('fade-in'); app.classList.remove('show'); setTimeout(() => overlay.classList.remove('show'), 300); }
-function initStudyPlanApp() { document.getElementById('spStudentName').innerHTML = '<option value="">' + (studyPlanState.data.name || '小明') + '</option>'; renderSpStepIndicator(); renderSpSelectedUnis(); }
+const SP_SEGMENT_LABELS = { major: '专业', region: '留学地区', school: '学校' };
+const SP_AI_QUESTIONS = {
+  major: [
+    { text: '你擅长或更喜欢以下哪类学科？', options: ['数理逻辑', '语言表达', '创意设计', '商业管理'] },
+    { text: '你未来更倾向于哪种发展方向？', options: ['科研深造', '大厂就业', '创业/管理', '艺术创作'] },
+    { text: '你是否有明确的职业目标？', options: ['已有明确目标', '还在探索中', '希望AI推荐'] }
+  ],
+  region: [
+    { text: '你更看重什么？', options: ['名校排名', '留学成本', '就业机会', '移民政策'] },
+    { text: '你倾向的学制是？', options: ['3年本科', '4年本科', '灵活学制'] },
+    { text: '毕业后希望？', options: ['回国发展', '留当地工作', '继续深造'] }
+  ],
+  school: [
+    { text: '你的目标院校层次？', options: ['冲刺顶尖名校', '稳妥匹配', '保底稳妥'] },
+    { text: '更看重学校哪方面？', options: ['综合排名', '专业排名', '地理位置', '校园文化'] },
+    { text: '你偏好哪种校园氛围？', options: ['学术严谨', '实践创新', '多元开放', '小而精'] }
+  ]
+};
+const SP_REGION_KEYS = { '英国': 'uk', '美国': 'us', '中国香港': 'hk', '香港': 'hk', '新加坡': 'sg', '澳洲': 'au', '澳大利亚': 'au', '加拿大': 'ca' };
+const SP_MAJOR_KEYS = { '金融/经济': 'finance', '金融': 'finance', '经济': 'finance', '计算机科学': 'cs', '计算机': 'cs', '工程': 'engineering', '数学/统计': 'math', '数学': 'math', '统计': 'math', '自然科学': 'science', '人文社科': 'social', '艺术设计': 'art', '艺术': 'art', '设计': 'art', '商科管理': 'business', '商科': 'business', '管理': 'business' };
+let spViewMode = 'edit';
+let spAiConsultMode = false;
+let spAiConsultTurn = 0;
+let spAiChatMessages = [];
+let spCurrentReport = null;
+let spAiConsultState = { selectingSegment: false, segment: null, questionIndex: 0, answers: { major: [], region: [], school: [] }, pendingAnswers: { major: [null, null, null], region: [null, null, null], school: [null, null, null] }, pendingConfirm: false };
+function resetSpAiCompositeAnswers(segment) { const questions = SP_AI_QUESTIONS[segment]; if (!questions) return; spAiConsultState.pendingAnswers[segment] = questions.map(() => null); }
+function setSpAiCompositeAnswer(segment, qIndex, value) { if (!spAiConsultState.pendingAnswers[segment]) resetSpAiCompositeAnswers(segment); spAiConsultState.pendingAnswers[segment][qIndex] = value; renderSpAiChatMessages(); }
+function isSpAiCompositeComplete(segment) { const arr = spAiConsultState.pendingAnswers[segment] || []; return arr.length > 0 && arr.every(v => v !== null && v !== undefined && v !== ''); }
+function confirmSpAiComposite(segment) { if (!isSpAiCompositeComplete(segment)) return; const answers = spAiConsultState.pendingAnswers[segment].slice(); spAiConsultState.answers[segment] = answers; spAiConsultState.questionIndex = answers.length; spAiConsultState.pendingConfirm = false; const summary = buildSegmentSummary(segment, answers); saveConsultReport(segment, summary, answers); resetSpAiCompositeAnswers(segment); generateSegmentReport(segment, summary, answers); }function openStudyPlanApp() { const overlay = document.getElementById('studyPlanAppOverlay'); const app = document.getElementById('studyPlanApp'); overlay.classList.add('show'); requestAnimationFrame(() => overlay.classList.add('fade-in')); requestAnimationFrame(() => app.classList.add('show')); initStudyPlanApp(); }
+function closeStudyPlanApp(e) { if (e && e.target !== e.currentTarget && e.target.className !== 'study-plan-app-close') return; const overlay = document.getElementById('studyPlanAppOverlay'); const app = document.getElementById('studyPlanApp'); overlay.classList.remove('fade-in'); app.classList.remove('show'); setTimeout(() => overlay.classList.remove('show'), 300); closeSpAiChat(); }
+function initStudyPlanApp() { document.getElementById('spStudentName').innerHTML = '<option value="">' + (studyPlanState.data.name || '小明') + '</option>'; setSpFormValues(); renderSpStepIndicator(); renderSpSelectedUnis(); renderSpGoalSummary('spGoalSummary'); renderSpRequirements(); renderSpTimeline(); renderSpReportList(); renderSpTaskIntegration(); renderOverallReport(); updateSpAiChatAvatar(); }
+function setSpFormValues() { const d = studyPlanState.data; const gradeSel = document.getElementById('spGrade'); const intakeSel = document.getElementById('spIntake'); if (gradeSel) { gradeSel.value = d.grade || ''; updateSpSelectStyle(gradeSel); } if (intakeSel) { intakeSel.value = d.intake || ''; updateSpSelectStyle(intakeSel); } renderSpPickerCards(); onSpRegionChange(); }
 function updateSpSelectStyle(sel) { sel.classList.toggle('placeholder', !sel.value); updateStudyPlanData(); }
-function onSpRegionChange() { const region = document.getElementById('spRegion').value; const select = document.getElementById('spUniversitySelect'); const unis = SP_UNIVERSITIES[region] || []; if (!region) { select.innerHTML = '<option value="">请先选择目标地区，再添加大学</option>'; select.disabled = true; select.classList.add('placeholder'); } else { select.innerHTML = '<option value="">+ 添加一所目标大学（最多3所）</option>' + unis.map(u => '<option value="' + u + '">' + u + '</option>').join(''); select.disabled = false; select.classList.add('placeholder'); } updateStudyPlanData(); }
-function addSpUniversity() { const select = document.getElementById('spUniversitySelect'); const uni = select.value; if (!uni) return; if (studyPlanState.data.universities.length >= 3) { showToast('最多选择3所目标大学'); select.value = ''; return; } if (studyPlanState.data.universities.includes(uni)) { showToast('该大学已选择'); select.value = ''; return; } studyPlanState.data.universities.push(uni); select.value = ''; select.classList.add('placeholder'); renderSpSelectedUnis(); updateStudyPlanData(); }
+function onSpRegionChange() { const d = studyPlanState.data; const region = d.region || ''; const unis = SP_UNIVERSITIES[region] || []; const card = document.getElementById('spUniversityCard'); if (card) { const placeholder = card.querySelector('.placeholder'); if (placeholder) { placeholder.textContent = region ? '请选择目标大学（最多3所）' : '请先选择目标申请国家/地区'; } } if (region && d.universities.length) { const validUnis = d.universities.filter(u => unis.includes(u)); if (validUnis.length !== d.universities.length) { studyPlanState.data.universities = validUnis; renderSpSelectedUnis(); } } updateStudyPlanData(); }
 function removeSpUniversity(uni) { studyPlanState.data.universities = studyPlanState.data.universities.filter(u => u !== uni); renderSpSelectedUnis(); updateStudyPlanData(); }
 function renderSpSelectedUnis() { const container = document.getElementById('spSelectedUnis'); container.innerHTML = studyPlanState.data.universities.map(u => '<span class="sp-selected-uni">' + u + '<span class="sp-selected-uni-remove" onclick="removeSpUniversity(\'' + u + '\')">✕</span></span>').join(''); }
-function updateStudyPlanData() { studyPlanState.data = { name: studyPlanState.data.name || '小明', region: document.getElementById('spRegion').value, universities: studyPlanState.data.universities, major: document.getElementById('spMajor').value, intake: document.getElementById('spIntake').value }; }
-function goToSpStep(step) { if (step > 1 && !studyPlanState.requirements) { if (step === 2) { showToast('请先生成申请要求'); return; } } if (step > 3 && studyPlanState.timeline.length === 0) { if (step === 3 || step === 4) { showToast('请先生成时间规划'); return; } } studyPlanState.step = step; renderSpStepIndicator(); document.querySelectorAll('.sp-step-panel').forEach(p => p.classList.remove('active')); document.getElementById('spStep' + step).classList.add('active'); document.getElementById('studyPlanAppBody').scrollTop = 0; }
-function renderSpStepIndicator() { document.querySelectorAll('.sp-step').forEach(s => { const sNum = parseInt(s.dataset.step); s.classList.remove('active','done'); if (sNum === studyPlanState.step) s.classList.add('active'); else if (studyPlanState.requirements && sNum < studyPlanState.step) s.classList.add('done'); }); }
-function contactTeacherForPlan() { document.getElementById('spTeacherToast').classList.add('show'); }
+function updateStudyPlanData() { const gradeSel = document.getElementById('spGrade'); const intakeSel = document.getElementById('spIntake'); studyPlanState.data = { name: studyPlanState.data.name || '小明', grade: gradeSel ? gradeSel.value : studyPlanState.data.grade, region: studyPlanState.data.region, universities: studyPlanState.data.universities, major: studyPlanState.data.major, intake: intakeSel ? intakeSel.value : studyPlanState.data.intake }; renderSpGoalSummary('spGoalSummary'); }
+function goToSpStep(step) { if (step < 1 || step > 5) return; studyPlanState.step = step; renderSpStepIndicator(); document.querySelectorAll('.sp-step-panel').forEach(p => p.classList.remove('active')); const panel = document.getElementById('spStep' + step); if (panel) panel.classList.add('active'); if (step === 3) renderSpRequirements(); if (step === 4) renderSpTimeline(); if (step === 5) renderSpTaskIntegration(); document.getElementById('studyPlanAppBody').scrollTop = 0; }
+function renderSpStepIndicator() { document.querySelectorAll('.sp-step').forEach(s => { const sNum = parseInt(s.dataset.step); s.classList.remove('active','done'); if (sNum === studyPlanState.step) s.classList.add('active'); else if (sNum < studyPlanState.step) s.classList.add('done'); }); }
+function contactTeacherForPlan() { studyPlanState.consultation.teacherContacted = true; document.getElementById('spTeacherToast').classList.add('show'); }
 function hideTeacherToast() { document.getElementById('spTeacherToast').classList.remove('show'); }
-function validateSpStep1() { updateStudyPlanData(); const d = studyPlanState.data; if (!d.region || d.universities.length === 0 || !d.major) { showToast('请填写完整的目标信息（带 * 为必填）'); return false; } return true; }
-function generateRequirements() { if (!validateSpStep1()) return; const d = studyPlanState.data; const base = SP_MAJOR_REQS[d.major] || SP_MAJOR_REQS.business; const hard = base.hard.map(item => ({...item})); const soft = base.soft.map(item => ({...item})); studyPlanState.requirements = {hard, soft}; document.getElementById('spRequirementsGrid').innerHTML = `<div class="sp-req-card"><div class="sp-req-title">📊 硬件要求（学术门槛）</div><div class="sp-req-list">${hard.map(item => `<div class="sp-req-item"><div class="sp-req-item-icon hard">${item.icon}</div><div><div style="font-weight:600;color:#333;margin-bottom:2px;">${item.label}</div><div>${item.value}</div></div></div>`).join('')}</div></div><div class="sp-req-card"><div class="sp-req-title">🌟 软件要求（综合素质）</div><div class="sp-req-list">${soft.map(item => `<div class="sp-req-item"><div class="sp-req-item-icon soft">${item.icon}</div><div><div style="font-weight:600;color:#333;margin-bottom:2px;">${item.label}</div><div>${item.value}</div></div></div>`).join('')}</div></div>`; document.getElementById('spFactorAnalysisBtn').disabled = false; document.getElementById('spGenerateTimelineBtn').disabled = false; goToSpStep(2); }
-function showFactorAnalysis() { if (!studyPlanState.requirements) return; const d = studyPlanState.data; const majorName = document.querySelector('#spMajor option:checked')?.textContent || d.major; const uniNames = d.universities.join('、'); const hard = studyPlanState.requirements.hard; let html = `<h4>目标学校与专业录取要求解析</h4><p>你选择的学校是 <span class="highlight">${uniNames}</span>，目标专业是 <span class="highlight">${majorName}</span>。这些学校对该专业的录取评估主要围绕以下硬件维度展开：</p><ul>`; hard.forEach(item => { html += `<li><b>${item.label}</b>：${item.value} — 这是学校判断你是否具备学术准备度的核心依据。</li>`; }); html += `</ul><h4>录取因素权重分析</h4><ul><li><span class="highlight">GPA/均分</span>是筛选的第一道门槛，顶尖大学会通过学术成绩快速识别申请者的学习能力和稳定性。</li><li><span class="highlight">标化考试</span>（A-Level/IB/AP 等）反映你对目标专业相关科目的掌握深度，直接影响录取竞争力。</li><li><span class="highlight">语言成绩</span>决定你能否适应全英文授课环境，部分学校对写作单项有额外要求。</li><li><span class="highlight">先修课程</span>匹配度越高，越能证明你能胜任大学阶段的专业课程。</li></ul><h4>针对性建议</h4><ul><li>优先保证核心科目达到目标学校录取中位数以上。</li><li>标化考试建议预留 2-3 次考试机会，避免单次失误影响申请。</li><li>如果目标学校竞争极其激烈，硬件成绩达标后可通过软背景打造差异化。</li></ul>`; showSpModal('录取因素解析', html); }
-function generateTimeline() { if (!studyPlanState.requirements) return; const d = studyPlanState.data; const intake = parseInt(d.intake) || 2027; const today = new Date(); const currentYear = today.getFullYear(); const currentMonth = today.getMonth() + 1; const monthsToIntake = (intake - currentYear) * 12 + (9 - currentMonth); const timeline = []; const targetAlevelMonth = Math.max(0, monthsToIntake - 6); const targetIeltsMonth = Math.max(0, monthsToIntake - 8); const interviewStartMonth = Math.max(0, monthsToIntake - 4); const addPhase = (offset, title, desc, examType, milestone) => { const m = (currentMonth - 1 + offset) % 12; const y = currentYear + Math.floor((currentMonth - 1 + offset) / 12); timeline.push({id:'t'+offset, date:(m+1)+'月 '+y, title, desc, examType, milestone}); }; addPhase(0, '诊断与目标确认', '明确目标学校与专业，制定申请策略', '', false); addPhase(Math.floor(targetIeltsMonth * 0.3), '雅思基础阶段', '完成雅思首考，定位听说读写薄弱项', 'ielts', false); addPhase(Math.floor(targetAlevelMonth * 0.4), 'A-Level AS 备考', '系统复习 AS 科目，参加模考检验水平', 'alevel', false); addPhase(Math.floor(targetIeltsMonth * 0.7), '雅思冲刺二考', '针对薄弱项集中突破，冲刺目标分数', 'ielts', true); addPhase(Math.floor(targetAlevelMonth * 0.8), 'A-Level 正式考试', '参加 AS/A2 正式考试，确保核心科目成绩', 'alevel', true); addPhase(interviewStartMonth, '学校面试准备', '准备牛剑/G5 等学校的面试与入学考试', 'interview', false); addPhase(interviewStartMonth + 1, '面试与笔试实战', '参加目标学校的入学笔试和面试', 'interview', true); addPhase(monthsToIntake - 1, '申请材料提交', '在截止日期前提交 UCAS/学校网申材料', '', true); studyPlanState.timeline = timeline; studyPlanState.details = timeline.map((t, idx) => ({id:'d'+idx, title:t.title, desc:t.desc + (t.examType ? '（' + {alevel:'A-Level相关',ielts:'雅思相关',interview:'面试相关'}[t.examType] + '）' : '')})); renderTimelineOverview(); renderTimeline(); renderSpDetailList(); document.getElementById('spTimelineAnalysisBtn').disabled = false; goToSpStep(3); }
-function renderTimelineOverview() { const d = studyPlanState.data; const intake = d.intake || '2027 Fall'; const container = document.getElementById('spTimelineOverview'); container.innerHTML = `<div class="sp-overview-title">📌 规划概览</div><div class="sp-overview-row"><div class="sp-overview-item"><div class="sp-overview-label">目标学校</div><div class="sp-overview-value">${d.universities.join('、')}</div></div><div class="sp-overview-item"><div class="sp-overview-label">目标专业</div><div class="sp-overview-value">${document.querySelector('#spMajor option:checked')?.textContent || d.major}</div></div><div class="sp-overview-item"><div class="sp-overview-label">入学时间</div><div class="sp-overview-value">${intake}</div></div><div class="sp-overview-item"><div class="sp-overview-label">核心考试</div><div class="sp-overview-value">A-Level · 雅思 · 面试/笔试</div></div></div>`; }
-function renderTimeline() { const container = document.getElementById('spTimeline'); container.innerHTML = studyPlanState.timeline.map(t => { const cls = t.examType ? 'exam-' + t.examType : ''; const tag = t.examType ? `<span class="sp-timeline-exam-tag ${t.examType}">${{alevel:'A-Level',ielts:'雅思',interview:'面试/笔试'}[t.examType]}</span>` : ''; return `<div class="sp-timeline-item ${t.milestone ? 'milestone' : ''} ${cls}">${tag}<div class="sp-timeline-date">${t.date}</div><div class="sp-timeline-title">${t.title}</div><div class="sp-timeline-desc">${t.desc}</div></div>`; }).join(''); }
-function renderSpDetailList() { const container = document.getElementById('spDetailList'); container.innerHTML = studyPlanState.details.map(d => `<div class="sp-detail-item" data-id="${d.id}"><div class="sp-detail-drag">⋮⋮</div><div class="sp-detail-content"><input class="sp-detail-title" value="${d.title}" onchange="updateSpDetail('${d.id}', 'title', this.value)"><textarea class="sp-detail-desc" rows="2" onchange="updateSpDetail('${d.id}', 'desc', this.value)">${d.desc}</textarea></div><div class="sp-detail-delete" onclick="deleteSpDetail('${d.id}')">🗑️</div></div>`).join(''); }
-function addSpDetailItem() { const id = 'd' + Date.now(); studyPlanState.details.push({id, title:'新的规划事项', desc:'请填写具体内容和目标'}); renderSpDetailList(); }
-function updateSpDetail(id, field, value) { const item = studyPlanState.details.find(d => d.id === id); if (item) item[field] = value; }
-function deleteSpDetail(id) { studyPlanState.details = studyPlanState.details.filter(d => d.id !== id); renderSpDetailList(); }
-function showTimelineAnalysis() { if (studyPlanState.timeline.length === 0) return; const d = studyPlanState.data; const intake = d.intake || '2027 Fall'; let html = `<h4>时间线设计逻辑</h4><p>你的目标是 <span class="highlight">${intake}</span> 入读 <span class="highlight">${d.universities.join('、')}</span>。时间线以 A-Level 考试、雅思考试和学校面试/笔试三大核心事件为锚点倒推设计：</p><ul><li><span class="highlight">A-Level 考试</span>：决定学术成绩硬门槛，需要提前 6-12 个月完成系统复习。</li><li><span class="highlight">雅思考试</span>：建议至少提前 8-10 个月达到目标分数，为文书和申请预留时间。</li><li><span class="highlight">学校面试/笔试</span>：牛剑/G5 等顶尖学校通常在申请截止后 1-3 个月安排，需要提前准备。</li></ul><h4>关键里程碑</h4><ul>${studyPlanState.timeline.filter(t => t.milestone).map(t => `<li><b>${t.date}</b>：${t.title} — ${t.desc}</li>`).join('')}</ul><h4>执行建议</h4><ul><li>三大考试不要堆在同一时间段，合理分配精力。</li><li>每次雅思/A-Level 考试后及时复盘，调整下一阶段计划。</li><li>面试准备要贯穿整个申请周期，不只是临考突击。</li></ul>`; showSpModal('时间线解析', html); }
+function validateSpStep1() { updateStudyPlanData(); const d = studyPlanState.data; if (!d.grade || !d.region || d.universities.length === 0 || !d.major) { showToast('请填写完整的目标信息（带 * 为必填）'); return false; } return true; }
+function startSpGoal() { if (!validateSpStep1()) return; goToSpStep(3); }
+function getSpRegionName(region) { return {uk:'英国',us:'美国',hk:'中国香港',sg:'新加坡',au:'澳洲',ca:'加拿大'}[region] || '未选择'; }
+function getSpMajorName(major) { const map = { finance: '金融/经济', cs: '计算机科学', engineering: '工程', math: '数学/统计', science: '自然科学', social: '人文社科', art: '艺术设计', business: '商科管理' }; return map[major] || (major || '未选择'); }
+function renderSpGoalSummary(containerId) { const d = studyPlanState.data; const regionName = getSpRegionName(d.region); const majorName = getSpMajorName(d.major); const intake = d.intake || '2027 Fall'; const grade = d.grade || '未选择'; const unis = d.universities.length ? d.universities.join('、') : '未选择'; const container = document.getElementById(containerId); if (!container) return; container.innerHTML = '<div class="sp-overview-title">📝 目标摘要</div><div class="sp-overview-row"><div class="sp-overview-item"><div class="sp-overview-label">年级</div><div class="sp-overview-value">' + grade + '</div></div><div class="sp-overview-item"><div class="sp-overview-label">目标申请年份</div><div class="sp-overview-value">' + intake + '</div></div><div class="sp-overview-item"><div class="sp-overview-label">目标申请国家/地区</div><div class="sp-overview-value">' + regionName + '</div></div><div class="sp-overview-item"><div class="sp-overview-label">目标专业</div><div class="sp-overview-value">' + majorName + '</div></div><div class="sp-overview-item"><div class="sp-overview-label">目标大学</div><div class="sp-overview-value">' + unis + '</div></div></div>'; }
+
+const SP_PICKER_OPTIONS = {
+  region: [
+    { value: 'uk', label: '英国' },
+    { value: 'us', label: '美国' },
+    { value: 'hk', label: '中国香港' },
+    { value: 'sg', label: '新加坡' },
+    { value: 'au', label: '澳洲' },
+    { value: 'ca', label: '加拿大' }
+  ],
+  major: [
+    { value: 'finance', label: '金融/经济' },
+    { value: 'cs', label: '计算机科学' },
+    { value: 'engineering', label: '工程' },
+    { value: 'math', label: '数学/统计' },
+    { value: 'science', label: '自然科学' },
+    { value: 'social', label: '人文社科' },
+    { value: 'art', label: '艺术设计' },
+    { value: 'business', label: '商科管理' }
+  ]
+};
+let spPickerState = { type: '', selected: [] };
+function getSpPickerOptions(type) { if (type === 'university') { const region = studyPlanState.data.region || ''; return (SP_UNIVERSITIES[region] || []).map(u => ({ value: u, label: u })); } return SP_PICKER_OPTIONS[type] || []; }
+function getSpPickerTitle(type) { return { region: '选择目标申请国家/地区', major: '选择目标专业', university: '选择目标大学（最多3所）' }[type] || '选择'; }
+function renderSpPickerCards() { const d = studyPlanState.data; const regionCard = document.getElementById('spRegionCard'); if (regionCard) { regionCard.innerHTML = '<span class="' + (d.region ? 'value' : 'placeholder') + '">' + (d.region ? getSpRegionName(d.region) : '请选择目标申请国家/地区') + '</span><span class="arrow">▾</span>'; } const majorCard = document.getElementById('spMajorCard'); if (majorCard) { majorCard.innerHTML = '<span class="' + (d.major ? 'value' : 'placeholder') + '">' + (d.major ? getSpMajorName(d.major) : '请选择目标专业') + '</span><span class="arrow">▾</span>'; } const uniCard = document.getElementById('spUniversityCard'); if (uniCard) { const region = d.region || ''; const value = d.universities.length ? d.universities.join('、') : ''; const placeholder = region ? (d.universities.length ? '已选 ' + d.universities.length + ' 所' : '请选择目标大学（最多3所）') : '请先选择目标申请国家/地区'; uniCard.innerHTML = '<span class="' + (value ? 'value' : 'placeholder') + '">' + (value || placeholder) + '</span><span class="arrow">▾</span>'; } }
+function openSpPicker(type) { if (type === 'university' && !studyPlanState.data.region) { showToast('请先选择目标申请国家/地区'); return; } spPickerState.type = type; spPickerState.selected = type === 'university' ? studyPlanState.data.universities.slice() : (studyPlanState.data[type] ? [studyPlanState.data[type]] : []); document.getElementById('spPickerTitle').textContent = getSpPickerTitle(type); renderSpPickerOptions(); const overlay = document.getElementById('spPickerOverlay'); const modal = document.getElementById('spPickerModal'); overlay.classList.add('show'); requestAnimationFrame(() => overlay.classList.add('fade-in')); requestAnimationFrame(() => modal.classList.add('show')); }
+function renderSpPickerOptions() { const type = spPickerState.type; const options = getSpPickerOptions(type); const isMulti = type === 'university'; const body = document.getElementById('spPickerBody'); if (!body) return; body.innerHTML = '<div class="sp-picker-options">' + options.map(o => { const selected = spPickerState.selected.includes(o.value); const disabled = isMulti && !selected && spPickerState.selected.length >= 3; const clickAttr = disabled ? '' : 'toggleSpPickerOption(\'' + String(o.value).replace(/\\/g, '\\\\').replace(/'/g, "\\'") + '\')'; return '<div class="sp-picker-option' + (selected ? ' selected' : '') + (disabled ? ' disabled' : '') + '" onclick="' + clickAttr + '">' + o.label + (selected && isMulti ? ' ✓' : '') + '</div>'; }).join('') + '</div>'; }
+function toggleSpPickerOption(value) { const type = spPickerState.type; if (type === 'university') { const idx = spPickerState.selected.indexOf(value); if (idx >= 0) { spPickerState.selected.splice(idx, 1); } else if (spPickerState.selected.length < 3) { spPickerState.selected.push(value); } else { showToast('最多选择3所目标大学'); return; } } else { spPickerState.selected = spPickerState.selected[0] === value ? [] : [value]; } renderSpPickerOptions(); }
+function confirmSpPicker() { const type = spPickerState.type; if (type === 'university') { studyPlanState.data.universities = spPickerState.selected.slice(); renderSpSelectedUnis(); } else if (type === 'region') { studyPlanState.data.region = spPickerState.selected[0] || ''; onSpRegionChange(); } else if (type === 'major') { studyPlanState.data.major = spPickerState.selected[0] || ''; } renderSpPickerCards(); updateStudyPlanData(); closeSpPicker(); }
+function closeSpPicker(e) { if (e && e.target !== e.currentTarget) return; const overlay = document.getElementById('spPickerOverlay'); const modal = document.getElementById('spPickerModal'); if (overlay) overlay.classList.remove('fade-in'); if (modal) modal.classList.remove('show'); setTimeout(() => { if (overlay) overlay.classList.remove('show'); }, 300); }
+function openSpPickerAiConsult() { const type = spPickerState.type; closeSpPicker(); if (type === 'major') openSpAiConsult('major'); else if (type === 'region') openSpAiConsult('region'); else if (type === 'university') openSpAiConsult('school'); }
+function openSpAiChat() { const panel = document.getElementById('spAiChatPanel'); const body = document.getElementById('studyPlanAppBody'); if (!panel) return; panel.classList.add('active'); body.classList.add('sp-main-with-chat'); updateSpAiChatAvatar(); renderSpAiChatMessages(); const inp = document.getElementById('spAiChatInput'); if (inp) inp.focus(); }
+function closeSpAiChat() { const panel = document.getElementById('spAiChatPanel'); const body = document.getElementById('studyPlanAppBody'); if (panel) panel.classList.remove('active'); if (body) body.classList.remove('sp-main-with-chat'); }
+function toggleSpAiChat() { const panel = document.getElementById('spAiChatPanel'); if (!panel) return; if (panel.classList.contains('active')) closeSpAiChat(); else openSpAiChat(); }
+function updateSpAiChatAvatar() { const img = document.getElementById('spAiChatAvatarImg'); if (!img) return; const fig = getFigure(userData.currentFigureId) || getFigure('base'); if (fig.generated) { img.parentElement.innerHTML = '<div id="spAiChatAvatarImg" style="width:80%;height:80%;display:flex;align-items:center;justify-content:center;font-size:18px;background:' + (fig.bg || '#f5f5f5') + ';border-radius:50%;">' + (fig.emoji || '🐾') + '</div>'; } else { img.parentElement.innerHTML = '<img id="spAiChatAvatarImg" src="' + fig.image + '" alt="小航" style="width:80%;height:80%;object-fit:contain;">'; } }
+function renderSpAiChatMessages() { const container = document.getElementById('spAiChatMessages'); if (!container) return; const fig = getFigure(userData.currentFigureId) || getFigure('base'); container.innerHTML = spAiChatMessages.map(m => { if (m.role === 'user') { return '<div class="msg user-msg" style="max-width:90%;"><div class="msg-bubble"><div class="msg-text">' + m.content + '</div><div class="msg-time">' + (m.time || '') + '</div></div></div>'; } const moodClass = m.mood || 'normal'; const moodEmoji = {normal:'', thinking:'💭', happy:'😊', confused:'🤔'}[moodClass] || ''; if (m.composite && m.segment && m.questions) { const segment = m.segment; const selections = spAiConsultState.pendingAnswers[segment] || []; let questionsHtml = ''; m.questions.forEach((q, qIdx) => { const optsHtml = q.options.map(o => { const isSelected = selections[qIdx] === o.value; const selectedClass = isSelected ? ' selected' : ''; return '<div class="sp-ai-option-card' + selectedClass + '" onclick=\'pickCompositeOption(' + JSON.stringify(segment).replace(/'/g, "&#39;") + ',' + qIdx + ',' + JSON.stringify(o.value).replace(/'/g, "&#39;") + ')\'>' + o.label + '</div>'; }).join(''); questionsHtml += '<div class="sp-ai-composite-question"><div class="sp-ai-composite-title"><span class="sp-ai-composite-index">' + (qIdx + 1) + '</span>' + escapeHtml(q.text) + '</div><div class="sp-ai-composite-options">' + optsHtml + '</div></div>'; }); const complete = isSpAiCompositeComplete(segment); const confirmClass = complete ? ' enabled' : ''; const confirmBtn = '<button class="sp-ai-composite-confirm' + confirmClass + '" onclick=\'confirmSpAiComposite(' + JSON.stringify(segment).replace(/'/g, "&#39;") + ')\' ' + (complete ? '' : 'disabled') + '>确认</button>'; return '<div class="msg ai-msg" style="max-width:95%;">' + renderAvatarHtml(fig, moodClass, moodEmoji) + '<div class="msg-bubble"><div class="sp-ai-composite"><div class="sp-ai-composite-intro">' + m.content + '</div>' + questionsHtml + confirmBtn + '</div><div class="msg-time">' + (m.time || '') + '</div></div></div>'; } let actionsHtml = ''; let optionsHtml = ''; if (m.actions && m.actions.length) { actionsHtml = '<div class="sp-ai-chat-actions">' + m.actions.map(a => '<button class="' + (a.primary ? 'primary' : '') + '" onclick="' + a.onclick + '">' + a.label + '</button>').join('') + '</div>'; } if (m.options && m.options.length) { optionsHtml = '<div class="sp-ai-option-cards">' + m.options.map(o => { const primaryClass = o.primary ? ' primary' : ''; return '<div class="sp-ai-option-card' + primaryClass + '" onclick=\'pickSpAiOption(' + JSON.stringify(o.label).replace(/'/g, "&#39;") + ',' + JSON.stringify(o.value).replace(/'/g, "&#39;") + ')\'>' + o.label + '</div>'; }).join('') + '</div>'; } return '<div class="msg ai-msg" style="max-width:90%;">' + renderAvatarHtml(fig, moodClass, moodEmoji) + '<div class="msg-bubble"><div class="msg-text">' + m.content + '</div>' + optionsHtml + actionsHtml + '<div class="msg-time">' + (m.time || '') + '</div></div></div>'; }).join(''); container.scrollTop = container.scrollHeight; }
+function pickCompositeOption(segment, qIndex, value) { setSpAiCompositeAnswer(segment, qIndex, value); }
+function sendSpAiChatMessage() { const inp = document.getElementById('spAiChatInput'); const text = (inp.value || '').trim(); if (!text) return; const time = formatTime(); spAiChatMessages.push({ role: 'user', content: escapeHtml(text), time }); renderSpAiChatMessages(); inp.value = ''; setTimeout(() => handleSpAiConsultResponse(text), 600); }
+function handleSpAiChatKey(e) { if (e.key === 'Enter') { e.preventDefault(); sendSpAiChatMessage(); } }
+function startSpAiConsult() { spAiChatMessages = []; spCurrentReport = null; spAiConsultState = { selectingSegment: true, segment: null, questionIndex: 0, answers: { major: [], region: [], school: [] }, pendingAnswers: { major: [null, null, null], region: [null, null, null], school: [null, null, null] }, pendingConfirm: false }; studyPlanState.consultation.activeSegment = ''; const time = formatTime(); openSpAiChat(); spAiChatMessages.push({ role: 'ai', content: '你好！我是 AI 小航。我可以分别帮你咨询目标专业、申请地区或目标大学。你想从哪个方向开始？', time, mood: 'happy', options: [{ label: '🎓 目标专业', value: 'major', primary: false }, { label: '🌍 申请地区', value: 'region', primary: false }, { label: '🏫 目标大学', value: 'school', primary: false }] }); renderSpAiChatMessages(); }function openSpAiConsult(segment) { if (!segment) { startSpAiConsult(); return; } if (segment === 'school') { const majorReady = studyPlanState.consultation.segments.major.done || studyPlanState.data.major; const regionReady = studyPlanState.consultation.segments.region.done || studyPlanState.data.region; if (!majorReady || !regionReady) { openSpAiChat(); const time = formatTime(); spAiChatMessages = []; spAiChatMessages.push({ role: 'ai', content: '咨询目标大学前，建议先明确目标专业和目标申请国家/地区，这样我能给你更精准的院校建议。', time, mood: 'confused', options: [{ label: '🎓 先咨询目标专业', value: 'major', primary: false }, { label: '🌍 先咨询申请地区', value: 'region', primary: false }] }); renderSpAiChatMessages(); return; } } spAiChatMessages = []; spCurrentReport = null; spAiConsultState = { selectingSegment: false, segment: segment, questionIndex: 0, answers: { major: [], region: [], school: [] }, pendingAnswers: { major: [null, null, null], region: [null, null, null], school: [null, null, null] }, pendingConfirm: false }; resetSpAiCompositeAnswers(segment); studyPlanState.consultation.activeSegment = segment; studyPlanState.consultation.segments[segment].done = false; spAiConsultMode = true; spAiConsultTurn = 0; openSpAiChat(); askSpAiQuestion(segment, 0); }function askSpAiQuestion(segment, questionIndex) { const questions = SP_AI_QUESTIONS[segment]; if (!questions || !questions.length) return; resetSpAiCompositeAnswers(segment); const time = formatTime(); const label = SP_SEGMENT_LABELS[segment] || segment; spAiChatMessages.push({ role: 'ai', content: '为了给你更精准的【' + label + '】建议，请回答以下问题：', time, mood: 'happy', composite: true, segment: segment, questions: questions.map(q => ({ text: q.text, options: q.options.map(opt => ({ label: opt, value: opt })) })) }); renderSpAiChatMessages(); }
+function pickSpAiOption(label, value) { if (value === 'contact' || value === 'apply') { return; } if (value === 'apply_major') { applySegmentReport('major'); return; } if (value === 'apply_region') { applySegmentReport('region'); return; } if (value === 'apply_school') { applySegmentReport('school'); return; } if (value === 'continue_region') { continueSegmentConsult('region'); return; } if (value === 'continue_school') { continueSegmentConsult('school'); return; } if (value === 'finish') { finishGoalConsult(); return; } const time = formatTime(); spAiChatMessages.push({ role: 'user', content: escapeHtml(label), time }); renderSpAiChatMessages(); setTimeout(() => handleSpAiConsultResponse(value), 600); }function buildSegmentSummary(segment, answers) { const label = SP_SEGMENT_LABELS[segment] || segment; if (segment === 'major') { const rec = getSpMajorName(inferMajorFromAnswers(answers)); return '【专业选择】你擅长或偏好「' + (answers[0] || '') + '」，未来发展方向倾向「' + (answers[1] || '') + '」，职业目标「' + (answers[2] || '') + '」。建议结合学科优势与职业规划，重点关注匹配度高的专业方向，并补充相关背景经历。综合以上，我推荐你优先考虑“' + rec + '”方向。'; } if (segment === 'region') { const rec = getSpRegionName(inferRegionFromAnswers(answers)); return '【留学地区】你看重「' + (answers[0] || '') + '」，倾向「' + (answers[1] || '') + '」，毕业后希望「' + (answers[2] || '') + '」。建议根据预算、学制与职业规划，选择政策与环境最契合的留学地区。综合以上，我推荐你重点关注“' + rec + '”。'; } if (segment === 'school') { const region = studyPlanState.data.region || 'us'; const recs = inferUnisFromAnswers(answers, region); return '【目标院校】你的目标层次为「' + (answers[0] || '') + '」，更看重「' + (answers[1] || '') + '」，偏好「' + (answers[2] || '') + '」的校园氛围。建议在选校清单中合理配置冲刺、匹配与保底院校。综合以上，我推荐你将“' + recs.join('、') + '”纳入目标清单。'; } return '【' + label + '】建议已根据你的选择整理完成。'; }function handleSpAiConsultResponse(userText) { const value = (userText || '').trim(); const lower = value.toLowerCase(); const confirmWords = ['确认', '是的', 'ok', 'yes']; const isConfirm = confirmWords.some(w => lower.includes(w)); spAiConsultTurn++; const time = formatTime(); if (value === 'apply_major') { applySegmentReport('major'); return; } if (value === 'apply_region') { applySegmentReport('region'); return; } if (value === 'apply_school') { applySegmentReport('school'); return; } if (value === 'continue_region') { continueSegmentConsult('region'); return; } if (value === 'continue_school') { continueSegmentConsult('school'); return; } if (value === 'finish') { finishGoalConsult(); return; } if (spAiConsultState.selectingSegment) { const segmentKeys = ['major','region','school']; let chosen = value; if (!segmentKeys.includes(chosen)) { const map = { '专业': 'major', '专业选择': 'major', '留学地区': 'region', '地区': 'region', '目标院校': 'school', '学校': 'school', '院校': 'school' }; chosen = map[value] || ''; if (!chosen && segmentKeys.includes(value.toLowerCase())) chosen = value.toLowerCase(); } if (!chosen) { spAiChatMessages.push({ role: 'ai', content: '请从上方选项中选择你最关心的方向，或输入“专业”、“地区”、“学校”。', time, mood: 'confused' }); renderSpAiChatMessages(); return; } openSpAiConsult(chosen); return; } if (spAiConsultState.pendingConfirm) { const segment = spAiConsultState.segment; const label = SP_SEGMENT_LABELS[segment]; if (value === 'confirm' || value === '确认保存' || isConfirm) { const summary = buildSegmentSummary(segment, spAiConsultState.answers[segment]); saveConsultReport(segment, summary, spAiConsultState.answers[segment]); spAiConsultState.pendingConfirm = false; spAiConsultState.segment = null; generateSegmentReport(segment, summary, spAiConsultState.answers[segment]); } else if (value === 'retry' || value === '再想想') { spAiConsultState.pendingConfirm = false; spAiConsultState.questionIndex = 0; spAiConsultState.answers[segment] = []; setTimeout(() => askSpAiQuestion(segment, 0), 600); } else { spAiChatMessages.push({ role: 'ai', content: '请选择“确认保存”保存建议，或选择“再想想”重新回答。', time, mood: 'confused' }); renderSpAiChatMessages(); } return; } if (spAiConsultState.segment && !spAiConsultState.pendingConfirm) { const activeQuestions = SP_AI_QUESTIONS[spAiConsultState.segment]; if (activeQuestions && spAiConsultState.questionIndex < activeQuestions.length) { spAiChatMessages.push({ role: 'ai', content: '请直接点击卡片中的选项作答，完成全部问题后点击“确认”。', time, mood: 'confused' }); renderSpAiChatMessages(); return; } } }function advanceSpAiConsult(finishedSegment) { continueSegmentConsult(nextSegmentAfter(finishedSegment)); }function saveConsultReport(segment, summary, answers) { if (!studyPlanState.consultation.segments[segment]) return; studyPlanState.consultation.segments[segment] = { report: summary, summary: summary, done: true, answers: answers || [], reportHtml: '' }; studyPlanState.consultation.activeSegment = ''; renderSpReportList(); showToast(SP_SEGMENT_LABELS[segment] + '咨询建议已保存'); }function generateSpInlineFinalReport() { showToast('请使用新的分段咨询报告功能'); }function applySpInlineReport() { showToast('请使用新的分段应用功能'); }function parseAndApplyConsultReport(content) { if (!content) return; const text = content; const regionMatch = text.match(/(英国|美国|香港|新加坡|澳洲|加拿大|澳大利亚)/); if (regionMatch) { const key = SP_REGION_KEYS[regionMatch[1]]; if (key) { studyPlanState.data.region = key; } } const majorMatch = text.match(/(金融\/经济|金融|经济|计算机科学|计算机|工程|数学\/统计|数学|统计|自然科学|人文社科|艺术设计|艺术|设计|商科管理|商科|管理)/); if (majorMatch) { const key = SP_MAJOR_KEYS[majorMatch[1]]; if (key) studyPlanState.data.major = key; } const uniMatches = text.match(/(牛津大学|剑桥大学|帝国理工学院|伦敦大学学院UCL|爱丁堡大学|曼彻斯特大学|伦敦国王学院KCL|华威大学|布里斯托大学|格拉斯哥大学|哈佛大学|麻省理工学院|斯坦福大学|普林斯顿大学|耶鲁大学|哥伦比亚大学|宾夕法尼亚大学|加州理工学院|杜克大学|芝加哥大学|香港大学HKU|香港中文大学CUHK|香港科技大学HKUST|香港理工大学PolyU|香港城市大学CityU|新加坡国立大学NUS|南洋理工大学NTU|新加坡管理大学SMU|墨尔本大学|悉尼大学|澳大利亚国立大学|新南威尔士大学UNSW|昆士兰大学|莫纳什大学|多伦多大学|不列颠哥伦比亚大学UBC|麦吉尔大学|滑铁卢大学|麦克马斯特大学)/g); if (uniMatches) { const region = studyPlanState.data.region; const regionUnis = SP_UNIVERSITIES[region] || []; const picked = []; for (let u of uniMatches) { if (regionUnis.includes(u) && !picked.includes(u)) picked.push(u); if (picked.length >= 3) break; } if (picked.length) studyPlanState.data.universities = picked; } const yearMatch = text.match(/(202[6-9])/); if (yearMatch) studyPlanState.data.intake = yearMatch[1]; setSpFormValues(); renderSpSelectedUnis(); renderSpGoalSummary('spGoalSummary'); updateStudyPlanData(); }
+function renderSpReportList() { const container = document.getElementById('spReportList'); if (!container) return; if (studyPlanState.reports.length === 0) { container.innerHTML = '<div class="sp-report-empty">暂无留学咨询报告，点击“咨询 AI 获取目标建议”开始咨询。</div>'; return; } container.innerHTML = studyPlanState.reports.map(r => '<div class="sp-report-card"><div><div class="sp-report-card-title">' + r.title + '</div><div class="sp-report-card-date">' + new Date(r.date).toLocaleDateString('zh-CN') + '</div></div><button class="sp-btn" onclick="viewSpReport(' + JSON.stringify(r).replace(/'/g, "&#39;") + ')">查看</button></div>').join(''); }
+
+function nextSegmentAfter(segment) { const order = ['major', 'region', 'school']; const idx = order.indexOf(segment); return (idx >= 0 && idx < order.length - 1) ? order[idx + 1] : ''; }
+function inferMajorFromAnswers(answers) { const a0 = (answers[0] || '').toString(); const a1 = (answers[1] || '').toString(); if (a0.includes('数理')) return 'math'; if (a0.includes('创意')) return 'art'; if (a0.includes('语言')) return 'social'; if (a0.includes('商业')) return 'business'; if (a1.includes('科研')) return 'science'; if (a1.includes('大厂')) return 'cs'; if (a1.includes('创业')) return 'business'; if (a1.includes('艺术')) return 'art'; return 'business'; }
+function inferRegionFromAnswers(answers) { const a0 = (answers[0] || '').toString(); const a2 = (answers[2] || '').toString(); if (a0.includes('排名')) return 'us'; if (a0.includes('成本')) return 'hk'; if (a0.includes('就业')) return 'us'; if (a0.includes('移民')) return 'ca'; if (a2.includes('回国')) return 'uk'; if (a2.includes('留当')) return 'ca'; if (a2.includes('继续')) return 'us'; return 'uk'; }
+function inferUnisFromAnswers(answers, region) { const a0 = (answers[0] || '').toString(); const unis = SP_UNIVERSITIES[region] || []; if (a0.includes('顶尖')) return unis.slice(0, 3); if (a0.includes('稳妥')) return unis.slice(3, 6); if (a0.includes('保底')) return unis.slice(-3); return unis.slice(0, 3); }
+function getSegmentAbstract(segment) { if (segment === 'major') return '建议结合你的学科优势、兴趣方向与职业目标，优先锁定匹配度高的专业领域，并通过课程、竞赛或实践进一步补强相关背景。'; if (segment === 'region') return '建议综合预算、学制、就业与移民政策，选择与个人发展规划最契合的国家/地区，并关注目标地区的申请时间线与标化要求。'; if (segment === 'school') return '建议在选校清单中合理配置冲刺、匹配与保底院校，同时结合目标专业的学科优势与地理位置制定申请策略。'; return ''; }
+function buildBenchmarkHtml(segment, context) { const ctx = context || {}; const majorName = ctx.majorName || getSpMajorName(studyPlanState.data.major) || '未选择'; const regionName = ctx.regionName || getSpRegionName(studyPlanState.data.region) || '未选择'; let rows = [], title = ''; if (segment === 'major') { title = '近3年与你背景相似的申请者中，各专业方向选择占比'; rows = [['金融/经济', 18], ['计算机科学', 22], ['工程', 15], ['数学/统计', 12], ['商科管理', 16], ['人文社科', 10], ['艺术设计', 4], ['自然科学', 3]]; } else if (segment === 'region') { title = '近3年目标' + majorName + '的学生中，各国家/地区选择占比'; rows = [['英国', 28], ['美国', 32], ['中国香港', 12], ['新加坡', 10], ['澳洲', 5], ['加拿大', 8], ['其他', 5]]; } else if (segment === 'school') { title = '近3年目标' + majorName + '且申请' + regionName + '的学生中，目标大学选择占比'; const region = studyPlanState.data.region || 'us'; const unis = SP_UNIVERSITIES[region] || SP_UNIVERSITIES['us']; const pcts = [22, 18, 15, 12, 8]; rows = unis.slice(0, 5).map((u, i) => [u, pcts[i] || 5]); } const colors = ['#4CAF50', '#66BB6A', '#81C784', '#A5D6A7', '#C8E6C9', '#FF9800', '#03A9F4', '#9C27B0']; const bars = rows.map(function(r, i) { const color = colors[i % colors.length]; return '<div class="sp-benchmark-row"><div class="sp-benchmark-label">' + r[0] + '</div><div class="sp-benchmark-bar-wrap"><div class="sp-benchmark-bar" style="width:' + r[1] + '%;background:' + color + ';"></div></div><div class="sp-benchmark-pct">' + r[1] + '%</div></div>'; }).join(''); return '<div class="sp-benchmark-block"><div class="sp-benchmark-title">' + title + '</div>' + bars + '</div>'; }
+function buildSegmentReportHtml(segment, summary) { const segmentNames = { major: '专业', region: '留学地区', school: '目标大学' }; const title = '留学咨询报告 · ' + segmentNames[segment]; const dateStr = new Date().toLocaleDateString('zh-CN'); const conclusion = summary; const abstract = getSegmentAbstract(segment); const benchmark = buildBenchmarkHtml(segment); return '<div class="sp-report-printable"><div class="sp-report-print-header"><button class="sp-btn" onclick="window.print()">🖨️ 打印 / 保存为PDF</button></div><h2>' + title + '</h2><p class="sp-report-date"><b>日期：</b>' + dateStr + '</p><div class="sp-report-section"><div class="sp-report-section-title">咨询结论</div><div class="sp-report-section-body">' + conclusion + '</div></div><div class="sp-report-section"><div class="sp-report-section-title">建议摘要</div><div class="sp-report-section-body">' + abstract + '</div></div><div class="sp-report-section"><div class="sp-report-section-title">Benchmark（近3年新航道相似学生选择占比）</div>' + benchmark + '</div></div>'; }
+function generateSegmentReport(segment, summary, answers) { const segmentNames = { major: '专业', region: '留学地区', school: '目标大学' }; const title = '留学咨询报告 · ' + segmentNames[segment]; const date = new Date().toISOString(); const reportObj = { id: 'rpt_' + Date.now() + '_' + segment, title: title, date: date, segment: segment, content: summary }; spCurrentReport = reportObj; studyPlanState.reports.push(reportObj); renderSpReportList(); const fullHtml = buildSegmentReportHtml(segment, summary); studyPlanState.consultation.segments[segment].reportHtml = fullHtml; studyPlanState.consultation.segments[segment].answers = answers || []; const time = formatTime(); let actionOptions = []; if (segment === 'major') { actionOptions = [{ label: '✅ 应用该专业到目标', value: 'apply_major', primary: true }, { label: '🌏 继续咨询申请地区', value: 'continue_region', primary: false }]; } else if (segment === 'region') { actionOptions = [{ label: '✅ 应用该地区到目标', value: 'apply_region', primary: true }, { label: '🏫 继续咨询目标大学', value: 'continue_school', primary: false }]; } else if (segment === 'school') { actionOptions = [{ label: '✅ 应用该大学到目标', value: 'apply_school', primary: true }, { label: '🎓 完成目标咨询', value: 'finish', primary: false }]; } const summaryText = getSegmentSummarySentence(segment, summary); const chatHtml = '<div class="sp-report-summary"><p>' + summaryText + '</p><div class="sp-report-summary-toggle"><a href="javascript:void(0)" class="sp-report-link" onclick=\'showSegmentReportModal(' + JSON.stringify(segment).replace(/'/g, "&#39;") + ')\'>查看完整报告</a></div></div>'; spAiChatMessages.push({ role: 'ai', content: chatHtml, time: time, mood: 'happy' }); spAiChatMessages.push({ role: 'ai', content: '我已生成' + segmentNames[segment] + '咨询报告，接下来你想做什么？', time: formatTime(), mood: 'happy', options: actionOptions }); renderSpAiChatMessages(); }
+function getSegmentSummarySentence(segment, summary) { const recMatch = summary.match(/我推荐你[^。]*。/); if (recMatch) return recMatch[0]; const segmentNames = { major: '专业', region: '留学地区', school: '目标大学' }; return '已生成' + segmentNames[segment] + '咨询报告。'; }
+function showSegmentReportModal(segment) { const seg = studyPlanState.consultation.segments[segment]; if (!seg || !seg.reportHtml) return; const segmentNames = { major: '专业', region: '留学地区', school: '目标大学' }; showSpModal('留学咨询报告 · ' + segmentNames[segment], seg.reportHtml); }
+function continueSegmentConsult(segment) { if (!segment) { finishGoalConsult(); return; } spAiConsultState = { selectingSegment: false, segment: segment, questionIndex: 0, answers: { major: [], region: [], school: [] }, pendingAnswers: { major: [null, null, null], region: [null, null, null], school: [null, null, null] }, pendingConfirm: false }; resetSpAiCompositeAnswers(segment); studyPlanState.consultation.activeSegment = segment; studyPlanState.consultation.segments[segment].done = false; const time = formatTime(); spAiChatMessages.push({ role: 'ai', content: '好的，接下来我们咨询' + SP_SEGMENT_LABELS[segment] + '。', time, mood: 'happy' }); renderSpAiChatMessages(); setTimeout(() => askSpAiQuestion(segment, 0), 600); }
+function finishGoalConsult() { const time = formatTime(); spAiChatMessages.push({ role: 'ai', content: '已完成全部目标咨询！你可以随时在右侧“历史报告”中查看或修改目标。', time, mood: 'happy' }); renderSpAiChatMessages(); setTimeout(() => closeSpAiChat(), 1200); }
+function applySegmentReport(segment) { const seg = studyPlanState.consultation.segments[segment]; if (!seg || !seg.report) return; const content = seg.report; if (segment === 'major') { const majorMatch = content.match(/优先考虑“([^”]+)”/); if (majorMatch) { const key = SP_MAJOR_KEYS[majorMatch[1]]; if (key) studyPlanState.data.major = key; } } else if (segment === 'region') { const regionMatch = content.match(/重点关注“([^”]+)”/); if (regionMatch) { const key = SP_REGION_KEYS[regionMatch[1]]; if (key) studyPlanState.data.region = key; } } else if (segment === 'school') { const region = studyPlanState.data.region || 'us'; const answers = seg.answers || []; const recs = inferUnisFromAnswers(answers, region); const validRecs = recs.filter(u => (SP_UNIVERSITIES[region] || []).includes(u)); if (validRecs.length) studyPlanState.data.universities = validRecs.slice(0, 3); } setSpFormValues(); renderSpSelectedUnis(); renderSpGoalSummary('spGoalSummary'); updateStudyPlanData(); saveStudyPlan(); showToast(SP_SEGMENT_LABELS[segment] + '报告已应用到目标'); }
+
+function viewSpReport(reportObj) { if (!reportObj || !reportObj.content) return; const reportDate = reportObj.date ? new Date(reportObj.date).toLocaleDateString('zh-CN') : new Date().toLocaleDateString('zh-CN'); const segmentNames = { major: '专业', region: '留学地区', school: '目标大学' }; const segment = reportObj.segment; const title = segment ? ('留学咨询报告 · ' + segmentNames[segment]) : '留学咨询报告'; if (segment && studyPlanState.consultation.segments[segment] && studyPlanState.consultation.segments[segment].reportHtml) { showSpModal(title, studyPlanState.consultation.segments[segment].reportHtml); return; } const html = '<div class="sp-report-block"><h3>' + (reportObj.title || '留学咨询报告') + '</h3><p><b>日期：</b>' + reportDate + '</p><div>' + reportObj.content.replace(/\n/g, '<br>') + '</div></div>'; showSpModal(title, html); }function showSpInlineReportModal() { if (spCurrentReport && spCurrentReport.segment && studyPlanState.consultation.segments[spCurrentReport.segment] && studyPlanState.consultation.segments[spCurrentReport.segment].reportHtml) { showSegmentReportModal(spCurrentReport.segment); return; } if (spCurrentReport) viewSpReport(spCurrentReport); }function toggleSpReportPopover() { const pop = document.getElementById('spReportPopover'); if (!pop) return; pop.classList.toggle('show'); renderSpReportPopoverList(); }
+function renderSpReportPopoverList() { const body = document.getElementById('spReportPopoverBody'); if (!body) return; if (studyPlanState.reports.length === 0) { body.innerHTML = '<div class="sp-report-empty">还没有保存的咨询报告</div>'; return; } body.innerHTML = studyPlanState.reports.map(r => '<div class="sp-report-popover-item" onclick="viewSpReport(' + JSON.stringify(r).replace(/'/g, "&#39;") + '); toggleSpReportPopover();"><div class="sp-report-popover-item-title">' + r.title + '</div><div class="sp-report-popover-item-date">' + new Date(r.date).toLocaleDateString('zh-CN') + '</div></div>').join(''); }
+function generateDefaultRequirements() { if (!validateSpStep1()) return; const d = studyPlanState.data; const tier = getSpUniTier(d.universities, d.region); studyPlanState.requirements = { hardware: [ { key: 'alevel', label: 'AL课程', content: getSpAlevelRec(d.major) }, { key: 'language', label: '语言', content: getSpLanguageRec(d.region, tier) }, { key: 'application', label: '申请', content: getSpApplicationRec(d.region) }, { key: 'extraTest', label: '额外笔试', content: getSpExtraTestRec(d.region, d.universities, d.major) }, { key: 'extraInterview', label: '额外面试', content: getSpExtraInterviewRec(d.region, d.universities, d.major) } ], software: [ { key: 'competition', label: '竞赛', content: getSpCompetitionRec(d.major) }, { key: 'background', label: '背景提升', content: getSpBackgroundRec(d.major, d.region) } ] }; renderSpRequirements(); showToast('已根据目标生成默认申请要求'); }
+function getSpUniTier(unis, region) { const regionUnis = SP_UNIVERSITIES[region] || []; const topList = regionUnis.slice(0, 4); return unis.some(u => topList.includes(u)) ? 'top' : 'standard'; }
+function getSpAlevelRec(major) { const map = { math: '建议至少选择3门 A-Level 课程：数学、进阶数学、物理。目标数学/统计方向的学生建议 AS/A2 阶段保持 A* 成绩，部分顶尖学校建议提交 IGCSE 成绩。', cs: '建议至少选择3门 A-Level 课程：数学、进阶数学、计算机科学/物理。建议完成 1-2 个编程或算法相关项目，以证明对计算机方向的学术热情。', engineering: '建议至少选择3门 A-Level 课程：数学、物理、进阶数学/化学。工程方向重视数理基础，部分学校建议提交相关科目高分成绩。', science: '建议至少选择3门 A-Level 课程：根据具体方向选择生物、化学、物理或数学中的三门。自然科学方向建议保持实验科目成绩优秀。', finance: '建议至少选择3门 A-Level 课程：数学、经济/会计、进阶数学/商务。金融/经济方向对数学要求高，建议提前修读统计或微积分相关内容。', business: '建议至少选择3门 A-Level 课程：数学、经济/商务、一门理科或人文科目。商科方向看重量化思维与商业洞察力。', social: '建议选择3门 A-Level 课程：一门人文/历史、一门社会科学（经济/心理/地理）及一门优势科目。人文社科对写作与批判性思维要求较高。', art: 'A-Level 成绩要求相对灵活，通常建议提交3门课程（如艺术与设计、一门文科、一门理科）。艺术方向以作品集为核心，学术成绩达到学校最低门槛即可。' }; return map[major] || map.business; }
+function getSpLanguageRec(region, tier) { const base = { uk: '雅思 6.5+（单项不低于6.0）或托福 90+', us: '托福 90+ 或雅思 6.5+（部分学校接受 Duolingo）', hk: '雅思 6.5+ 或托福 80+；部分港校接受高考英语成绩替代', sg: '雅思 6.5+ 或托福 90+', au: '雅思 6.5+（单项不低于6.0）或托福 79+', ca: '雅思 6.5+ 或托福 90+' }[region] || '雅思 6.5+ 或托福 90+'; const topAdd = tier === 'top' ? '。冲刺顶尖院校建议达到雅思 7.0+（单项不低于6.5）或托福 100+' : ''; return base + topAdd; }
+function getSpApplicationRec(region) { if (region === 'uk') return '通过 UCAS 提交个人陈述（Personal Statement），通常由学校 A-Level 老师或班主任撰写 1 封学术推荐信。部分专业可能需要提交作品集或写作样本。'; if (region === 'us') return '使用 Common App / Coalition App 提交主文书（Personal Statement）及补充文书；需要 2-3 封推荐信（建议包含学科老师与班主任）。'; return '提交个人陈述 / Personal Statement，并准备 1-2 封教师推荐信（建议由熟悉你学术表现的 A-Level 老师完成）。按目标国家要求补充文书或作品集。'; }
+function getSpExtraTestRec(region, unis, major) { if (region === 'uk') { const g5 = ['牛津大学','剑桥大学','帝国理工学院','伦敦大学学院UCL','伦敦政治经济学院']; const hasG5 = unis.some(u => g5.includes(u)); if (hasG5) return '牛津大学、剑桥大学、帝国理工学院、伦敦政治经济学院、华威大学等相关专业可能要求额外笔试（如 MAT/STEP/TMUA/ESAT/LNAT 等），请根据专业与学院官网确认具体考试。'; return '部分英国大学的热门专业（如数学、工程、法律、医学）可能要求 MAT/STEP/TMUA/ESAT/LNAT 等入学笔试，建议提前 6-12 个月准备。'; } if (region === 'us') return '美国大学通常不设置统一入学笔试，但部分顶尖院校的理工科专业建议提交 SAT Subject（如已恢复）或 AP 成绩以增强竞争力。'; return '部分国家/地区的热门或顶尖专业可能设置入学笔试，请根据目标大学官网确认是否需要及考试科目。'; }
+function getSpExtraInterviewRec(region, unis, major) { if (region === 'uk') { const interviewUnis = ['牛津大学','剑桥大学','帝国理工学院']; const has = unis.some(u => interviewUnis.includes(u)); if (has) return '牛津大学、剑桥大学、帝国理工学院等竞争激烈的专业通常安排面试，重点考察学术思维、问题解决能力与学习动机。'; return '英国 G5 及医学、兽医等专业普遍设有面试环节，建议提前进行模拟面试训练。'; } if (region === 'us') return '部分美国大学提供可选校友面试或第三方面试（InitialView），虽然不是强制，但良好的面试表现能为申请加分。'; return '部分顶尖院校的热门专业会安排面试，建议关注学校通知并提前准备。'; }
+function getSpCompetitionRec(major) { const map = { math: '推荐参加 AMC、AIME、欧几里得数学竞赛、BMO、数学建模竞赛等，展示数学思维与解题能力。', cs: '推荐参加 USACO、CCC（加拿大计算机竞赛）、NOIP、Kaggle 入门赛等，体现算法与编程能力。', engineering: '推荐参加物理碗、BPhO、FRC 机器人竞赛、IEO 等，突出工程实践与理科综合能力。', science: '根据方向推荐 Physics Bowl、BPhO、CCC、UKChO、BBO、USABO、ISEF 等科学竞赛。', finance: '推荐参加 NEC、IEO、沃顿商赛、DECA、FBLA 等经济商科类竞赛，强化商业思维。', business: '推荐参加 DECA、FBLA、沃顿商赛、NEC、IEO、模拟联合国等，展示领导力与商业素养。', social: '推荐参加 John Locke 论文竞赛、NYT 写作竞赛、历史竞赛、模拟联合国、辩论赛等，体现写作与思辨能力。', art: '重点准备高质量作品集，可参加作品集比赛、设计竞赛、艺术展览与奖项评选。' }; return map[major] || '建议根据目标专业选择高含金量的学科竞赛，以体现学术热情与专业能力。'; }
+function getSpBackgroundRec(major, region) { const base = { math: '建议参与数学课题研究、学术夏校（如 Ross/PROMYS/STEP）、EPQ 或学术论文项目。', cs: '建议完成 GitHub 项目、开源贡献、AI/算法科研或参加知名科技夏校。', engineering: '建议参与机器人、工程设计、创客项目、实验室科研或工程类夏校。', science: '建议进入实验室参与科研、参加科学夏校、发表论文或参加 ISEF 等科研类活动。', finance: '建议进行银行、券商、咨询公司实习，或参加金融/商业分析类科研与夏校。', business: '建议参加企业实习、创业项目、商业案例分析、领导力社团或商科夏校。', social: '建议完成独立研究、社会调研、公益项目、写作发表或人文类夏校。', art: '建议持续打磨作品集，参加艺术工作坊、画廊实习、设计项目或个人展览。' }[major] || '建议结合专业方向进行科研、EPQ、夏校、实训或实习，提升综合竞争力。'; return base + ' 如需个性化方案，可点击“咨询新航道老师获取建议”。'; }
+function renderSpRequirements() { const grid = document.getElementById('spRequirementsGrid'); if (!grid) return; if (!studyPlanState.requirements || !Array.isArray(studyPlanState.requirements.hardware) || !Array.isArray(studyPlanState.requirements.software)) { studyPlanState.requirements = {hardware: [], software: []}; } const d = studyPlanState.data; const complete = d.grade && d.region && d.universities.length && d.major; if (!complete) { grid.innerHTML = '<div class="sp-req-prompt"><div class="sp-req-prompt-icon">📝</div><div class="sp-req-prompt-title">请先完善我的留学目标</div><div class="sp-req-prompt-desc">需要选择年级、目标国家/地区、目标专业和至少一所目标大学，才能生成申请要求。</div></div>'; return; } const hasReqs = studyPlanState.requirements.hardware.length || studyPlanState.requirements.software.length; if (!hasReqs) { generateDefaultRequirements(); return; } const renderSection = (type, title, icon, cls) => { const list = studyPlanState.requirements[type] || []; return '<div class="sp-req-section"><div class="sp-req-category-title ' + cls + '">' + icon + ' ' + title + '</div><div class="sp-req-table">' + list.map((item, idx) => '<div class="sp-req-row"><div class="sp-req-item-label">' + item.label + '</div><div class="sp-req-item-content" contenteditable="true" onblur="updateSpRequirement(\'' + type + '\', ' + idx + ', this.innerText)">' + (item.content || '') + '</div></div>').join('') + '</div>' + (type === 'software' ? '<div class="sp-req-teacher-btn"><button class="sp-btn secondary" onclick="contactTeacherForPlan()">💬 咨询新航道老师获取建议</button></div>' : '') + '</div>'; }; const factorAnalysis = '<div class="sp-factor-analysis"><div class="sp-factor-analysis-title">🎓 录取因素解析</div><div class="sp-factor-analysis-intro">招生官在审阅申请时会综合评估硬件与软件两个维度，以下关键因素决定了你在目标院校中的录取概率。</div><div class="sp-factor-analysis-body"><div class="sp-factor-item"><span class="sp-factor-dot hard"></span><div class="sp-factor-text"><b>学术成绩 / GPA</b>是名校初筛的第一道门槛，稳定优秀的高中成绩能够证明学生具备完成大学高强度课程的能力。</div></div><div class="sp-factor-item"><span class="sp-factor-dot hard"></span><div class="sp-factor-text"><b>标化考试</b>（A-Level/IB/AP 等）反映专业基础与学科掌握深度，直接影响录取竞争力。</div></div><div class="sp-factor-item"><span class="sp-factor-dot hard"></span><div class="sp-factor-text"><b>语言成绩</b>决定你能否适应全英文授课环境，部分顶尖专业对写作与口语单项有额外要求。</div></div><div class="sp-factor-item"><span class="sp-factor-dot hard"></span><div class="sp-factor-text"><b>先修课程匹配度</b>越高，越能证明你能胜任大学阶段的专业课程，尤其是理工与商科方向。</div></div><div class="sp-factor-item"><span class="sp-factor-dot soft"></span><div class="sp-factor-text"><b>竞赛与科研</b>体现学术热情、探索深度与持续投入，是区分同类申请者的重要软实力。</div></div><div class="sp-factor-item"><span class="sp-factor-dot soft"></span><div class="sp-factor-text"><b>文书与推荐信</b>展示个人特质、成长故事与思维深度，是硬件达标后脱颖而出的关键。</div></div><div class="sp-factor-item"><span class="sp-factor-dot soft"></span><div class="sp-factor-text"><b>面试表现</b>影响最终录取，尤其是牛津、剑桥等采用面试筛选的学校，临场思维与表达至关重要。</div></div></div></div>'; grid.innerHTML = renderSection('hardware', '硬件要求', '📊', 'hard') + renderSection('software', '软件要求', '🌟', 'soft') + factorAnalysis; }
+function updateSpRequirement(type, idx, content) { const item = (studyPlanState.requirements[type] || [])[idx]; if (item) item.content = content; }
+function generateTimelineFromRequirements() { if (!studyPlanState.requirements.hardware.length) { showToast('请先生成申请要求'); return; } generateTimeline(); }
+function generateTimeline() { if (!studyPlanState.requirements.hardware.length) { showToast('请先生成申请要求'); return; } const d = studyPlanState.data; const intake = parseInt(d.intake) || 2027; const today = new Date(); const currentYear = today.getFullYear(); const currentMonth = today.getMonth() + 1; const monthsToIntake = (intake - currentYear) * 12 + (9 - currentMonth); const alevelEnd = Math.max(0, monthsToIntake - 6); const ieltsEnd = Math.max(0, monthsToIntake - 3); const interviewStart = Math.max(0, monthsToIntake - 4); let counter = 0; const addItem = (offset, category, title, desc, milestone) => { const clamped = Math.max(0, Math.min(offset, monthsToIntake - 1)); const total = currentMonth - 1 + clamped; const m = ((total % 12) + 12) % 12; const y = currentYear + Math.floor(total / 12); const dateKey = y + '-' + (m + 1).toString().padStart(2, '0') + '-01'; return { id: 't' + (counter++), date: (m + 1) + '月 ' + y, dateKey, title, desc, category, milestone }; }; studyPlanState.timeline.items = [ addItem(Math.floor(alevelEnd * 0.10), 'alevel', 'AS 诊断/模考', '通过诊断与模考定位当前 AS 阶段薄弱点，调整后续复习计划', false), addItem(Math.floor(alevelEnd * 0.40), 'alevel', 'AS 正式考试', '参加 AS 正式考试，争取核心科目达到预估成绩', true), addItem(Math.floor(alevelEnd * 0.65), 'alevel', 'A2 备考', '系统复习 A2 科目，完成真题训练与知识点查漏补缺', false), addItem(Math.floor(alevelEnd * 0.90), 'alevel', 'A2 正式考试', '参加 A2 正式考试，确保最终成绩满足目标院校要求', true), addItem(Math.floor(ieltsEnd * 0.15), 'ielts', '雅思首考', '完成雅思首考，全面评估听说读写四项能力', false), addItem(Math.floor(ieltsEnd * 0.50), 'ielts', '雅思二考', '针对薄弱项强化训练，冲刺目标总分与单项分数', true), addItem(Math.floor(ieltsEnd * 0.85), 'ielts', '雅思冲刺三考', '考前冲刺模拟，稳定发挥并达到入学语言要求', true), addItem(interviewStart + 0, 'interview', '入学笔试准备', '根据目标专业要求，系统准备 MAT/STEP/TMUA/ESAT/LNAT 等笔试', false), addItem(interviewStart + 1, 'interview', '笔试实战', '参加目标学校或专业要求的入学笔试', true), addItem(interviewStart + 2, 'interview', '面试准备', '梳理学术背景与个人陈述，进行模拟面试训练', false), addItem(interviewStart + 3, 'interview', '面试实战', '参加目标学校面试，展示学术思维与综合能力', true) ]; renderSpTimeline(); showToast('时间规划已生成'); goToSpStep(4); }
+function renderSpTimeline() { const container = document.getElementById('spTimelineList'); if (!container) return; const img = document.getElementById('spTimelineImage'); const placeholder = document.getElementById('spTimelinePlaceholder'); if (img) { const src = studyPlanState.timeline.imageData || studyPlanState.timeline.imageFile || 'docs/images/study-plan-timeline.png'; img.src = src; img.classList.remove('hide'); } if (placeholder) placeholder.classList.remove('show'); if (studyPlanState.timeline.items.length === 0) { container.innerHTML = '<div class="sp-empty-state"><div class="sp-empty-icon">🗓️</div><div class="sp-empty-title">还没有时间线事项</div><div class="sp-empty-desc">点击“根据目标生成默认时间线”开始规划。</div></div>'; return; } const categories = { alevel: { label: 'A-Level 考试', icon: '📚' }, ielts: { label: '雅思', icon: '🌐' }, interview: { label: '学校面试/笔试', icon: '🎓' } }; const grouped = {}; studyPlanState.timeline.items.forEach(item => { const cat = item.category || 'alevel'; if (!grouped[cat]) grouped[cat] = []; grouped[cat].push(item); }); container.innerHTML = Object.keys(categories).map(key => { const cat = categories[key]; const items = (grouped[key] || []).sort((a, b) => (a.dateKey || '').localeCompare(b.dateKey || '')); return '<div class="sp-timeline-category"><div class="sp-timeline-category-title ' + key + '">' + cat.icon + ' ' + cat.label + '</div><div class="sp-timeline-category-items">' + (items.length ? items.map(item => renderSpTimelineEditableRow(item)).join('') : '<div style="font-size:13px;color:#999;padding:8px 0;">暂无事项</div>') + '</div><div class="sp-add-timeline-item" onclick="addSpTimelineItem(\'' + key + '\')">+ 添加事项</div></div>'; }).join(''); }
+function renderSpTimelineEditableRow(item) { return '<div class="sp-timeline-editable-row ' + (item.category || '') + '"><input type="date" value="' + (item.dateKey || '') + '" onchange="updateSpTimelineItem(\'' + item.id + '\', \'dateKey\', this.value)"><div class="sp-timeline-editable-main"><input class="sp-timeline-editable-title" value="' + escapeHtml(item.title) + '" onchange="updateSpTimelineItem(\'' + item.id + '\', \'title\', this.value)" placeholder="事项标题"><textarea class="sp-timeline-editable-desc" onchange="updateSpTimelineItem(\'' + item.id + '\', \'desc\', this.value)" placeholder="事项描述" rows="2">' + escapeHtml(item.desc) + '</textarea><div class="sp-timeline-editable-meta"><label><input type="checkbox" ' + (item.milestone ? 'checked' : '') + ' onchange="updateSpTimelineItem(\'' + item.id + '\', \'milestone\', this.checked)"> 里程碑</label><span style="margin-left:auto;color:#ccc;cursor:pointer;" onclick="deleteSpTimelineItem(\'' + item.id + '\')">🗑️</span></div></div></div>'; }
+function addSpTimelineItem(category) { const cat = category || 'alevel'; const today = new Date(); const dateKey = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-01'; studyPlanState.timeline.items.push({ id: 't' + Date.now(), date: (today.getMonth() + 1) + '月 ' + today.getFullYear(), dateKey, title: '新事项', desc: '请填写描述', category: cat, milestone: false }); renderSpTimeline(); }
+function updateSpTimelineItem(id, field, value) { const item = studyPlanState.timeline.items.find(x => x.id === id); if (!item) return; item[field] = value; if (field === 'dateKey' && value) { const [y, m] = value.split('-').map(Number); item.date = m + '月 ' + y; } }
+function deleteSpTimelineItem(id) { const idx = studyPlanState.timeline.items.findIndex(x => x.id === id); if (idx >= 0) { studyPlanState.timeline.items.splice(idx, 1); renderSpTimeline(); } }
+function generateScheduleSnapshot() { const items = studyPlanState.timeline.items; if (items.length === 0) { showToast('请先生成时间线'); return; } const container = document.getElementById('spScheduleSnapshot'); if (!container) return; const tasks = items.filter(t => t.dateKey).map(t => { const color = t.category === 'ielts' ? 'purple' : t.category === 'interview' ? 'orange' : 'blue'; return { id: 'snap_' + t.id, title: t.title, desc: t.desc, time: '', color, category: 'study-plan', done: false }; }); if (tasks.length === 0) { container.innerHTML = '<div class="sp-empty-state"><div class="sp-empty-icon">📅</div><div>没有可生成的日程事项</div></div>'; return; } container.innerHTML = '<div class="sp-schedule-snapshot-title">📅 未来日程快照</div>' + tasks.map(t => renderTaskItem(t)).join(''); studyPlanState.scheduleSnapshot = tasks; showToast('日程快照已生成'); }
+function renderSpTaskIntegration() { const toggle = document.getElementById('spTaskIntegrateToggle'); if (!toggle) return; toggle.checked = !!studyPlanState.integrateTasks; }
+function toggleSpTaskIntegration() { const on = document.getElementById('spTaskIntegrateToggle').checked; studyPlanState.integrateTasks = on; const status = document.getElementById('spTaskIntegrationStatus'); if (status) status.textContent = on ? '已开启：日程快照任务已同步到今日学习日历。' : '已关闭：不会自动同步任务到学习日历。'; if (on) { const tasks = studyPlanState.scheduleSnapshot || []; if (tasks.length === 0) { showToast('请先生成日程快照'); return; } const key = formatDateKey(new Date()); if (!calendarData[key]) calendarData[key] = []; tasks.forEach(t => { if (!calendarData[key].find(x => x.id === t.id)) calendarData[key].push({...t}); }); saveCalendarData(); showToast('已同步到今日学习日历'); } }
+function renderOverallReport() { const d = studyPlanState.data; const regionName = getSpRegionName(d.region); const majorName = getSpMajorName(d.major); const intake = d.intake || '2027 Fall'; const unis = d.universities.length ? d.universities.join('、') : '未选择'; const summaryCard = `<div class="sp-card"><h3 style="font-size:15px;color:#333;margin-bottom:12px;">📝 留学目标摘要</h3><p style="font-size:13px;color:#555;line-height:1.7;"><b>学生：</b>${d.name || '小明'}<br><b>目标地区：</b>${regionName}<br><b>目标专业：</b>${majorName}<br><b>入学时间：</b>${intake}<br><b>目标大学：</b>${unis}</p></div>`; let reportsCard = ''; if (studyPlanState.reports.length) { reportsCard = `<div class="sp-card"><h3 style="font-size:15px;color:#333;margin-bottom:12px;">📋 咨询报告</h3><ul style="font-size:13px;color:#555;line-height:1.7;padding-left:18px;">${studyPlanState.reports.map(r => `<li><b>${r.title}</b>：${new Date(r.date).toLocaleDateString('zh-CN')}</li>`).join('')}</ul></div>`; } let reqsCard = ''; if (studyPlanState.requirements.hardware.length || studyPlanState.requirements.software.length) { reqsCard = `<div class="sp-card"><h3 style="font-size:15px;color:#333;margin-bottom:12px;">📊 申请要求</h3><p style="font-size:13px;color:#555;line-height:1.7;"><b>硬件要求：</b>${studyPlanState.requirements.hardware.map(x => x.label + '：' + (x.content || '')).join('；')}</p><p style="font-size:13px;color:#555;line-height:1.7;margin-top:8px;"><b>软件要求：</b>${studyPlanState.requirements.software.map(x => x.label + '：' + (x.content || '')).join('；')}</p></div>`; } let timelineCard = ''; if (studyPlanState.timeline.items.length) { const timelineImg = studyPlanState.timeline.imageData || studyPlanState.timeline.imageFile || 'docs/images/study-plan-timeline.png'; const categories = { alevel: { label: 'A-Level 考试', icon: '📚' }, ielts: { label: '雅思', icon: '🌐' }, interview: { label: '学校面试/笔试', icon: '🎓' } }; const grouped = {}; studyPlanState.timeline.items.forEach(item => { const cat = item.category || 'alevel'; if (!grouped[cat]) grouped[cat] = []; grouped[cat].push(item); }); const groupedList = Object.keys(categories).map(key => { const items = (grouped[key] || []).sort((a, b) => (a.dateKey || '').localeCompare(b.dateKey || '')); if (!items.length) return ''; return '<div style="margin-bottom:10px;"><b style="color:#333;">' + categories[key].icon + ' ' + categories[key].label + '</b><ul style="padding-left:18px;margin:4px 0 0 0;">' + items.map(t => '<li><b>' + t.date + '</b> ' + t.title + '：' + t.desc + '</li>').join('') + '</ul></div>'; }).join(''); timelineCard = '<div class="sp-card"><h3 style="font-size:15px;color:#333;margin-bottom:12px;">🗓️ 时间规划</h3><img src="' + timelineImg + '" style="max-width:100%;border-radius:8px;margin-bottom:10px;display:block;" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'block\';"><div style="display:none;font-size:13px;color:#999;text-align:center;padding:12px;background:#f8f9fa;border-radius:8px;margin-bottom:10px;">默认时间线图片未找到，请将图片保存到 docs/images/study-plan-timeline.png</div>' + groupedList + '</div>'; } let snapshotCard = ''; if (studyPlanState.scheduleSnapshot && studyPlanState.scheduleSnapshot.length) { snapshotCard = `<div class="sp-card"><h3 style="font-size:15px;color:#333;margin-bottom:12px;">📅 日程快照</h3><ul style="font-size:13px;color:#555;line-height:1.7;padding-left:18px;">${studyPlanState.scheduleSnapshot.map(t => `<li>${t.title} ${t.desc ? '— ' + t.desc : ''}</li>`).join('')}</ul></div>`; } const integrateStatus = studyPlanState.integrateTasks ? '已开启' : '未开启'; const integrateCard = `<div class="sp-card"><h3 style="font-size:15px;color:#333;margin-bottom:12px;">📚 学习任务结合</h3><p style="font-size:13px;color:#555;line-height:1.7;">将学习任务与留学规划结合：${integrateStatus}</p></div>`; const sectionsHtml = summaryCard + reportsCard + reqsCard + timelineCard + snapshotCard + integrateCard; const printBtn = '<div class="sp-actions" style="margin-bottom:12px;"><button class="sp-btn primary" onclick="printOverallReport()">🖨️ 打印 / 导出 PDF</button></div>'; studyPlanState.overallReportHtml = '<div class="sp-overall-report"><h2>留学规划整体报告</h2>' + sectionsHtml + '</div>'; if (spViewMode === 'presentation') { const pres = document.getElementById('spPresentationView'); if (pres) pres.innerHTML = printBtn + '<div class="sp-masonry">' + sectionsHtml + '</div>'; } }
+function printOverallReport() { const printArea = document.getElementById('spPrintArea'); if (!printArea) return; renderOverallReport(); printArea.innerHTML = studyPlanState.overallReportHtml; document.body.classList.add('printing'); setTimeout(() => { window.print(); document.body.classList.remove('printing'); }, 100); }
 function saveStudyPlan() { localStorage.setItem('xh_study_plan', JSON.stringify(studyPlanState)); showToast('留学规划已保存'); }
-function loadStudyPlan() { try { const raw = localStorage.getItem('xh_study_plan'); if (raw) { const saved = JSON.parse(raw); studyPlanState = {...studyPlanState, ...saved, data: {...studyPlanState.data, ...saved.data}}; } } catch (e) {} }
+function loadStudyPlan() { try { const raw = localStorage.getItem('xh_study_plan'); if (raw) { const saved = JSON.parse(raw); studyPlanState = {...studyPlanState, ...saved, data: {...studyPlanState.data, ...saved.data}, consultation: {...studyPlanState.consultation, ...(saved.consultation || {}), segments: {...studyPlanState.consultation.segments, ...(saved.consultation && saved.consultation.segments ? saved.consultation.segments : {})}}, timeline: {...studyPlanState.timeline, ...(saved.timeline || {})}, requirements: {...studyPlanState.requirements, ...(saved.requirements || {}), hardware: (saved.requirements && saved.requirements.hardware) ? saved.requirements.hardware : ((saved.requirements && saved.requirements.hard) ? saved.requirements.hard : []), software: (saved.requirements && saved.requirements.software) ? saved.requirements.software : ((saved.requirements && saved.requirements.soft) ? saved.requirements.soft : [])}}; } } catch (e) {} }
 function showSpModal(title, html) { document.getElementById('spModalTitle').textContent = title; document.getElementById('spModalBody').innerHTML = html; const overlay = document.getElementById('spModalOverlay'); const modal = document.getElementById('spModal'); overlay.classList.add('show'); requestAnimationFrame(() => overlay.classList.add('fade-in')); requestAnimationFrame(() => modal.classList.add('show')); }
 function closeSpModal(e) { if (e && e.target !== e.currentTarget && e.target.className !== 'study-plan-app-close') return; const overlay = document.getElementById('spModalOverlay'); const modal = document.getElementById('spModal'); overlay.classList.remove('fade-in'); modal.classList.remove('show'); setTimeout(() => overlay.classList.remove('show'), 300); }
 function addStudyPlanEntryCard() { const taskCards = document.querySelector('.task-cards'); if (!taskCards) return; const existing = document.getElementById('spEntryCard'); if (existing) return; const card = document.createElement('div'); card.className = 'sp-mini-card'; card.id = 'spEntryCard'; card.onclick = openStudyPlanApp; card.innerHTML = `<div class="sp-mini-card-header"><div class="sp-mini-card-title">🎓 留学规划</div><div class="sp-mini-card-status">规划中</div></div><div class="sp-mini-card-info">点击创建你的专属留学规划卡片，AI帮你拆解申请目标。</div>`; taskCards.insertBefore(card, taskCards.firstChild); }
-function handleStudyPlanIntent() { const conv = chatConversations.find(c => c.id === currentConversationId); if (!conv) return; const time = formatTime(); conv.messages.push({ role:'ai', content:'我已经为你准备好留学规划卡片啦！你可以在里面填写目标大学、专业和入学时间，AI会帮你生成申请要求、考试时间线和个性化学习计划推荐。', type:'study-plan-card-entry', time, mood:'happy' }); conv.time = new Date().toISOString(); saveConversations(); renderCurrentConversation(); if (isAuxChatOpen) renderAuxMessages(); setTimeout(openStudyPlanApp, 400); }
+function handleStudyPlanIntent() { const conv = chatConversations.find(c => c.id === currentConversationId); if (!conv) return; const time = formatTime(); conv.messages.push({ role:'ai', content:'我已经帮你创建了留学规划卡片，点击打开即可开始填写目标、进行 AI 分段咨询并生成完整报告。', type:'study-plan-card-entry', time, mood:'happy' }); conv.time = new Date().toISOString(); saveConversations(); renderCurrentConversation(); if (isAuxChatOpen) renderAuxMessages(); setTimeout(openStudyPlanApp, 400); }
 
-let spViewMode = 'edit';
-let spCurrentSlide = 1;
-function toggleSpPresentationView() { const toggle = document.getElementById('spViewToggle'); const steps = document.getElementById('studyPlanSteps'); const panels = document.querySelectorAll('.sp-step-panel'); const pres = document.getElementById('spPresentationView'); const slide = document.getElementById('spSlideView'); if (spViewMode === 'edit') { spViewMode = 'presentation'; toggle.textContent = '✏️ 编辑视图'; steps.style.display = 'none'; panels.forEach(p => p.classList.remove('active')); pres.classList.add('active'); slide.classList.remove('active'); renderSpPresentation(); } else { spViewMode = 'edit'; toggle.textContent = '🖼️ 完整视图'; steps.style.display = 'flex'; pres.classList.remove('active'); slide.classList.remove('active'); goToSpStep(studyPlanState.step || 1); } }
-function renderSpPresentation() { const container = document.getElementById('spPresentationView'); const d = studyPlanState.data; const majorName = document.querySelector('#spMajor option:checked')?.textContent || d.major || '未选择'; const regionName = {uk:'英国',us:'美国',hk:'中国香港',sg:'新加坡',au:'澳洲',ca:'加拿大'}[d.region] || '未选择'; const intake = d.intake || '2027 Fall'; const unis = d.universities.length ? d.universities.join('、') : '未选择'; const slides = [ { title: '填写目标', summary: `<b>${d.name || '小明'}</b> · ${regionName} · ${majorName}<br>入学：${intake}<br>目标：${unis}` }, { title: '申请要求', summary: studyPlanState.requirements ? `硬件要求 ${studyPlanState.requirements.hard.length} 项 · 软件要求 ${studyPlanState.requirements.soft.length} 项` : '尚未生成申请要求，请在编辑模式下填写并生成。' }, { title: '时间规划', summary: studyPlanState.timeline.length ? `共 ${studyPlanState.timeline.length} 个阶段 · 目标 ${intake} 入读 ${unis}` : '尚未生成时间规划，请在编辑模式下先填写目标并生成。' }, { title: '学习计划', summary: '系统将根据你的留学规划目标，持续推荐个性化学习任务，帮助你一步步靠近梦校。' } ]; container.innerHTML = slides.map((s, i) => `<div class="sp-presentation-thumb" onclick="openSpSlide(${i+1})"><div class="sp-thumb-num">${i+1}</div><div class="sp-thumb-title">${s.title}</div><div class="sp-thumb-summary">${s.summary}</div></div>`).join(''); }
-function openSpSlide(idx) { spCurrentSlide = idx; spViewMode = 'slide'; document.getElementById('spPresentationView').classList.remove('active'); document.getElementById('spSlideView').classList.add('active'); renderSpSlide(idx); }
-function closeSpSlide() { spViewMode = 'presentation'; document.getElementById('spSlideView').classList.remove('active'); document.getElementById('spPresentationView').classList.add('active'); }
-function nextSpSlide() { if (spCurrentSlide < 4) { spCurrentSlide++; renderSpSlide(spCurrentSlide); } }
-function prevSpSlide() { if (spCurrentSlide > 1) { spCurrentSlide--; renderSpSlide(spCurrentSlide); } }
-function renderSpSlide(idx) { document.getElementById('spSlideCounter').textContent = `${idx} / 4`; document.getElementById('spSlidePrev').disabled = idx === 1; document.getElementById('spSlideNext').disabled = idx === 4; const content = document.getElementById('spSlideContent'); if (idx === 1) { const d = studyPlanState.data; const majorName = document.querySelector('#spMajor option:checked')?.textContent || d.major || '未选择'; const regionName = {uk:'英国',us:'美国',hk:'中国香港',sg:'新加坡',au:'澳洲',ca:'加拿大'}[d.region] || '未选择'; const intake = d.intake || '2027 Fall'; const unis = d.universities.length ? d.universities.join('、') : '未选择'; content.innerHTML = `<div class="sp-card"><div class="sp-card-title">📝 填写目标</div><div class="sp-form-grid"><div class="sp-form-field"><div class="sp-form-label">学生姓名</div><div class="sp-select" style="background:#f5f5f5;">${d.name || '小明'}</div></div><div class="sp-form-field"><div class="sp-form-label">目标地区</div><div class="sp-select" style="background:#f5f5f5;">${regionName}</div></div><div class="sp-form-field"><div class="sp-form-label">目标专业</div><div class="sp-select" style="background:#f5f5f5;">${majorName}</div></div><div class="sp-form-field"><div class="sp-form-label">目标入学年份</div><div class="sp-select" style="background:#f5f5f5;">${intake}</div></div><div class="sp-form-field full-width"><div class="sp-form-label">目标大学</div><div class="sp-selected-unis">${d.universities.map(u => `<span class="sp-selected-uni">${u}</span>`).join('') || '<span style="color:#999;">未选择</span>'}</div></div></div></div>`; } else if (idx === 2) { const grid = document.getElementById('spRequirementsGrid'); content.innerHTML = grid ? grid.innerHTML : '<div class="sp-empty-state"><div class="sp-empty-icon">📋</div><div class="sp-empty-title">还没有生成申请要求</div></div>'; } else if (idx === 3) { const overview = document.getElementById('spTimelineOverview'); const timeline = document.getElementById('spTimeline'); const details = document.getElementById('spDetailList'); content.innerHTML = `<div class="sp-card"><div class="sp-card-title">🗓️ 时间规划</div>${overview ? overview.innerHTML : ''}${timeline ? timeline.innerHTML : ''}</div><div class="sp-card"><div class="sp-card-title">📝 规划明细</div>${details ? details.innerHTML : ''}</div>`; } else if (idx === 4) { const plan = document.getElementById('spTomorrowPlan'); content.innerHTML = plan ? plan.innerHTML : '<div class="sp-empty-state"><div class="sp-empty-icon">🎯</div><div class="sp-empty-title">学习计划</div><div class="sp-empty-desc">系统将根据你的留学规划目标，持续推荐个性化学习任务。</div></div>'; } }
-
-loadStudyPlan();
+function toggleSpPresentationView() { const toggle = document.getElementById('spViewToggle'); const steps = document.getElementById('studyPlanSteps'); const panels = document.querySelectorAll('.sp-step-panel'); const pres = document.getElementById('spPresentationView'); if (spViewMode === 'edit') { spViewMode = 'presentation'; toggle.textContent = '✏️ 编辑视图'; steps.style.display = 'none'; panels.forEach(p => p.classList.remove('active')); pres.classList.add('active'); renderOverallReport(); } else { spViewMode = 'edit'; toggle.textContent = '🖼️ 完整视图'; steps.style.display = 'flex'; pres.classList.remove('active'); goToSpStep(studyPlanState.step || 1); } }
 
 loadStudyPlan();
 document.addEventListener('DOMContentLoaded', addStudyPlanEntryCard);
 </script>
 
-<!-- 留学规划应用 -->
-<div class="study-plan-app-overlay" id="studyPlanAppOverlay" onclick="closeStudyPlanApp(event)">
-    <div class="study-plan-app" id="studyPlanApp">
-        <div class="study-plan-app-header">
-            <div class="study-plan-app-title">
-                <span>🎓</span>
-                <span>留学规划助手</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;">
-                <button class="sp-view-toggle" id="spViewToggle" onclick="toggleSpPresentationView()">🖼️ 完整视图</button>
-                <button class="study-plan-app-close" onclick="closeStudyPlanApp()">✕</button>
-            </div>
-        </div>
-        <div class="study-plan-app-body" id="studyPlanAppBody">
-            <div class="study-plan-steps" id="studyPlanSteps">
-                <div class="sp-step active" data-step="1" onclick="goToSpStep(1)"><span class="sp-step-num">1</span>填写目标</div>
-                <div class="sp-step" data-step="2" onclick="goToSpStep(2)"><span class="sp-step-num">2</span>申请要求</div>
-                <div class="sp-step" data-step="3" onclick="goToSpStep(3)"><span class="sp-step-num">3</span>时间规划</div>
-                <div class="sp-step" data-step="4" onclick="goToSpStep(4)"><span class="sp-step-num">4</span>学习计划</div>
-            </div>
-            <div class="sp-presentation-view" id="spPresentationView"></div>
-            <div class="sp-slide-view" id="spSlideView">
-                <div class="sp-slide-header">
-                    <button class="sp-slide-back" onclick="closeSpSlide()">← 返回</button>
-                    <div class="sp-slide-counter" id="spSlideCounter">1 / 4</div>
-                </div>
-                <div class="sp-slide-content" id="spSlideContent"></div>
-                <div class="sp-slide-nav">
-                    <button class="sp-slide-nav-btn" id="spSlidePrev" onclick="prevSpSlide()">← 上一页</button>
-                    <button class="sp-slide-nav-btn" id="spSlideNext" onclick="nextSpSlide()">下一页 →</button>
-                </div>
-            </div>
-            <div class="sp-step-panel active" id="spStep1">
-                <div class="sp-card">
-                    <div class="sp-card-title">📝 我的留学规划卡片</div>
-                    <div class="sp-form-grid">
-                        <div class="sp-form-field">
-                            <label class="sp-form-label">学生姓名</label>
-                            <select class="sp-select" id="spStudentName" disabled><option value="">小明</option></select>
-                        </div>
-                        <div class="sp-form-field">
-                            <label class="sp-form-label">目标地区 <span class="required">*</span></label>
-                            <select class="sp-select placeholder" id="spRegion" onchange="onSpRegionChange();updateSpSelectStyle(this)">
-                                <option value="">请选择目标地区</option>
-                                <option value="uk">英国</option>
-                                <option value="us">美国</option>
-                                <option value="hk">中国香港</option>
-                                <option value="sg">新加坡</option>
-                                <option value="au">澳洲</option>
-                                <option value="ca">加拿大</option>
-                            </select>
-                        </div>
-                        <div class="sp-form-field">
-                            <label class="sp-form-label">目标专业 <span class="required">*</span></label>
-                            <select class="sp-select placeholder" id="spMajor" onchange="updateSpSelectStyle(this)">
-                                <option value="">请选择目标专业</option>
-                                <option value="finance">金融/经济</option>
-                                <option value="cs">计算机科学</option>
-                                <option value="engineering">工程</option>
-                                <option value="math">数学/统计</option>
-                                <option value="science">自然科学</option>
-                                <option value="social">人文社科</option>
-                                <option value="art">艺术设计</option>
-                                <option value="business">商科管理</option>
-                            </select>
-                        </div>
-                        <div class="sp-form-field">
-                            <label class="sp-form-label">目标入学年份</label>
-                            <select class="sp-select placeholder" id="spIntake" onchange="updateSpSelectStyle(this)">
-                                <option value="">请选择入学年份</option>
-                                <option value="2026">2026 Fall</option>
-                                <option value="2027">2027 Fall</option>
-                                <option value="2028">2028 Fall</option>
-                                <option value="2029">2029 Fall</option>
-                            </select>
-                        </div>
-                        <div class="sp-form-field full-width">
-                            <label class="sp-form-label">目标大学 <span class="required">*</span>（最多选3所，地区联动）</label>
-                            <div class="sp-university-selector">
-                                <select class="sp-select placeholder" id="spUniversitySelect" onchange="addSpUniversity()">
-                                    <option value="">请先选择目标地区，再添加大学</option>
-                                </select>
-                                <div class="sp-selected-unis" id="spSelectedUnis"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="sp-tip">
-                    <span class="sp-tip-icon">💡</span>
-                    <span>如果你还没有明确的目标大学或专业，可以点击"联系新航道老师"，资深顾问会在 3 个工作日内电话联系你，帮你做一对一规划。</span>
-                </div>
-                <div class="sp-actions">
-                    <button class="sp-btn secondary" onclick="contactTeacherForPlan()">📞 联系新航道老师</button>
-                    <button class="sp-btn primary" onclick="generateRequirements()">生成申请要求</button>
-                </div>
-            </div>
-            <div class="sp-step-panel" id="spStep2">
-                <div class="sp-requirements-grid" id="spRequirementsGrid">
-                    <div class="sp-empty-state">
-                        <div class="sp-empty-icon">📋</div>
-                        <div class="sp-empty-title">还没有生成申请要求</div>
-                        <div class="sp-empty-desc">请在第一步填写目标信息，然后点击"生成申请要求"</div>
-                    </div>
-                </div>
-                <div class="sp-actions">
-                    <button class="sp-btn" id="spFactorAnalysisBtn" onclick="showFactorAnalysis()" disabled>📊 查看录取因素解析</button>
-                    <button class="sp-btn primary" id="spGenerateTimelineBtn" onclick="generateTimeline()" disabled>生成时间规划</button>
-                </div>
-            </div>
-            <div class="sp-step-panel" id="spStep3">
-                <div class="sp-card">
-                    <div class="sp-card-title">🗓️ 留学规划时间线</div>
-                    <div class="sp-timeline-overview" id="spTimelineOverview"></div>
-                    <div class="sp-timeline" id="spTimeline"></div>
-                    <div class="sp-plan-actions">
-                        <button class="sp-btn" id="spTimelineAnalysisBtn" onclick="showTimelineAnalysis()" disabled>📈 查看时间线解析</button>
-                    </div>
-                </div>
-                <div class="sp-card">
-                    <div class="sp-card-title">📝 规划明细（可手动修改，与时间轴对应）</div>
-                    <div class="sp-detail-list" id="spDetailList"></div>
-                    <div class="sp-add-detail" onclick="addSpDetailItem()">+ 添加规划事项</div>
-                </div>
-                <div class="sp-actions">
-                    <button class="sp-btn primary" onclick="goToSpStep(4)">生成学习计划</button>
-                </div>
-            </div>
-            <div class="sp-step-panel" id="spStep4">
-                <div class="sp-card">
-                    <div class="sp-card-title">✅ 学习计划</div>
-                    <div class="sp-study-plan-preview" id="spTomorrowPlan">
-                        <div style="text-align:center;padding:40px 20px;color:#999;">
-                            <div style="font-size:48px;margin-bottom:12px;">🎯</div>
-                            <div style="font-size:15px;font-weight:600;color:#666;margin-bottom:8px;">系统将根据你的留学规划目标，更新个性化学习计划推荐</div>
-                            <div style="font-size:13px;line-height:1.6;">完成留学规划后，小航会结合你的目标大学、专业和时间线，<br>每天为你推荐针对性的学习任务，帮助你一步步靠近梦校。</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="sp-tip">
-                    <span class="sp-tip-icon">💡</span>
-                    <span>确认后，系统将保存你的留学规划，并在后续为你持续推荐个性化学习计划。你也可以随时返回修改目标和时间线。</span>
-                </div>
-                <div class="sp-actions">
-                    <button class="sp-btn" onclick="saveStudyPlan()">💾 保存规划</button>
-                    <button class="sp-btn primary" onclick="closeStudyPlanApp()">完成</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="sp-modal-overlay" id="spModalOverlay" onclick="closeSpModal(event)">
-    <div class="sp-modal" id="spModal">
-        <div class="sp-modal-header">
-            <div class="sp-modal-title" id="spModalTitle">解析</div>
-            <button class="study-plan-app-close" onclick="closeSpModal()">✕</button>
-        </div>
-        <div class="sp-modal-body" id="spModalBody"></div>
-    </div>
-</div>
-<div class="sp-teacher-toast" id="spTeacherToast">
-    <div class="sp-teacher-toast-icon">📞</div>
-    <div class="sp-teacher-toast-title">已为你安排顾问老师</div>
-    <div class="sp-teacher-toast-desc">新航道资深留学顾问将在 3 个工作日内通过电话联系你，请保持手机畅通。</div>
-    <button class="sp-btn primary" onclick="hideTeacherToast()">我知道了</button>
-</div>
+
 </body>
 </html>
